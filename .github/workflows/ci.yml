@@ -1,0 +1,126 @@
+name: CI
+
+# Every push: lint → typecheck → Jest → build the .snplg → upload it as a run
+# artifact. A v* tag also publishes a GitHub Release with the .snplg attached.
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PLUGIN_KEY: SupernotePuzzles
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      # The layout drives both the printed template and the stroke mapping, so a
+      # stale template would silently misplace boxes.
+      - run: npm run render-templates -- --check
+      - run: npx jest --ci --coverage
+
+  build:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      # Gradle 8.13 needs a JDK no newer than 23; the RN 0.79 toolchain targets 17.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - run: npm ci
+
+      - name: Stamp version
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION=$(jq -r .version package.json)
+          # versionCode must increase on every build or the device won't upgrade.
+          CODE=$((1000 + GITHUB_RUN_NUMBER))
+          if [[ "$GITHUB_REF" == refs/tags/v* && "$GITHUB_REF_NAME" != "v$VERSION" ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $VERSION"
+            exit 1
+          fi
+          jq --arg v "$VERSION" --arg c "$CODE" '.versionName=$v | .versionCode=$c' \
+            PluginConfig.json > PluginConfig.tmp && mv PluginConfig.tmp PluginConfig.json
+          SHA="${GITHUB_SHA::7}"
+          NOW="$(date -u +%Y-%m-%dT%H:%MZ)"
+          cat > src/buildInfo.ts <<EOF
+          // Stamped by CI run ${GITHUB_RUN_NUMBER}.
+          export const BUILD_INFO = {
+            versionName: '${VERSION}',
+            versionCode: '${CODE}',
+            gitSha: '${SHA}',
+            builtAt: '${NOW}',
+          } as const;
+          EOF
+          cat src/buildInfo.ts
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "VERSION_CODE=$CODE" >> "$GITHUB_ENV"
+
+      - name: Build plugin
+        run: rm -rf build && bash buildPlugin.sh
+
+      # buildPlugin.sh exits 0 even when the native (Gradle) build fails, so
+      # check the package really contains the native code and RNFS.
+      - name: Verify package
+        shell: bash
+        run: |
+          set -euo pipefail
+          P="build/outputs/${PLUGIN_KEY}.snplg"
+          test -f "$P"
+          unzip -l "$P" > listing.txt
+          cat listing.txt
+          grep -q ' app.npk$' listing.txt
+          unzip -p "$P" PluginConfig.json | tee /dev/stderr | jq -e '
+            .nativeCodePackage == "/app.npk"
+            and (.reactPackages | index("com.rnfs.RNFSPackage") != null)
+            and .versionCode == env.VERSION_CODE
+            and .pluginKey == env.PLUGIN_KEY'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PLUGIN_KEY }}-v${{ env.VERSION }}-${{ env.VERSION_CODE }}
+          path: build/outputs/${{ env.PLUGIN_KEY }}.snplg
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.snplg
+          generate_release_notes: true

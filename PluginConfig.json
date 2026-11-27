@@ -1,0 +1,17 @@
+{
+  "name": "Puzzles",
+  "desc": "Play NYT puzzles and Minute Cryptic with the pen on a real note page. M0: device probe build.",
+  "author": "IRKnyazev",
+  "iconPath": "assets/icon.png",
+  "versionName": "0.0.1",
+  "versionCode": "1",
+  "pluginID": "sd55lh4jnwwoilc0",
+  "pluginKey": "SupernotePuzzles",
+  "jsMainPath": "index",
+  "supportTypes": ["NOTE"],
+  "uses-permissions": [
+    "plugin.permission.INTERNET",
+    "plugin.permission.FILE:READ",
+    "plugin.permission.FILE:WRITE"
+  ]
+}
