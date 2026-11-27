@@ -1,0 +1,10 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src", "__tests__", "__mocks__", "App.tsx", "index.js"],
+  "exclude": ["node_modules", "build", "android", "coverage", "scripts"]
+}
