@@ -1,13 +1,33 @@
-# Supernote Puzzles — design v0.3
+# Supernote Puzzles — design v0.4
 
 A Supernote plugin (Manta first) for playing the NYT games and Minute Cryptic
 with the pen, so it feels as close to paper as possible. Plugin key
 `SupernotePuzzles`, shown on the device as "Puzzles".
 
-Status: **approved for M0**. v0.3 folds in the check of the survey's claims
-against the `sn-plugin-lib` 0.2.3 source and the reference plugins' code
-(`docs/SDK-NOTES.md`). Decisions are logged in `docs/DECISIONS.md`. The
-remaining unknowns are answered by the M0 probe on a real Manta.
+Status: **M0 done; M1 next**. v0.4 adds the M0 device results from the
+owner's Manta (Chauvet 3.31.45): `docs/M0-RESULTS.md`, with the decisions
+they led to in `docs/DECISIONS.md`. v0.3 had checked the survey's claims
+against the `sn-plugin-lib` 0.2.3 source and the reference plugins
+(`docs/SDK-NOTES.md`).
+
+### Changes since v0.3 (M0 device results)
+
+- **Recognition reads whole entries.** Single letters in boxes were read
+  right 75–82% of the time (blanks for I, L, O, U, J; look-alikes like
+  O→0, Z→2), but whole words and crossword entries were right. CHECK reads
+  each entry in one call, maps letters back to squares, and forgives
+  look-alikes of the right letter.
+- **Pen-up points are EMR** even on SDK 0.2.3 (getElements is px); the
+  conversion is verified.
+- **Marks:** geometry and placed picture elements only; `insertImage`
+  lands in the page centre and vanishes on the next edit.
+- **Removing marks:** `batchUpdatePageElements` (persists, not on the
+  owner's Undo stack); lasso as a fallback (persists, but undoable).
+- **Saving doesn't reset Undo** on 3.31.45.
+- **Page buttons work** on finger and pen and stay silent on other notes,
+  but a tap on the floating toolbar over a printed button also fires it:
+  M1 needs a guard.
+- **Template style:** 3 px grid lines, 18 px clue numbers.
 
 ### Changes since v0.2
 
@@ -66,13 +86,13 @@ remaining unknowns are answered by the M0 probe on a real Manta.
 |---|---|---|
 | Show the puzzle | Make a PNG of the puzzle → `MyStyle/SupernotePuzzles/` (react-native-fs) → `createNote({notePath, template, mode: 0, isPortrait: true})` with absolute paths / `insertNotePage({notePath, page, template})` | Ink2Task does this on Manta; SDK source |
 | Make the PNG | M0: at development time (resvg). Live puzzles: decided in M1/M2 (view-shot or Kotlin Canvas) | DECISIONS.md |
-| Read your writing | `getElements(page, path)` → strokes (`type 0`, `layerNum 0`) → points in page px (SDK 0.2.x) → square they fall in | SDK source; Ink2Task; needs `FILE:READ` (1503) |
-| Turn ink into text | `recognizeElements(strokes, getPageSize(path, page))`; split on error 117; 116 = first use needs Wi-Fi | SDK source, Ink2Task, dictionary |
-| Page buttons | `PluginManager.registerMotionListener(1, {onMsg})`: `action` 0 down / 1 up, `toolType` 1 finger / 2 pen; down and up inside the area, moved ≤ 50 px; open file is a puzzle note **and** `canHandwrite()` isn't `false` | Ink2Task (pending P4) |
+| Read your writing | `getElements(page, path)` → strokes (`type 0`, `layerNum 0`) → points in page px → square they fall in | **Measured** (M0); needs `FILE:READ` |
+| Turn ink into text | `recognizeElements(strokes of one entry, getPageSize(path, page))` → letters mapped back to squares; single squares only as fallback; normalise look-alikes; split on 117 | **Measured** (M0): words right, single letters 75–82% |
+| Page buttons | `PluginManager.registerMotionListener(1, {onMsg})`: `action` 0 down / 1 up, `toolType` 1 finger / 2 pen; down and up inside the area, moved ≤ 50 px; open file is a puzzle note **and** `canHandwrite()` isn't `false`; plus a guard against the floating toolbar (M1) | **Measured** (M0) |
 | Toolbar buttons | `registerButton(1, ['NOTE'], {id, name, icon, showType: 1})` | all |
-| Feedback marks | `insertGeometry` (`straightLine`, `GEO_polygon`, `GEO_circle`; penWidth ≥ 100; penType 10); shaded tiles via a picture element with a rect, or `insertImage(path)` (no position) | Snap, Tables (pending P6) |
-| Remove our marks | Never `deletePageElements`. Lasso route or `batchUpdatePageElements`; which one works on a Manta is pending P6 | Scribble, Tables |
-| Live strokes (later) | `registerEventListener('event_pen_up', 1, …)` → `Element[]`; filter to ink pens | Snap (pending P2) |
+| Feedback marks | `insertGeometry` or geometry elements (penWidth ≥ 100; penType 10); shaded tiles as picture elements with a rect via `insertPageElements`. Never `insertImage` | **Measured** (M0) |
+| Remove our marks | `batchUpdatePageElements` (delete ours + insert new, one call, not undoable); lasso → `deleteLassoElements` as fallback (undoable). Never `deletePageElements` | **Measured** (M0) |
+| Live strokes (later) | `registerEventListener('event_pen_up', 1, …)` → `Element[]`; points are **EMR**, convert; skip penType 4 (lasso) | **Measured** (M0) |
 | Save state | `react-native-fs` JSON in the plugin dir; puzzle id also in the note filename. Never `saveCurrentNote` during play (resets undo) | Ink2Task, Snap |
 | Network | `plugin.permission.INTERNET` declared **and** requested at runtime, then `fetch` (HTTPS only) | Ink2Task, gorlix (pending P5) |
 | Floating clue bar (later) | Kotlin `TYPE_APPLICATION_OVERLAY` module; don't declare `SYSTEM_ALERT_WINDOW` | RPN, Ink2Task |
@@ -133,33 +153,23 @@ Requires firmware Chauvet **3.30.45 or later**; developed on 3.31.45.
 | Strands / Letter Boxed | Letter grid / square | Draw lines through letters | Maps the path → letters | M5 (needs stroke paths, not OCR) |
 | Connections | 4×4 words | Circle or tick 4 words, tap SUBMIT | Maps marks → words | M5 (or the plugin UI) |
 
-## 5. Unknowns for the M0 probe
+## 5. Unknowns (answered by M0)
 
-Answered by the survey: custom template ✓ (Ink2Task) · page-button taps ✓ ·
-layers ✗ (avoid) · batch insert on Manta ✓ (with retry) · `userData` ✗.
+All six were measured on the owner's Manta (Chauvet 3.31.45); details in
+`docs/M0-RESULTS.md`.
 
-Still open, all checked by the M0 probe on your Manta (Chauvet 3.31.45):
+- **P1 Recognition:** words and whole entries ✓; single letters 75–82% →
+  read per entry, map to squares, forgive look-alikes.
+- **P2 Coordinates:** `getElements` px ✓; pen-up EMR (converted) ✓.
+- **P3 Template:** sharp, placed right ✓; 3 px lines, 18 px clue numbers.
+- **P4 Page buttons:** finger and pen ✓; silent on other notes ✓; the
+  floating toolbar can sit over a button and fire it ✗ (guard in M1).
+- **P5 Network:** NYT JSON over HTTPS ✓.
+- **P6 Feedback:** geometry and placed pictures ✓; `insertImage` ✗; batch
+  and lasso removal persist ✓; saving keeps Undo ✓.
 
-- **P1 Recognition quality.** Write test pages (single capitals in boxes, rows
-  of 5 letters, words on lines). The probe recognises them (a) one square at a
-  time, (b) one word at a time and (c) a whole row at once, then logs the text
-  and timing. **This decides the recognition design.** Also: does
-  `getElements` see ink that hasn't been saved?
-- **P2 Stroke coordinates.** For the same stroke, are `getElements` points and
-  `event_pen_up` points both in px on Manta 3.31, or is one of them EMR? A
-  printed target box gives the true position. Also: pen types of ink and
-  lasso strokes.
-- **P3 Template quality.** Make a 15×15 grid template with small numbers:
-  is it crisp, the right size, and the right place?
-- **P4 Page-button taps.** Finger and pen taps on a printed button register;
-  none fire on other notes; what `getCurrentFilePath()` and `canHandwrite()`
-  return in each case.
-- **P5 Network.** HTTPS `fetch` from PluginHost to nytimes.com (public Wordle
-  JSON) works after the INTERNET permission is requested.
-- **P6 Feedback.** Insert a ✓ mark and grey tiles (`insertImage` and a placed
-  picture element), then remove them through the lasso and through
-  `batchUpdatePageElements`; confirm the removal survives closing and
-  reopening the note, and whether undo still works, including after a save.
+Still open for M1: the toolbar guard; whether switching strokes to the
+fineliner pen type before recognising helps single letters.
 
 ## 6. Milestones
 

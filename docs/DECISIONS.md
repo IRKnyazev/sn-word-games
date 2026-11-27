@@ -2,7 +2,95 @@
 
 Newest first. Each entry: date, decision, why, what was rejected.
 Device results from the owner's Manta beat docs and other plugins' notes.
-"Pending Pn" means the M0 probe will confirm or overturn it.
+"Pending Pn" means the M0 probe will confirm or overturn it; M0 results
+are recorded in the first entry below.
+
+## 2026-11-27 — M0 device results (Manta, Chauvet 3.31.45)
+
+Evidence for all entries below: `docs/M0-RESULTS.md`.
+
+### Recognition: read whole entries, not single squares
+
+- **Decision:** Recognise a whole entry (an across or down answer, a Wordle
+  row) in one call and map its letters back to the squares in order when the
+  count matches. Read single squares only as a fallback. Normalise
+  look-alikes (0→O, 1→I, 2→Z, 5→S, ✗/×→X, ✓→V) before comparing, and when
+  checking against a known answer, count a look-alike of the right letter as
+  right. Always show what was read.
+- **Why:** Words on lines were 4/4 and entries like "help", "dog", "hello"
+  were read correctly, while the same letters alone failed 18–31% of the time
+  (blank for I, L, O, U, J; digits and symbols for O, Z, Y, X, D, V). Reading
+  per entry is also faster (one ~0.5 s call instead of one per square).
+- **Rejected:** One call per square (75–82% and slow); our own A–Z
+  classifier for now (try the cheaper fixes first; M1 can also test changing
+  the pen type to fineliner before recognising).
+
+### Coordinates: convert pen-up, trust getElements
+
+- **Decision:** Treat `getElements` points as page pixels. Treat
+  `event_pen_up` points as EMR and convert them (the formula in
+  `src/ink/frame.ts`). Keep frame detection as a guard.
+- **Why:** Measured with a printed target: `getElements` px, pen-up EMR, the
+  conversion matched to 0.5 px. Lasso strokes are penType 4 at pen-up.
+- **Rejected:** Assuming 0.2.3 made pen-up px; `getLastElement()` (returned
+  a different stroke).
+
+### Marks: geometry and placed pictures; no insertImage
+
+- **Decision:** Draw ✓/✗ and lines with `insertGeometry` or geometry
+  elements, and shaded tiles with picture elements that carry a rect, through
+  `insertPageElements`. Don't use `insertImage`.
+- **Why:** Geometry and placed pictures land exactly. `insertImage` puts the
+  image in the middle of the page and it vanishes on the next page edit.
+- **Rejected:** `insertImage`; zig-zag fills.
+
+### Removing our marks: batch update, lasso as fallback
+
+- **Decision:** Replace or remove our own marks with
+  `batchUpdatePageElements` (delete our numbers, insert the new marks, in
+  one call). Keep the lasso route as a fallback. Only ever target geometry
+  and pictures we placed, inside a known area; never strokes. Don't call
+  `setLassoBoxState(2)` after `deleteLassoElements` (904). Never
+  `deletePageElements`.
+- **Why:** Both routes persist after reopening the note. Plugin inserts
+  aren't on the owner's Undo stack, and batch removals aren't either, so the
+  owner's Undo stays about their own ink and doesn't resurrect stale marks;
+  lasso removals are undoable, which would bring old ✓/✗ back. The batch
+  call is also one atomic step.
+- **Rejected:** Lasso as the main route (undo brings marks back, and the
+  lasso can clash with the owner's own selection).
+- **Supersedes:** "Removing our own marks is unresolved".
+
+### Saving
+
+- **Decision:** Still don't save during play, but saving is no longer
+  feared: on 3.31.45 `saveCurrentNote` doesn't reset Undo.
+- **Why:** The owner undid a scribble written before a save.
+- **Supersedes:** "Don't save the note during normal play" (its reason was
+  Snap's measurement on older firmware).
+
+### Page buttons need a guard against the floating toolbar
+
+- **Decision:** Keep page buttons and the `getCurrentFilePath()` +
+  `canHandwrite()` guard (both behaved correctly), but M1 must stop a tap on
+  the floating toolbar firing a printed button underneath it.
+- **Why:** With the toolbar moved over TAP, tapping its icons fired TAP;
+  `canHandwrite()` stayed true.
+- **Options for M1:** put buttons where the docked toolbar can't sit, require
+  a short hold, or ignore a tap that lands while the toolbar is over the
+  button (if detectable).
+
+### Template style
+
+- **Decision:** Grid lines 3 px, clue numbers 18 px; greys #9d and #c9.
+- **Why:** The owner's choice from the P3 sample strip.
+
+### Install
+
+- **Decision:** Install the CI artifact as downloaded (no unzipping) with Add
+  Plugin. Every CI build has a higher `versionCode`.
+- **Why:** The device unpacks the artifact. "The plugin version is too low"
+  means the installed build's `versionCode` isn't lower.
 
 ## 2026-11-27 — Log file only after FILE:WRITE; pages identified by template
 

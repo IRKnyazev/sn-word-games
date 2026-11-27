@@ -8,6 +8,29 @@ SDK 0.1.65 and older firmware than our Chauvet 3.31.45, so the M0 probe
 re-checks them. Our own device results go in `DECISIONS.md` and win over
 anything here.
 
+## Measured on our Manta (Chauvet 3.31.45, SDK 0.2.3) — wins over the rest
+
+From the M0 probe (`docs/M0-RESULTS.md`):
+
+- `getElements` points: page px. `event_pen_up` points: **EMR** (convert).
+  Lasso strokes at pen-up: penType 4. Ink pen strokes: penType 16.
+- `getLastElement()` can return a stroke other than the one just written.
+- `getCurrentFilePath()` reported the note on screen correctly.
+  `canHandwrite()` is false while the plugin menu is up. Taps on the floating
+  toolbar reach the motion listener with `canHandwrite()` true.
+- `recognizeElements`: whole words right; single letters 75–82% (blanks for
+  I, L, O, U, J; look-alikes like O→"0", Z→"2", X→"✗"). ~0.25–1 s per call.
+- `insertGeometry` returns `true`. Geometry and picture elements via
+  `insertPageElements` land exactly. `insertImage` lands in the page centre
+  and vanishes on the next page edit.
+- Plugin inserts aren't on the owner's Undo stack. Lasso deletes persist and
+  are undoable; `setLassoBoxState(2)` after `deleteLassoElements` → 904.
+  `batchUpdatePageElements` deletes and inserts, persists, isn't undoable.
+- `saveCurrentNote` doesn't reset Undo.
+- `hasPermission` answered 1 for FILE:READ, FILE:WRITE and INTERNET without
+  any prompt. HTTPS to nytimes.com works.
+- Custom page templates report their name as `user_<file name>`.
+
 ## Versions and coordinates
 
 - 0.2.3 is the only 0.2.x release (2026-10-12). Its methods are the same as
