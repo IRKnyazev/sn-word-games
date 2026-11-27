@@ -181,9 +181,11 @@ Still open, all checked by the M0 probe on your Manta (Chauvet 3.31.45):
 - The build compiles native code (react-native-fs → `app.npk`). CI checks the
   package really contains it, because `buildPlugin.sh` exits 0 when Gradle
   fails.
-- Install: "Add Plugin" with the new `.snplg` (don't use Reinstall, which uses
-  the old copy); `versionCode` is `1000 + CI run number`, so it goes up every
-  build. The file must stay named `SupernotePuzzles.snplg`.
+- Install: copy the downloaded CI artifact (the `.zip`, not unzipped; the
+  device unpacks it) to `MyStyle/`, then "Add Plugin" (don't use Reinstall,
+  which uses the old copy). `versionCode` is `1000 + CI run number`, so it goes
+  up every build; a build that isn't higher than the installed one is refused
+  with "The plugin version is too low".
 - Each milestone ends with a device checklist and a log file sent back.
 
 ## 8. Not doing (for now)

@@ -10,10 +10,10 @@ the note underneath.
 
 1. Download the build: open the latest green CI run on the `m0-probe` branch
    (GitHub → Actions → CI), scroll to **Artifacts**, download
-   `SupernotePuzzles-v0.0.1-10NN` and unzip it. Keep the file name
-   `SupernotePuzzles.snplg`.
-2. Copy `SupernotePuzzles.snplg` to the Manta's `MyStyle/` folder (USB,
-   Supernote Partner or Browse & Access).
+   `SupernotePuzzles-v0.0.1-10NN`. **Don't unzip it**: the Supernote unpacks
+   it when you install.
+2. Copy the downloaded file to the Manta's `MyStyle/` folder (USB, Supernote
+   Partner or Browse & Access).
 3. Settings → Apps → Plugins → **Add Plugin** → choose it (not Reinstall).
 4. Restart the Manta once (other plugins saw listeners fire twice after a
    reinstall without a restart).

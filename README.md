@@ -13,10 +13,12 @@ rely on, and `docs/M0-DEVICE-CHECKLIST.md` for the device test.
 
 Needs firmware Chauvet 3.30.45 or later (developed on 3.31.45).
 
-1. GitHub → Actions → the latest green **CI** run → Artifacts → download and
-   unzip. The file must stay named `SupernotePuzzles.snplg`.
-2. Copy it to `MyStyle/` on the device.
-3. Settings → Apps → Plugins → **Add Plugin** (Reinstall uses an old copy).
+1. GitHub → Actions → the latest green **CI** run → Artifacts → download the
+   `.zip`. **Don't unzip it**: the Supernote unpacks it when you install.
+2. Copy the downloaded file to `MyStyle/` on the device.
+3. Settings → Apps → Plugins → **Add Plugin** → choose it (Reinstall uses an
+   old copy). A build with the same or a lower `versionCode` than the one
+   installed is refused with "The plugin version is too low".
 
 Tagged releases (`v*`) also attach the `.snplg` to a GitHub Release.
 
