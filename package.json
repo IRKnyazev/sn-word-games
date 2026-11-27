@@ -1,6 +1,6 @@
 {
   "name": "SupernotePuzzles",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Play NYT puzzles and Minute Cryptic with the pen on a real Supernote note page.",
   "private": true,
   "scripts": {

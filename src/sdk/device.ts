@@ -99,6 +99,11 @@ export const deviceSdk: Sdk = {
       ms: first.ms + second.ms,
     };
   },
+  showPluginView: () =>
+    call(() => PluginManager.showPluginView(), {
+      plain: true,
+      timeoutMs: SHORT,
+    }),
   closePluginView: () =>
     call(() => PluginManager.closePluginView(), {
       plain: true,

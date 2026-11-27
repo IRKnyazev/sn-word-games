@@ -104,6 +104,7 @@ export interface Sdk {
   }): Promise<Res<boolean>>;
   openNote(path: string, page: number): Promise<Res<unknown>>;
   closePluginView(): Promise<Res<unknown>>;
+  showPluginView(): Promise<Res<unknown>>;
   saveCurrentNote(): Promise<Res<unknown>>;
 
   // Reading

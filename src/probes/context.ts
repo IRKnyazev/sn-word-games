@@ -1,5 +1,6 @@
 import type {LogSink, Logger} from '../diag/logger';
 import type {ElementLike, Fetcher, Files, Sdk} from '../sdk/types';
+import type {StateStore} from '../state/store';
 import type {ProbeState} from './state';
 
 export interface Unsubscribe {
@@ -15,6 +16,8 @@ export interface ProbeContext {
   state: ProbeState;
   now: () => number;
   date: () => Date;
+  /** Per-note puzzle state (checks, reveals). */
+  store: StateStore;
   /** The log file sink; attached only once FILE:WRITE is granted. */
   makeLogSink: () => LogSink;
   /** Subscribes to pen-up events (only while P2 is armed). */

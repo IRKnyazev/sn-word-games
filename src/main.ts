@@ -7,6 +7,7 @@ import {PluginManager} from 'sn-plugin-lib';
 import {fileSink} from './diag/fileSink';
 import {Logger, describeError} from './diag/logger';
 import type {ProbeContext} from './probes/context';
+import {checkPuzzle, openReveal} from './app/mini';
 import {startupLine} from './probes/env';
 import {readProbePage} from './probes/p1';
 import {createMotionHandler} from './probes/p4';
@@ -16,6 +17,7 @@ import type {MotionLike} from './probes/tap';
 import {deviceFetch, deviceFiles, deviceSdk, iconUri} from './sdk/device';
 import {logFile} from './sdk/paths';
 import {isGranted} from './sdk/permissions';
+import {fileStateStore} from './state/store';
 import {PERMISSION, type ElementLike} from './sdk/types';
 
 export const SDK_VERSION: string = (() => {
@@ -47,6 +49,10 @@ export function start(): void {
     now: () => Date.now(),
     date: () => new Date(),
     makeLogSink,
+    store: fileStateStore(deviceFiles, async () => {
+      const r = await deviceSdk.getPluginDirPath();
+      return r.ok ? r.value ?? null : null;
+    }),
     listenPenUp: onElements =>
       PluginManager.registerEventListener('event_pen_up', 1, {
         onMsg: (msg: unknown) =>
@@ -82,6 +88,9 @@ export function start(): void {
       runProbe(ctx, 'P1 READ (page button)', [PERMISSION.read], () =>
         readProbePage(ctx, 'button'),
       ),
+    check: () =>
+      runProbe(ctx, 'Mini CHECK', [PERMISSION.read], () => checkPuzzle(ctx)),
+    reveal: () => openReveal(ctx),
   });
   PluginManager.registerMotionListener(1, {
     onMsg: (msg: unknown) => {
