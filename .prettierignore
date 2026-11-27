@@ -1,0 +1,5 @@
+src/assets/*.generated.ts
+build/
+coverage/
+android/
+previews/
