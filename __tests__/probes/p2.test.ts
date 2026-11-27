@@ -22,6 +22,39 @@ describe('P2 coordinates', () => {
     expect(sdk.recycle).toHaveBeenCalledWith([el]);
   });
 
+  it('skips lasso strokes (pen type 4) but still frees them', async () => {
+    const sdk = fakeSdk();
+    const ctx = testContext(sdk);
+    armP2(ctx);
+    const lasso = strokeIn(target);
+    lasso.stroke!.penType = 4;
+    await onPenUp(ctx, [lasso]);
+    expect(ctx.state.penUps).toHaveLength(0);
+    expect(sdk.recycle).toHaveBeenCalledWith([lasso]);
+    expect(ctx.lines().some(l => l.includes('penType=4 (not ink)'))).toBe(true);
+  });
+
+  it('frees the last element even if reading it fails', async () => {
+    const bad = {
+      uuid: 'x',
+      type: 0,
+      stroke: {
+        points: {
+          size: async () => {
+            throw new Error('gone');
+          },
+          getRange: async () => [],
+        },
+      },
+    };
+    const sdk = fakeSdk({
+      getCurrentPageNum: async () => ok(2),
+      getLastElement: async () => ok(bad),
+    });
+    await expect(reportP2(testContext(sdk))).rejects.toThrow('gone');
+    expect(sdk.recycle).toHaveBeenCalledWith([bad]);
+  });
+
   it('report compares getElements and pen-up with the target', async () => {
     const el = strokeIn(target);
     const sdk = fakeSdk({

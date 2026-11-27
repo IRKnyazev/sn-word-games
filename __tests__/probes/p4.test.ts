@@ -51,7 +51,31 @@ describe('page buttons', () => {
     await flush();
     await flush();
     expect(read).toHaveBeenCalledTimes(1);
-    expect(sdk.showDialog).toHaveBeenCalledWith('read 3 cells');
+    expect(sdk.showDialog).toHaveBeenCalledWith('read 3 cells', true);
+  });
+
+  it('ignores hover and other non-tap actions even when armed', () => {
+    const sdk = fakeSdk();
+    const ctx = testContext(sdk);
+    armP4(ctx);
+    const handler = createMotionHandler(ctx, {read: jest.fn()});
+    for (const action of [2, 7, 9, 10]) {
+      handler({action, ...centreOf('TAP'), toolType: 2});
+    }
+    expect(ctx.state.motions).toHaveLength(0);
+    expect(ctx.lines().filter(l => l.includes('motion'))).toHaveLength(0);
+  });
+
+  it('two quick taps fire once', async () => {
+    const sdk = fakeSdk();
+    const ctx = testContext(sdk);
+    const handler = createMotionHandler(ctx, {read: jest.fn()});
+    tapAt(handler, centreOf('TAP'));
+    tapAt(handler, centreOf('TAP'));
+    await flush();
+    await flush();
+    expect(sdk.showDialog).toHaveBeenCalledTimes(1);
+    expect(ctx.state.tapSince).toBe(0);
   });
 
   it('stays silent on other notes unless armed', async () => {

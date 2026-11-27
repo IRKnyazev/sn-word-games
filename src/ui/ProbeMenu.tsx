@@ -7,6 +7,8 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import type {ProbeContext} from '../probes/context';
 import {menuActions, runAction, type MenuAction} from '../probes/actions';
+import {ensureLogFile} from '../probes/runner';
+import {BUSY_STALE_MS} from '../probes/state';
 import {logFile} from '../sdk/paths';
 
 interface Props {
@@ -17,7 +19,11 @@ interface Props {
 
 export function ProbeMenu({ctx, sdkVersion, header}: Props): React.JSX.Element {
   const actions = useMemo(() => menuActions(sdkVersion), [sdkVersion]);
-  const [running, setRunning] = useState<string | null>(null);
+  // The id and start time of the run in progress. A run older than
+  // BUSY_STALE_MS no longer blocks the menu (a hung SDK call can't lock it).
+  const [running, setRunning] = useState<{id: string; since: number} | null>(
+    null,
+  );
   const [result, setResult] = useState<string>(
     'Pick a probe. Results also go to the log file.',
   );
@@ -25,10 +31,14 @@ export function ProbeMenu({ctx, sdkVersion, header}: Props): React.JSX.Element {
 
   const onRun = useCallback(
     async (a: MenuAction) => {
-      if (!ctx || running) {
+      if (!ctx) {
         return;
       }
-      setRunning(a.id);
+      if (running && Date.now() - running.since < BUSY_STALE_MS) {
+        setResult(`Still running ${running.id}…`);
+        return;
+      }
+      setRunning({id: a.id, since: Date.now()});
       setResult(`Running: ${a.section} · ${a.label}…`);
       try {
         const r = await runAction(ctx, a);
@@ -39,6 +49,21 @@ export function ProbeMenu({ctx, sdkVersion, header}: Props): React.JSX.Element {
     },
     [ctx, running],
   );
+
+  const writeLog = useCallback(async () => {
+    if (!ctx) {
+      return;
+    }
+    const granted = await ensureLogFile(ctx);
+    const ok = granted && (await ctx.log.flush());
+    setResult(
+      ok
+        ? `Log written to ${logFile(ctx.files.externalRoot)}`
+        : granted
+        ? 'Could not write the log file. Use Show log and take a photo.'
+        : 'File permission refused, so no log file. Use Show log and take a photo.',
+    );
+  }, [ctx]);
 
   const close = useCallback(() => {
     ctx?.sdk.closePluginView();
@@ -86,16 +111,15 @@ export function ProbeMenu({ctx, sdkVersion, header}: Props): React.JSX.Element {
                 <Pressable
                   key={a.id}
                   accessibilityRole="button"
-                  disabled={!!running}
                   onPress={() => onRun(a)}
                   style={[
                     styles.button,
-                    running === a.id ? styles.buttonActive : null,
+                    running?.id === a.id ? styles.buttonActive : null,
                   ]}>
                   <Text
                     style={[
                       styles.buttonText,
-                      running === a.id ? styles.buttonTextActive : null,
+                      running?.id === a.id ? styles.buttonTextActive : null,
                     ]}>
                     {a.label}
                   </Text>
@@ -121,14 +145,7 @@ export function ProbeMenu({ctx, sdkVersion, header}: Props): React.JSX.Element {
             <Pressable
               style={styles.button}
               accessibilityRole="button"
-              onPress={async () => {
-                const ok = await ctx?.log.flush();
-                setResult(
-                  ok
-                    ? `Log written to ${logFile(ctx?.files.externalRoot)}`
-                    : 'Could not write the log file yet.',
-                );
-              }}>
+              onPress={writeLog}>
               <Text style={styles.buttonText}>Write log now</Text>
             </Pressable>
           </View>

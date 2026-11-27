@@ -1,5 +1,10 @@
 import {describeError} from '../diag/logger';
-import {MANTA_PAGE, probeLayoutForPage} from '../layout/probe';
+import {
+  MANTA_PAGE,
+  probeLayoutForPage,
+  probePageIdFromTemplate,
+  probePages,
+} from '../layout/probe';
 import type {Size} from '../layout/geometry';
 import type {PageLayout} from '../layout/types';
 import {isProbeNotePath} from '../sdk/paths';
@@ -30,7 +35,8 @@ export async function runProbe(
   needs: Permission[],
   fn: () => Promise<string>,
 ): Promise<RunResult> {
-  if (!ctx.state.tryBegin(name, ctx.now())) {
+  const token = ctx.state.tryBegin(name, ctx.now());
+  if (token === null) {
     return {
       ok: false,
       summary: `Busy with ${ctx.state.busy?.name}. Try again in a moment.`,
@@ -38,10 +44,10 @@ export async function runProbe(
   }
   ctx.log.section(name);
   try {
-    for (const p of [
-      PERMISSION.write,
-      ...needs.filter(n => n !== PERMISSION.write),
-    ]) {
+    if (!(await ensureLogFile(ctx))) {
+      return {ok: false, summary: `Permission refused: ${PERMISSION.write}`};
+    }
+    for (const p of needs.filter(n => n !== PERMISSION.write)) {
       if (!(await ensurePermission(ctx.sdk, p, WHY[p], ctx.log))) {
         return {ok: false, summary: `Permission refused: ${p}`};
       }
@@ -53,7 +59,7 @@ export async function runProbe(
     ctx.log.error(name, `failed: ${describeError(e)}`);
     return {ok: false, summary: `Failed: ${describeError(e)}`};
   } finally {
-    ctx.state.end();
+    ctx.state.end(token);
     const flushed = await ctx.log.flush();
     if (!flushed) {
       ctx.log.warn(
@@ -62,6 +68,23 @@ export async function runProbe(
       );
     }
   }
+}
+
+/**
+ * Asks for FILE:WRITE (Document/ is a gated folder) and only then attaches
+ * the log file. Until then log lines wait in memory.
+ */
+export async function ensureLogFile(ctx: ProbeContext): Promise<boolean> {
+  const granted = await ensurePermission(
+    ctx.sdk,
+    PERMISSION.write,
+    WHY[PERMISSION.write],
+    ctx.log,
+  );
+  if (granted && !ctx.log.hasSink()) {
+    ctx.log.setSink(ctx.makeLogSink());
+  }
+  return granted;
 }
 
 export interface ProbePage {
@@ -97,7 +120,29 @@ export async function currentProbePage(
   } else {
     ctx.log.warn(tag, `getPageSize ${describe(sizeRes)}; assuming 1920×2560`);
   }
-  const layout = probeLayoutForPage(page, size);
+  // Prefer the page's own template name; fall back to the page index.
+  const tpl = await ctx.sdk.getNotePageTemplate(path, page);
+  const tplName = tpl.ok
+    ? (tpl.value as {name?: unknown} | null)?.name
+    : undefined;
+  const byName = probePageIdFromTemplate(tplName);
+  const layout = byName
+    ? probePages(size).find(l => l.id === byName) ?? null
+    : probeLayoutForPage(page, size);
+  if (byName && byName !== probeLayoutForPage(page, size)?.id) {
+    ctx.log.warn(
+      tag,
+      `page ${page + 1} has template ${byName}: pages are out of order`,
+    );
+  }
+  if (!byName) {
+    ctx.log.info(
+      tag,
+      `template name not recognised (${
+        tpl.ok ? JSON.stringify(tplName) : describe(tpl)
+      }); using page index`,
+    );
+  }
   if (!layout) {
     return `Page ${page + 1} is not a probe page.`;
   }

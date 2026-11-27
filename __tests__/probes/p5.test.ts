@@ -60,6 +60,20 @@ describe('P5 network', () => {
     expect(all).not.toContain('HIDDEN');
   });
 
+  it('never echoes a body that fails to parse', async () => {
+    const ctx = testContext(undefined, {
+      fetch: async () => ({
+        status: 200,
+        contentType: 'application/json',
+        text: async () => '\ufeff{"id":1,"solution":"secret"',
+      }),
+    });
+    await runNetworkProbe(ctx);
+    const all = ctx.lines().join('\n');
+    expect(all).not.toContain('secret');
+    expect(all).toContain('broken JSON');
+  });
+
   it('reports network errors and non-JSON bodies', async () => {
     let n = 0;
     const ctx = testContext(undefined, {
@@ -79,6 +93,6 @@ describe('P5 network', () => {
       /wordle: failed \(TypeError: Network request failed\)/,
     );
     expect(summary).toMatch(/connections: HTTP 403/);
-    expect(ctx.lines().join('\n')).toContain('not JSON');
+    expect(ctx.lines().join('\n')).toContain('markup');
   });
 });

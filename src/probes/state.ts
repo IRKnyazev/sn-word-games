@@ -43,7 +43,10 @@ export class ProbeState {
   private armedUntil: Record<Armable, number> = {p2: 0, p4: 0};
   readonly penUps: PenUpSample[] = [];
   readonly motions: MotionSample[] = [];
-  busy: {name: string; since: number} | null = null;
+  busy: {name: string; since: number; token: number} | null = null;
+  /** When a page-button tap started being handled (0 = none in flight). */
+  tapSince = 0;
+  private nextToken = 1;
   lastFireAt = 0;
 
   arm(kind: Armable, now: number): void {
@@ -70,16 +73,44 @@ export class ProbeState {
     pushRing(this.motions, s, 40);
   }
 
-  /** Claims the busy flag; false if another run holds a fresh claim. */
-  tryBegin(name: string, now: number): boolean {
-    if (this.busy && now - this.busy.since < BUSY_STALE_MS) {
+  /** Claims the busy flag; null if another run holds a fresh claim. */
+  tryBegin(name: string, now: number): number | null {
+    if (this.isBusy(now)) {
+      return null;
+    }
+    const token = this.nextToken++;
+    this.busy = {name, since: now, token};
+    return token;
+  }
+
+  isBusy(now: number): boolean {
+    return this.busy !== null && now - this.busy.since < BUSY_STALE_MS;
+  }
+
+  /** Long runs call this between steps so they don't look stale. */
+  heartbeat(now: number): void {
+    if (this.busy) {
+      this.busy.since = now;
+    }
+  }
+
+  /** Releases the claim only if it is still ours. */
+  end(token: number): void {
+    if (this.busy?.token === token) {
+      this.busy = null;
+    }
+  }
+
+  /** Claims tap handling; false if a fresh tap is still being handled. */
+  tryBeginTap(now: number): boolean {
+    if (this.tapSince !== 0 && now - this.tapSince < BUSY_STALE_MS) {
       return false;
     }
-    this.busy = {name, since: now};
+    this.tapSince = now;
     return true;
   }
 
-  end(): void {
-    this.busy = null;
+  endTap(): void {
+    this.tapSince = 0;
   }
 }

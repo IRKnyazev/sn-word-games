@@ -22,7 +22,17 @@ describe('menu actions', () => {
     expect(sdk.closePluginView.mock.invocationCallOrder[0]).toBeLessThan(
       sdk.saveCurrentNote.mock.invocationCallOrder[0],
     );
-    expect(sdk.showDialog).toHaveBeenCalledWith(r.summary);
+    expect(sdk.showDialog).toHaveBeenCalledWith(r.summary, true);
+  });
+
+  it("doesn't close the view when another probe is running", async () => {
+    const sdk = fakeSdk();
+    const ctx = testContext(sdk);
+    ctx.state.tryBegin('P1', ctx.now());
+    const r = await runAction(ctx, actions.find(a => a.id === 'p6save')!);
+    expect(r.ok).toBe(false);
+    expect(sdk.closePluginView).not.toHaveBeenCalled();
+    expect(sdk.saveCurrentNote).not.toHaveBeenCalled();
   });
 
   it('keeps the view open for menu probes', async () => {

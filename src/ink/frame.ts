@@ -86,3 +86,12 @@ export function emrRectToPx(r: Rect, page: Size): Rect {
     bottom: Math.max(a.y, b.y),
   };
 }
+
+/**
+ * Page-px bounds for a stroke read in `frame`. EMR is converted when the page
+ * size is known; otherwise the bounds are returned unchanged (and the caller
+ * should log that the frame couldn't be converted).
+ */
+export function toPagePx(r: Rect, frame: Frame, page: Size): Rect {
+  return frame === 'emr' && emrMaxFor(page) ? emrRectToPx(r, page) : r;
+}

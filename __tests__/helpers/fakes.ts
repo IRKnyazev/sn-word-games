@@ -190,6 +190,7 @@ export function testContext(
     state: new ProbeState(),
     now: opts.now ?? (() => (t += 10)),
     date: () => new Date(2026, 10, 27, 10, 15, 0),
+    makeLogSink: () => ({append: async () => undefined}),
     listenPenUp: jest.fn(() => ({remove: jest.fn()})),
     lines: () => log.tail(1000),
   };

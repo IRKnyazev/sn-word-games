@@ -93,8 +93,9 @@ jobs:
           set -euo pipefail
           P="build/outputs/${PLUGIN_KEY}.snplg"
           test -f "$P"
-          unzip -l "$P"
-          unzip -l "$P" | grep -q ' app.npk$'
+          unzip -l "$P" > listing.txt
+          cat listing.txt
+          grep -q ' app.npk$' listing.txt
           unzip -p "$P" PluginConfig.json | tee /dev/stderr | jq -e '
             .nativeCodePackage == "/app.npk"
             and (.reactPackages | index("com.rnfs.RNFSPackage") != null)

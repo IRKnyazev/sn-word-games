@@ -4,6 +4,7 @@ import {
   TILE_PNGS,
   type EmbeddedPng,
 } from '../assets/templates.generated';
+import {probePageIdFromTemplate} from '../layout/probe';
 import {noteDir, probeNotePath, templateDir, templatePath} from '../sdk/paths';
 import {describe} from '../sdk/result';
 import type {ProbeContext} from './context';
@@ -87,17 +88,34 @@ export async function createProbeNote(ctx: ProbeContext): Promise<string> {
     `getNoteTotalPageNum ${total.ok ? total.value : describe(total)}`,
   );
   const pages = total.ok ? total.value : templates.length;
+  const order: string[] = [];
   for (let p = 0; p < pages; p++) {
     const t = await ctx.sdk.getNotePageTemplate(notePath, p);
     ctx.log.info(tag, `page ${p + 1} template`, t.ok ? t.value : describe(t));
+    const id = probePageIdFromTemplate(
+      t.ok ? (t.value as {name?: unknown} | null)?.name : undefined,
+    );
+    order.push(id ?? '?');
   }
+  const expectedOrder = PROBE_TEMPLATES.map(t => t.id);
+  const orderOk = order.every((id, i) => id === '?' || id === expectedOrder[i]);
+  ctx.log.info(
+    tag,
+    `page order ${order.join(', ')} (expected ${expectedOrder.join(', ')})`,
+  );
+  const orderNote = orderOk
+    ? ''
+    : `\nWarning: pages are out of order (${order.join(', ')}).`;
 
   const closed = await ctx.sdk.closePluginView();
   ctx.log.info(tag, `closePluginView ${describe(closed)}`);
   const opened = await ctx.sdk.openNote(notePath, 0);
   ctx.log.info(tag, `openNote ${describe(opened)}`);
   const name = notePath.slice(notePath.lastIndexOf('/') + 1);
-  return opened.ok
-    ? `Created and opened "${name}" (${pages} pages).`
-    : `Created "${name}" (${pages} pages) in Note/SupernotePuzzles, but couldn't open it: open it by hand.`;
+  return (
+    (opened.ok
+      ? `Created and opened "${name}" (${pages} pages).`
+      : `Created "${name}" (${pages} pages) in Note/SupernotePuzzles, but couldn't open it: open it by hand.`) +
+    orderNote
+  );
 }

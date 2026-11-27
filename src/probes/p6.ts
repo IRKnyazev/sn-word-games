@@ -117,7 +117,7 @@ async function readArea(
 }
 
 function marks(w: P6Where): {
-  tick: GeometrySpec;
+  tick: GeometrySpec[];
   cross: GeometrySpec[];
   square: GeometrySpec;
   lightTile: Rect;
@@ -128,15 +128,25 @@ function marks(w: P6Where): {
   const T = w.area.top;
   const ink = {penColor: 0x00, penType: 10, penWidth: 400};
   return {
-    tick: {
-      ...ink,
-      type: 'GEO_polygon',
-      points: [
-        {x: L + u(40), y: T + u(190)},
-        {x: L + u(90), y: T + u(240)},
-        {x: L + u(170), y: T + u(140)},
-      ],
-    },
+    // Two lines rather than a 3-point polygon, which may be drawn closed.
+    tick: [
+      {
+        ...ink,
+        type: 'straightLine',
+        points: [
+          {x: L + u(40), y: T + u(190)},
+          {x: L + u(90), y: T + u(240)},
+        ],
+      },
+      {
+        ...ink,
+        type: 'straightLine',
+        points: [
+          {x: L + u(90), y: T + u(240)},
+          {x: L + u(170), y: T + u(140)},
+        ],
+      },
+    ],
     cross: [
       {
         ...ink,
@@ -190,12 +200,14 @@ export async function insertMarks(ctx: ProbeContext): Promise<string> {
     ctx.log.info(TAG, `${name}: ${detail}`);
   };
 
-  const tick = await ctx.sdk.insertGeometry(m.tick);
-  step(
-    '✓ insertGeometry',
-    insertSucceeded(tick),
-    `${describe(tick)} result=${JSON.stringify(tick.ok ? tick.value : null)}`,
-  );
+  for (const [i, line] of m.tick.entries()) {
+    const r = await ctx.sdk.insertGeometry(line);
+    step(
+      `✓ line ${i + 1} insertGeometry`,
+      insertSucceeded(r),
+      `${describe(r)} result=${JSON.stringify(r.ok ? r.value : null)}`,
+    );
+  }
   for (const [i, line] of m.cross.entries()) {
     const r = await ctx.sdk.insertGeometry(line);
     step(
@@ -249,12 +261,12 @@ export async function insertMarks(ctx: ProbeContext): Promise<string> {
     const dp = after.count.pictures - before.count.pictures;
     ctx.log.info(
       TAG,
-      `landed: +${dg} geometry in box (expected 4), +${dp} pictures in box`,
+      `landed: +${dg} geometry in box (expected 5), +${dp} pictures in box`,
       {
         picturesAnywhere: after.count.picturesAnywhere,
       },
     );
-    lines.push(`landed in box: +${dg} geometry (of 4), +${dp} pictures`);
+    lines.push(`landed in box: +${dg} geometry (of 5), +${dp} pictures`);
     lines.push(
       `pictures on page: ${after.count.picturesAnywhere.join('; ') || 'none'}`,
     );
@@ -293,15 +305,20 @@ export async function removeViaLasso(ctx: ProbeContext): Promise<string> {
         }`,
       );
     }
-    if (infos.some(i => i.type === ELEMENT_TYPE.stroke)) {
+    const foreign = infos.filter(
+      i => i.type !== ELEMENT_TYPE.geometry && i.type !== ELEMENT_TYPE.picture,
+    );
+    if (foreign.length > 0) {
       const st = await ctx.sdk.setLassoBoxState(2);
       ctx.log.warn(
         TAG,
-        `handwriting found in the P6 box: not deleting (setLassoBoxState ${describe(
+        `found ${foreign.length} non-mark element(s) (types ${foreign
+          .map(f => f.type)
+          .join(',')}) in the P6 box: not deleting (setLassoBoxState ${describe(
           st,
         )})`,
       );
-      return 'Found handwriting in the P6 box, so nothing was deleted. Erase it by hand and try again.';
+      return 'Found your writing (or other content) in the P6 box, so nothing was deleted. Erase it by hand and try again.';
     }
     if (infos.length === 0) {
       const st = await ctx.sdk.setLassoBoxState(2);

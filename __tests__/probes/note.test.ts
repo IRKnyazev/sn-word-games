@@ -31,6 +31,15 @@ describe('createProbeNote', () => {
     expect(summary).toMatch(/Created and opened/);
   });
 
+  it('warns when the pages come out in the wrong order', async () => {
+    const names = ['p1-letters-a.png', 'p3-crossword-b.png', 'p1-words-c.png'];
+    const sdk = fakeSdk({
+      getNotePageTemplate: async (_p: string, page: number) =>
+        ok({name: names[page]}),
+    });
+    expect(await createProbeNote(testContext(sdk))).toMatch(/out of order/);
+  });
+
   it("doesn't rewrite templates that are already there", async () => {
     const sdk = fakeSdk();
     const ctx = testContext(sdk);

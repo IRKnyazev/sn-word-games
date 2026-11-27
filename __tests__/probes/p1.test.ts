@@ -136,3 +136,23 @@ describe('readProbePage', () => {
     expect(recognisedText(['x'])).toBe('["x"]');
   });
 });
+
+describe('layout choice', () => {
+  it('uses the page template name over the page index', async () => {
+    const [, words] = probePages();
+    const lineCells = words.cells.filter(c => c.kind === 'line');
+    const strokes = lineCells.map(c => strokeIn(c.rect, {tag: c.expected}));
+    const sdk = fakeSdk({
+      getCurrentPageNum: async () => ok(0),
+      getNotePageTemplate: async () =>
+        ok({name: '/x/MyStyle/SupernotePuzzles/p1-words-123.png'}),
+      getElements: async () => ok(strokes),
+      recognize: async (els: Tagged[]) =>
+        ok(els.map(e => e.tag ?? '?').join('')),
+    });
+    const ctx = testContext(sdk);
+    const summary = await readProbePage(ctx, 'menu');
+    expect(summary).toContain('P1 · Words');
+    expect(ctx.lines().some(l => l.includes('out of order'))).toBe(true);
+  });
+});

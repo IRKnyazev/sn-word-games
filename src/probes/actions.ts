@@ -125,6 +125,12 @@ export async function runAction(
   ctx: ProbeContext,
   action: MenuAction,
 ): Promise<RunResult> {
+  if (ctx.state.isBusy(ctx.now())) {
+    return {
+      ok: false,
+      summary: `Busy with ${ctx.state.busy?.name}. Try again in a moment.`,
+    };
+  }
   if (action.closesView) {
     await ctx.sdk.closePluginView();
   }
@@ -135,7 +141,7 @@ export async function runAction(
     () => action.run(ctx),
   );
   if (action.closesView) {
-    await ctx.sdk.showDialog(result.summary);
+    await ctx.sdk.showDialog(result.summary, result.ok);
   }
   return result;
 }

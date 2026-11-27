@@ -180,3 +180,21 @@ describe('emrRectToPx', () => {
     expect(() => emrRectToPx(R(0, 0, 1, 1), {width: 1, height: 1})).toThrow();
   });
 });
+
+describe('toPagePx', () => {
+  const {toPagePx} = require('../../src/ink/frame');
+  it('leaves px and unknown page sizes alone', () => {
+    const r = {left: 1, top: 2, right: 3, bottom: 4};
+    expect(toPagePx(r, 'px', {width: 1920, height: 2560})).toBe(r);
+    expect(toPagePx(r, 'emr', {width: 2560, height: 1920})).toBe(r);
+  });
+  it('converts EMR on a known page', () => {
+    const out = toPagePx(
+      {left: 0, top: 0, right: 21632, bottom: 16224},
+      'emr',
+      {width: 1920, height: 2560},
+    );
+    expect(Math.round(out.left)).toBe(0);
+    expect(Math.round(out.bottom)).toBe(2559);
+  });
+});

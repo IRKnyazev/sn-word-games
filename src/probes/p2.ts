@@ -12,9 +12,9 @@ import {
   type Size,
 } from '../layout/geometry';
 import {MANTA_PAGE, probeLayoutForPage} from '../layout/probe';
-import {detectFrame, emrRectToPx} from '../ink/frame';
+import {detectFrame, toPagePx} from '../ink/frame';
 import {describe} from '../sdk/result';
-import {ELEMENT_TYPE, type ElementLike} from '../sdk/types';
+import {ELEMENT_TYPE, INK_PEN_TYPES, type ElementLike} from '../sdk/types';
 import type {ProbeContext, Unsubscribe} from './context';
 import {describeAll, describeElement, fmtPoint} from './elements';
 import {currentProbePage} from './runner';
@@ -52,6 +52,18 @@ export async function onPenUp(
       return;
     }
     for (const el of elements.slice(0, 3)) {
+      const penType = el.stroke?.penType;
+      if (
+        el.type !== ELEMENT_TYPE.stroke ||
+        !INK_PEN_TYPES.includes(penType ?? -1)
+      ) {
+        // Lasso paths arrive here too (penType 4 on a Manta): not ink.
+        ctx.log.info(
+          TAG,
+          `pen-up skipped: type=${el.type} penType=${penType} (not ink)`,
+        );
+        continue;
+      }
       const info = await describeElement(el, 0, 2000);
       ctx.state.addPenUp({
         at: ctx.now(),
@@ -87,7 +99,7 @@ function verdict(bounds: Rect | null, target: Rect, size: Size): string {
     return 'no points';
   }
   const frame = detectFrame(bounds, size);
-  const px = frame === 'emr' ? emrRectToPx(bounds, size) : bounds;
+  const px = toPagePx(bounds, frame, size);
   const hit = contains(target, centre(px))
     ? 'centre in target'
     : intersects(px, target)
@@ -157,14 +169,18 @@ export async function reportP2(ctx: ProbeContext): Promise<string> {
     }
     const last = await ctx.sdk.getLastElement();
     if (last.ok && last.value) {
-      const info = await describeElement(last.value, 0);
-      ctx.log.info(
-        TAG,
-        `getLastElement type=${info.type} bounds=${
-          info.bounds ? formatRect(info.bounds) : '-'
-        } → ${verdict(info.bounds, target, size)}`,
-      );
-      ctx.sdk.recycle([last.value]);
+      const lastEl = last.value;
+      try {
+        const info = await describeElement(lastEl, 0);
+        ctx.log.info(
+          TAG,
+          `getLastElement type=${info.type} bounds=${
+            info.bounds ? formatRect(info.bounds) : '-'
+          } → ${verdict(info.bounds, target, size)}`,
+        );
+      } finally {
+        ctx.sdk.recycle([lastEl]);
+      }
     } else {
       ctx.log.info(TAG, `getLastElement ${last.ok ? 'null' : describe(last)}`);
     }

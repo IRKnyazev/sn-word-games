@@ -10,7 +10,7 @@ import {isProbeNotePath} from '../sdk/paths';
 import {describe} from '../sdk/result';
 import type {ProbeContext} from './context';
 import type {RunResult} from './runner';
-import {BUSY_STALE_MS, TAP_DEBOUNCE_MS} from './state';
+import {TAP_DEBOUNCE_MS} from './state';
 import {ACTION, TapDetector, toolName, type MotionLike, type Tap} from './tap';
 
 const TAG = 'P4';
@@ -34,7 +34,12 @@ export function createMotionHandler(
 ): (ev: MotionLike) => void {
   const detector = new TapDetector(probeZones(MANTA_PAGE));
   return ev => {
-    if (ev.action === ACTION.move) {
+    // Hot path: only down, up and cancel matter (moves, hovers, others don't).
+    if (
+      ev.action !== ACTION.down &&
+      ev.action !== ACTION.up &&
+      ev.action !== ACTION.cancel
+    ) {
       return;
     }
     const now = ctx.now();
@@ -60,11 +65,22 @@ export function createMotionHandler(
       );
     }
     const tap = detector.feed(ev);
-    if (tap) {
-      handleTap(ctx, tap, p4, actions).catch(e =>
-        ctx.log.error(TAG, `tap handler: ${String(e)}`),
-      );
+    if (!tap) {
+      return;
     }
+    // Claimed synchronously, so two quick taps can't both get past the checks.
+    if (!ctx.state.tryBeginTap(now)) {
+      if (p4) {
+        ctx.log.info(
+          TAG,
+          `tap ${tap.zone.id} ignored: previous tap still running`,
+        );
+      }
+      return;
+    }
+    handleTap(ctx, tap, p4, actions)
+      .catch(e => ctx.log.error(TAG, `tap handler: ${String(e)}`))
+      .finally(() => ctx.state.endTap());
   };
 }
 
@@ -80,8 +96,7 @@ export async function handleTap(
   const overMenu = hw.ok && hw.value === false;
   const now = ctx.now();
   const debounced = now - ctx.state.lastFireAt < TAP_DEBOUNCE_MS;
-  const busy =
-    ctx.state.busy !== null && now - ctx.state.busy.since < BUSY_STALE_MS;
+  const busy = ctx.state.isBusy(now);
   const fire = isProbe && !overMenu && !debounced && !busy;
   const loud = armed || isProbe;
   if (loud) {
@@ -111,7 +126,7 @@ export async function handleTap(
   if (tap.zone.id === 'READ') {
     const res = await actions.read();
     ctx.state.lastFireAt = ctx.now();
-    await ctx.sdk.showDialog(res.summary);
+    await ctx.sdk.showDialog(res.summary, res.ok);
     return;
   }
   const shown = await ctx.sdk.showDialog(`TAP received (${tap.tool}).`);

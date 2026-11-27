@@ -74,18 +74,30 @@ export const deviceSdk: Sdk = {
     call(() => PluginFileAPI.createNote(params), {timeoutMs: LONG}),
   insertNotePage: params =>
     call(() => PluginFileAPI.insertNotePage(params), {timeoutMs: LONG}),
+  // Answers the route that worked ('openFile' or 'openFilePath'). A call that
+  // succeeds but reports false counts as not opened.
   openNote: async (path, page) => {
     const first = await call(() => PluginFileAPI.openFile(path, page), {
       timeoutMs: NORMAL,
     });
-    if (first.ok) {
-      return first;
+    if (first.ok && first.value !== false) {
+      return {ok: true, value: 'openFile', ms: first.ms};
     }
     // Ink2Task opens notes this way.
-    return call(() => FileUtils.openFilePath(path), {
+    const second = await call(() => FileUtils.openFilePath(path), {
       plain: true,
       timeoutMs: NORMAL,
     });
+    if (second.ok && second.value !== false) {
+      return {ok: true, value: 'openFilePath', ms: first.ms + second.ms};
+    }
+    const why = (r: Res<unknown>) => (r.ok ? 'returned false' : r.message);
+    return {
+      ok: false,
+      code: first.ok ? undefined : first.code,
+      message: `openFile: ${why(first)}; openFilePath: ${why(second)}`,
+      ms: first.ms + second.ms,
+    };
   },
   closePluginView: () =>
     call(() => PluginManager.closePluginView(), {
@@ -133,11 +145,13 @@ export const deviceSdk: Sdk = {
     }
     const el = res.value as ElementLike & Record<string, unknown>;
     el.pageNum = page;
-    el.thickness = spec.penWidth;
+    // The SDK refuses widths under 100 (error 303).
+    const penWidth = Math.max(100, spec.penWidth);
+    el.thickness = penWidth;
     el.geometry = {
       penColor: spec.penColor,
       penType: spec.penType,
-      penWidth: spec.penWidth,
+      penWidth,
       type: spec.type,
       points: spec.points,
       ellipseCenterPoint: spec.ellipseCenterPoint ?? null,
@@ -195,8 +209,8 @@ export const deviceSdk: Sdk = {
       plain: true,
       timeoutMs: 0,
     }),
-  showDialog: text =>
-    call(() => NativeUIUtils.showRattaDialog(text, 'OK', '', true), {
+  showDialog: (text, success = true) =>
+    call(() => NativeUIUtils.showRattaDialog(text, 'OK', '', success), {
       plain: true,
       timeoutMs: 0,
     }),
@@ -227,10 +241,12 @@ export const deviceFetch: Fetcher = async (url, timeoutMs) => {
       signal: controller.signal,
       headers: {Accept: 'application/json'},
     });
+    // Read the body while the abort timer still runs.
+    const body = await res.text();
     return {
       status: res.status,
       contentType: res.headers.get('content-type'),
-      text: () => res.text(),
+      text: async () => body,
     };
   } finally {
     clearTimeout(timer);

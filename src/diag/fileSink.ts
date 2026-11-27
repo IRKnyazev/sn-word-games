@@ -19,11 +19,12 @@ export function fileSink(
         await files.mkdir(dir);
         ready = true;
       }
-      if (await files.exists(path)) {
-        const size = await files.size(path);
-        if (size > maxBytes) {
+      try {
+        if ((await files.exists(path)) && (await files.size(path)) > maxBytes) {
           await files.move(path, prev);
         }
+      } catch {
+        // Rotation is best-effort; never stop logging because of it.
       }
       await files.appendUtf8(path, text);
     },

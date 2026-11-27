@@ -1,4 +1,4 @@
-import type {Logger} from '../diag/logger';
+import type {LogSink, Logger} from '../diag/logger';
 import type {ElementLike, Fetcher, Files, Sdk} from '../sdk/types';
 import type {ProbeState} from './state';
 
@@ -15,6 +15,8 @@ export interface ProbeContext {
   state: ProbeState;
   now: () => number;
   date: () => Date;
+  /** The log file sink; attached only once FILE:WRITE is granted. */
+  makeLogSink: () => LogSink;
   /** Subscribes to pen-up events (only while P2 is armed). */
   listenPenUp: (onElements: (elements: ElementLike[]) => void) => Unsubscribe;
 }

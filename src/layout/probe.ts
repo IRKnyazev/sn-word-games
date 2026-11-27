@@ -511,3 +511,14 @@ export function probeLayoutForPage(
 export function probeZones(size: Size = MANTA_PAGE): Zone[] {
   return probePages(size)[0].zones;
 }
+
+/**
+ * The probe page a template name refers to (template files are named
+ * "<page id>-<sha>.png"), or null if the name isn't one of ours.
+ */
+export function probePageIdFromTemplate(name: unknown): ProbePageId | null {
+  if (typeof name !== 'string') {
+    return null;
+  }
+  return PROBE_PAGE_IDS.find(id => name.includes(id)) ?? null;
+}

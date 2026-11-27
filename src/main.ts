@@ -15,6 +15,7 @@ import {ProbeState} from './probes/state';
 import type {MotionLike} from './probes/tap';
 import {deviceFetch, deviceFiles, deviceSdk, iconUri} from './sdk/device';
 import {logFile} from './sdk/paths';
+import {isGranted} from './sdk/permissions';
 import {PERMISSION, type ElementLike} from './sdk/types';
 
 export const SDK_VERSION: string = (() => {
@@ -33,8 +34,10 @@ export function getContext(): ProbeContext | null {
 
 export function start(): void {
   PluginManager.init();
+  // No log file yet: Document/ is gated by FILE:WRITE. Lines wait in memory.
   const log = new Logger();
-  log.setSink(fileSink(deviceFiles, logFile(deviceFiles.externalRoot)));
+  const makeLogSink = () =>
+    fileSink(deviceFiles, logFile(deviceFiles.externalRoot));
   const ctx: ProbeContext = {
     sdk: deviceSdk,
     files: deviceFiles,
@@ -43,6 +46,7 @@ export function start(): void {
     state: new ProbeState(),
     now: () => Date.now(),
     date: () => new Date(),
+    makeLogSink,
     listenPenUp: onElements =>
       PluginManager.registerEventListener('event_pen_up', 1, {
         onMsg: (msg: unknown) =>
@@ -56,12 +60,16 @@ export function start(): void {
   log.info('start', startupLine(SDK_VERSION));
 
   try {
-    PluginManager.registerButton(1, ['NOTE'], {
-      id: 100,
-      name: 'Puzzles',
-      icon: iconUri(),
-      showType: 1,
-    });
+    Promise.resolve(
+      PluginManager.registerButton(1, ['NOTE'], {
+        id: 100,
+        name: 'Puzzles',
+        icon: iconUri(),
+        showType: 1,
+      }),
+    )
+      .then(r => log.info('start', `registerButton → ${String(r)}`))
+      .catch(e => log.error('start', `registerButton: ${describeError(e)}`));
   } catch (e) {
     log.error('start', `registerButton: ${describeError(e)}`);
   }
@@ -84,5 +92,15 @@ export function start(): void {
       }
     },
   });
-  log.flush().catch(() => undefined);
+  // If write permission was already granted earlier, start the log file now
+  // (checking only; never prompting at start-up).
+  deviceSdk
+    .hasPermission(PERMISSION.write)
+    .then(r => {
+      if (r.ok && isGranted(r.value)) {
+        log.setSink(makeLogSink());
+      }
+      return log.flush();
+    })
+    .catch(() => undefined);
 }

@@ -37,7 +37,10 @@ describe('P6 feedback marks', () => {
     const sdk = fakeSdk(onPage2);
     const ctx = testContext(sdk);
     const summary = await insertMarks(ctx);
-    expect(sdk.insertGeometry).toHaveBeenCalledTimes(3);
+    expect(sdk.insertGeometry).toHaveBeenCalledTimes(4);
+    expect(
+      sdk.insertGeometry.mock.calls.every(([g]) => g.type === 'straightLine'),
+    ).toBe(true);
     for (const [spec] of sdk.insertGeometry.mock.calls) {
       expect(spec.penWidth).toBeGreaterThanOrEqual(100);
       for (const p of spec.points) {
@@ -71,6 +74,21 @@ describe('P6 feedback marks', () => {
     expect(summary).toMatch(/nothing was deleted/);
     expect(sdk.deleteLassoElements).not.toHaveBeenCalled();
     expect(sdk.setLassoBoxState).toHaveBeenCalledWith(2);
+  });
+
+  it('lasso removal never deletes text boxes or other content', async () => {
+    const sdk = fakeSdk({
+      ...onPage2,
+      getLassoElements: async () =>
+        ok([
+          geometryEl([{x: inside.left, y: inside.top}], 5),
+          {uuid: 't1', type: 500, numInPage: 6},
+        ]),
+    });
+    expect(await removeViaLasso(testContext(sdk))).toMatch(
+      /nothing was deleted/,
+    );
+    expect(sdk.deleteLassoElements).not.toHaveBeenCalled();
   });
 
   it('lasso removal deletes our marks and clears the lasso', async () => {

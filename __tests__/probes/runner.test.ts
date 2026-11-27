@@ -13,6 +13,29 @@ describe('runProbe', () => {
     expect(ctx.state.busy).toBeNull();
   });
 
+  it('attaches the log file only after write permission is granted', async () => {
+    const sdk = fakeSdk({
+      hasPermission: async () => ok(0),
+      requestPermission: async () => ok(0),
+    });
+    const ctx = testContext(sdk);
+    const r = await runProbe(ctx, 'X', [], async () => 'x');
+    expect(r.ok).toBe(false);
+    expect(ctx.log.hasSink()).toBe(false);
+
+    const granted = testContext();
+    await runProbe(granted, 'Y', [], async () => 'y');
+    expect(granted.log.hasSink()).toBe(true);
+  });
+
+  it("a stale run's end() doesn't release a newer claim", () => {
+    const ctx = testContext();
+    const old = ctx.state.tryBegin('old', 0)!;
+    const fresh = ctx.state.tryBegin('new', 10 * 60 * 1000)!;
+    ctx.state.end(old);
+    expect(ctx.state.busy?.token).toBe(fresh);
+  });
+
   it('refuses a second run while one is in progress', async () => {
     const ctx = testContext();
     let release!: () => void;

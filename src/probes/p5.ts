@@ -45,6 +45,18 @@ export function describeBody(
   return out;
 }
 
+/** What a non-JSON body looks like, without echoing any of it. */
+export function bodyKind(text: string): string {
+  const c = text.trimStart()[0];
+  return c === '<'
+    ? 'markup'
+    : c === '{' || c === '['
+    ? 'broken JSON'
+    : c
+    ? 'other'
+    : 'empty';
+}
+
 export async function runNetworkProbe(ctx: ProbeContext): Promise<string> {
   const date = localDate(ctx.date());
   const lines: string[] = [];
@@ -58,7 +70,7 @@ export async function runNetworkProbe(ctx: ProbeContext): Promise<string> {
       try {
         shape = describeBody(name, JSON.parse(text));
       } catch {
-        shape = {parse: 'not JSON', firstChars: text.slice(0, 60)};
+        shape = {parse: 'not JSON', startsWith: bodyKind(text)};
       }
       ctx.log.info(
         TAG,

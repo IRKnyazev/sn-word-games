@@ -21,6 +21,17 @@ describe('fileSink', () => {
     expect(files.written.get('/r/log.txt')).toBe('next\n');
   });
 
+  it('keeps appending when rotation fails', async () => {
+    const files = fakeFiles();
+    (files.move as jest.Mock).mockRejectedValue(
+      new Error('no delete permission'),
+    );
+    const sink = fileSink(files, '/r/log.txt', 5);
+    await sink.append('123456\n');
+    await sink.append('next\n');
+    expect(files.written.get('/r/log.txt')).toBe('123456\nnext\n');
+  });
+
   it('propagates write errors so the logger keeps the lines', async () => {
     const files = fakeFiles();
     (files.appendUtf8 as jest.Mock).mockRejectedValueOnce(new Error('EACCES'));

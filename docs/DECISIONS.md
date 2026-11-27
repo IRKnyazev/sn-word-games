@@ -4,6 +4,18 @@ Newest first. Each entry: date, decision, why, what was rejected.
 Device results from the owner's Manta beat docs and other plugins' notes.
 "Pending Pn" means the M0 probe will confirm or overturn it.
 
+## 2026-11-27 — Log file only after FILE:WRITE; pages identified by template
+
+- **Decision:** The log file in `Document/` is attached only after FILE:WRITE
+  is granted (checked silently at start-up, asked for on the first menu
+  action); until then lines wait in memory and the menu's **Show log** works.
+  Probe pages are identified by their template name (`<page id>-<sha>.png`),
+  falling back to the page index.
+- **Why:** `Document/` is a permission-gated folder (M0 review). The order of
+  pages added with `insertNotePage` isn't documented, so the page index alone
+  could pick the wrong layout.
+- **Rejected:** Writing the log at start-up; trusting the page index.
+
 ## 2026-11-27 — No answers in logs
 
 - **Decision:** Logs and probe output never contain puzzle answers (Wordle

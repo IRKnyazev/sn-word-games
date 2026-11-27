@@ -8,7 +8,12 @@
 import {formatRect} from '../layout/geometry';
 import type {Cell, Group} from '../layout/types';
 import {assignStrokes, type StrokeBox} from '../ink/assign';
-import {detectFrameFromMany, emrRectToPx, type Frame} from '../ink/frame';
+import {
+  detectFrameFromMany,
+  emrMaxFor,
+  toPagePx,
+  type Frame,
+} from '../ink/frame';
 import {
   recogniseResilient,
   type RecogniseOutcome,
@@ -87,6 +92,12 @@ export async function readProbePage(
       size,
     );
     ctx.log.info(TAG, `strokes=${strokeIdx.length} coordinate frame=${frame}`);
+    if (frame === 'emr' && !emrMaxFor(size)) {
+      ctx.log.warn(
+        TAG,
+        `EMR points but no conversion for page ${size.width}×${size.height}`,
+      );
+    }
 
     const boxes: StrokeBox[] = [];
     for (const i of strokeIdx) {
@@ -96,7 +107,7 @@ export async function readProbePage(
       }
       boxes.push({
         index: i,
-        bounds: frame === 'emr' ? emrRectToPx(b, size) : b,
+        bounds: toPagePx(b, frame, size),
       });
     }
     const assignment = assignStrokes(boxes, layout.cells);
@@ -119,6 +130,7 @@ export async function readProbePage(
     const recognise = async (
       part: ElementLike[],
     ): Promise<RecogniseOutcome> => {
+      ctx.state.heartbeat(ctx.now());
       const r = await ctx.sdk.recognize(part, size);
       return r.ok
         ? {ok: true, text: recognisedText(r.value)}

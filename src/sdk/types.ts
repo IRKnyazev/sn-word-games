@@ -141,7 +141,8 @@ export interface Sdk {
   // Permissions and UI
   hasPermission(p: Permission): Promise<Res<number>>;
   requestPermission(p: Permission, desc: string): Promise<Res<number>>;
-  showDialog(text: string): Promise<Res<unknown>>;
+  /** `success` picks the dialog's success or failure styling. */
+  showDialog(text: string, success?: boolean): Promise<Res<unknown>>;
 }
 
 /** File access through react-native-fs (the SDK can't write files). */
