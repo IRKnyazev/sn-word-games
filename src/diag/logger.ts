@@ -47,26 +47,49 @@ export function describeError(e: unknown): string {
   return safeJson(e, 500);
 }
 
+/** Plain-data copy for JSON: marks real cycles (not shared references). */
+function toPlain(value: unknown, ancestors: object[]): unknown {
+  if (value instanceof Error) {
+    return describeError(value);
+  }
+  if (typeof value === 'function') {
+    return '[function]';
+  }
+  if (typeof value === 'bigint') {
+    return value.toString();
+  }
+  if (typeof value !== 'object' || value === null) {
+    return value;
+  }
+  if (ancestors.includes(value)) {
+    return '[circular]';
+  }
+  const toJSON = (value as {toJSON?: unknown}).toJSON;
+  if (typeof toJSON === 'function') {
+    const replaced: unknown = toJSON.call(value);
+    if (replaced !== value) {
+      return toPlain(replaced, ancestors);
+    }
+  }
+  ancestors.push(value);
+  try {
+    if (Array.isArray(value)) {
+      return value.map(v => toPlain(v, ancestors));
+    }
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value)) {
+      out[k] = toPlain(v, ancestors);
+    }
+    return out;
+  } finally {
+    ancestors.pop();
+  }
+}
+
 export function safeJson(value: unknown, maxChars = 4000): string {
   let text: string;
   try {
-    const seen = new WeakSet<object>();
-    text =
-      JSON.stringify(value, (_k, v) => {
-        if (typeof v === 'object' && v !== null) {
-          if (seen.has(v)) {
-            return '[circular]';
-          }
-          seen.add(v);
-        }
-        if (typeof v === 'function') {
-          return '[function]';
-        }
-        if (v instanceof Error) {
-          return describeError(v);
-        }
-        return v;
-      }) ?? String(value);
+    text = JSON.stringify(toPlain(value, [])) ?? String(value);
   } catch (e) {
     text = `[unserialisable: ${e instanceof Error ? e.message : String(e)}]`;
   }
@@ -151,15 +174,17 @@ export class Logger {
     }
     const batch = this.pending;
     this.pending = [];
+    // Lines dropped while this write is in flight are reported next time.
+    const reported = this.dropped;
     let text = batch.join('\n') + '\n';
-    if (this.dropped > 0) {
+    if (reported > 0) {
       text =
-        `[${this.dropped} earlier lines dropped before the log file was available]\n` +
+        `[${reported} earlier lines dropped before the log file was available]\n` +
         text;
     }
     try {
       await this.sink.append(text);
-      this.dropped = 0;
+      this.dropped -= reported;
       return true;
     } catch (e) {
       this.pending = batch.concat(this.pending);

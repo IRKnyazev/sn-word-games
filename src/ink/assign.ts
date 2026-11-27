@@ -11,6 +11,7 @@ import {
   intersection,
   outset,
   type Rect,
+  type Point,
 } from '../layout/geometry';
 import type {Cell} from '../layout/types';
 
@@ -40,16 +41,26 @@ export interface AssignOptions {
 
 /** Overlap of a stroke box with a cell as a fraction of the stroke box. */
 export function overlapFraction(stroke: Rect, cell: Rect): number {
-  const i = intersection(stroke, cell);
+  // A dot or a perfectly straight stroke has zero area: treat it as 1 px thick.
+  const s: Rect = {
+    left: stroke.left,
+    top: stroke.top,
+    right: Math.max(stroke.right, stroke.left + 1),
+    bottom: Math.max(stroke.bottom, stroke.top + 1),
+  };
+  const i = intersection(s, cell);
   if (!i) {
     return 0;
   }
-  // A dot or a perfectly straight stroke has zero area: treat as 1 px thick.
-  const sw = Math.max(1, stroke.right - stroke.left);
-  const sh = Math.max(1, stroke.bottom - stroke.top);
-  const iw = Math.max(1, i.right - i.left);
-  const ih = Math.max(1, i.bottom - i.top);
-  return Math.min(1, (iw * ih) / (sw * sh));
+  const area = (s.right - s.left) * (s.bottom - s.top);
+  return Math.min(1, ((i.right - i.left) * (i.bottom - i.top)) / area);
+}
+
+/** Distance from a point to a rect (0 inside). */
+export function distanceToRect(p: Point, r: Rect): number {
+  const dx = Math.max(r.left - p.x, 0, p.x - r.right);
+  const dy = Math.max(r.top - p.y, 0, p.y - r.bottom);
+  return Math.hypot(dx, dy);
 }
 
 export function assignStrokes(
@@ -73,7 +84,14 @@ export function assignStrokes(
     if (holders.length === 1) {
       chosen = holders[0];
     } else if (holders.length > 1) {
-      chosen = holders.find(cell => contains(cell.rect, c)) ?? holders[0];
+      // A cell that really holds the centre wins; otherwise the nearest one.
+      chosen =
+        holders.find(cell => contains(cell.rect, c)) ??
+        holders.reduce((best, cell) =>
+          distanceToRect(c, cell.rect) < distanceToRect(c, best.rect)
+            ? cell
+            : best,
+        );
     } else {
       let best = 0;
       for (const cell of cells) {
