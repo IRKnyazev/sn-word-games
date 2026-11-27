@@ -128,3 +128,37 @@ describe('page buttons', () => {
     expect(sdk.showDialog).toHaveBeenCalledTimes(2);
   });
 });
+
+describe('page buttons on puzzle notes', () => {
+  const NOTE = '/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note';
+
+  it('the right-hand button is CHECK and shows its summary', async () => {
+    const sdk = fakeSdk({getCurrentFilePath: async () => ok(NOTE)});
+    const ctx = testContext(sdk);
+    const actions = {
+      ...noActions(),
+      check: jest.fn(async () => ({
+        ok: true,
+        summary: '9 of 10 entries right.',
+      })),
+    };
+    const handler = createMotionHandler(ctx, actions);
+    tapAt(handler, centreOf('READ'));
+    await flush();
+    await flush();
+    expect(actions.check).toHaveBeenCalledTimes(1);
+    expect(actions.read).not.toHaveBeenCalled();
+    expect(sdk.showDialog).toHaveBeenCalledWith('9 of 10 entries right.', true);
+  });
+
+  it('the left-hand button is REVEAL and opens the view (no dialog)', async () => {
+    const sdk = fakeSdk({getCurrentFilePath: async () => ok(NOTE)});
+    const ctx = testContext(sdk);
+    const actions = noActions();
+    const handler = createMotionHandler(ctx, actions);
+    tapAt(handler, centreOf('TAP'));
+    await flush();
+    expect(actions.reveal).toHaveBeenCalledTimes(1);
+    expect(sdk.showDialog).not.toHaveBeenCalled();
+  });
+});
