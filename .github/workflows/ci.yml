@@ -32,6 +32,9 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
+      # The layout drives both the printed template and the stroke mapping, so a
+      # stale template would silently misplace boxes.
+      - run: npm run render-templates -- --check
       - run: npx jest --ci --coverage
 
   build:
