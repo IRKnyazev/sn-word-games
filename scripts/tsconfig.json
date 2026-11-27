@@ -4,6 +4,6 @@
     "types": ["node"],
     "lib": ["es2022"]
   },
-  "include": ["./**/*.ts", "../src/**/*.ts"],
-  "exclude": ["../src/**/*.tsx", "../src/sdk/**", "../src/ui/**"]
+  "include": ["./**/*.ts"],
+  "exclude": []
 }
