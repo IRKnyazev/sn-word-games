@@ -17,6 +17,8 @@ import {join, resolve} from 'node:path';
 import {Resvg} from '@resvg/resvg-js';
 import {PNG} from 'pngjs';
 import {probePages, MANTA_PAGE} from '../src/layout/probe';
+import {miniLayout} from '../src/layout/mini';
+import {PUZZLES} from '../src/puzzles/sample';
 import {layoutToSvg, TEMPLATE_FONT_FAMILY} from '../src/render/svg';
 
 const ROOT = resolve(__dirname, '..');
@@ -108,6 +110,7 @@ interface Rendered {
 }
 
 function renderAll(): {
+  puzzles: Rendered[];
   pages: Rendered[];
   tiles: Record<string, Rendered>;
   icon: Buffer;
@@ -137,12 +140,24 @@ function renderAll(): {
     };
   }
   const icon = reencode(rasterise(iconSvg()), 6);
-  return {pages, tiles, icon};
+  const puzzles = Object.values(PUZZLES).map(p => {
+    const layout = miniLayout(p, MANTA_PAGE).page;
+    const png = reencode(rasterise(layoutToSvg(layout)), 2);
+    return {
+      id: layout.id,
+      width: layout.size.width,
+      height: layout.size.height,
+      sha: sha(png),
+      png,
+    };
+  });
+  return {pages, tiles, icon, puzzles};
 }
 
 function generatedSource(
   pages: Rendered[],
   tiles: Record<string, Rendered>,
+  puzzles: Rendered[],
 ): string {
   const entry = (r: Rendered) =>
     `  {id: '${r.id}', width: ${r.width}, height: ${r.height}, sha: '${
@@ -168,6 +183,11 @@ export const PROBE_TEMPLATES: EmbeddedPng[] = [
 ${pages.map(entry).join(',\n')},
 ];
 
+/** Puzzle page templates, by layout id (e.g. "mini-sample-1"). */
+export const PUZZLE_TEMPLATES: Record<string, EmbeddedPng> = {
+${puzzles.map(p => `  '${p.id}': ${entry(p).trim()},`).join('\n')}
+};
+
 export const TILE_PNGS: {dark: EmbeddedPng; light: EmbeddedPng} = {
   dark: ${entry(tiles.dark).trim()},
   light: ${entry(tiles.light).trim()},
@@ -177,8 +197,8 @@ export const TILE_PNGS: {dark: EmbeddedPng; light: EmbeddedPng} = {
 
 function main(): void {
   const check = process.argv.includes('--check');
-  const {pages, tiles, icon} = renderAll();
-  const source = generatedSource(pages, tiles);
+  const {pages, tiles, icon, puzzles} = renderAll();
+  const source = generatedSource(pages, tiles, puzzles);
 
   if (check) {
     const current = readFileSync(OUT_FILE, 'utf8');
@@ -197,7 +217,7 @@ function main(): void {
   writeFileSync(OUT_FILE, source);
   writeFileSync(ICON_FILE, icon);
   mkdirSync(PREVIEW_DIR, {recursive: true});
-  for (const p of pages) {
+  for (const p of [...pages, ...puzzles]) {
     writeFileSync(join(PREVIEW_DIR, `${p.id}.png`), p.png);
   }
   for (const t of Object.values(tiles)) {
