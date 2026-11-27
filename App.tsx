@@ -1,40 +1,17 @@
 /**
- * Plugin view root. Full-screen, finger only.
+ * Plugin view root: the full-screen Probes menu (M0).
  * @format
  */
 import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {PluginManager} from 'sn-plugin-lib';
+import {BUILD_INFO} from './src/buildInfo';
+import {getContext, SDK_VERSION} from './src/main';
+import {ProbeMenu} from './src/ui/ProbeMenu';
 
 function App(): React.JSX.Element {
+  const header = `v${BUILD_INFO.versionName} (${BUILD_INFO.versionCode}) ${BUILD_INFO.gitSha} · sn-plugin-lib ${SDK_VERSION}`;
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Puzzles</Text>
-      <Pressable
-        style={styles.button}
-        onPress={() => PluginManager.closePluginView()}>
-        <Text style={styles.buttonText}>Close</Text>
-      </Pressable>
-    </View>
+    <ProbeMenu ctx={getContext()} sdkVersion={SDK_VERSION} header={header} />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-  },
-  title: {fontSize: 32, fontWeight: '600', color: '#000000'},
-  button: {
-    marginTop: 24,
-    borderWidth: 2,
-    borderColor: '#000000',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-  },
-  buttonText: {fontSize: 22, color: '#000000'},
-});
 
 export default App;
