@@ -8,7 +8,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {recordReveal, revealSquares} from '../app/mini';
 import type {ProbeContext} from '../probes/context';
-import {cellKey, type GridPuzzle} from '../model/grid';
+import {cellKey, whiteCells, type GridPuzzle} from '../model/grid';
 import {PUZZLES} from '../puzzles/sample';
 import {runProbe} from '../probes/runner';
 import {setRoute} from './route';
@@ -29,9 +29,7 @@ export function keysFor(p: GridPuzzle, pick: Pick, wrong: string[]): string[] {
     case 'wrong':
       return wrong;
     case 'all':
-      return p.entries
-        .filter(e => e.direction === 'across')
-        .flatMap(e => e.cells.map(cellKey));
+      return whiteCells(p).map(cellKey);
   }
 }
 
@@ -121,17 +119,34 @@ export function RevealScreen({
   );
 
   const close = async (drawMarks: boolean) => {
-    setRoute({screen: 'menu'});
     if (!ctx) {
+      setRoute({screen: 'menu'});
       return;
     }
+    // Close first, then switch the route, so the menu doesn't flash on e-ink.
     await ctx.sdk.closePluginView();
+    setRoute({screen: 'menu'});
     if (drawMarks) {
       // Draw the grey triangles on the page now the view is closed.
-      await runProbe(ctx, 'Mini REVEAL marks', [], () =>
+      const r = await runProbe(ctx, 'Mini REVEAL marks', [], () =>
         revealSquares(ctx, []),
       );
+      if (!r.ok) {
+        ctx.log.warn('reveal', `marks not drawn: ${r.summary}`);
+      }
     }
+  };
+
+  const reveal = async (p: Pick) => {
+    const keys = keysFor(puzzle!, p, wrong);
+    try {
+      if (ctx) {
+        await recordReveal(ctx, puzzleId, notePath, keys);
+      }
+    } catch (e) {
+      ctx?.log.warn('reveal', `couldn't record the reveal: ${String(e)}`);
+    }
+    setShown(answerText(puzzle!, p, keys));
   };
 
   if (!puzzle) {
@@ -157,7 +172,6 @@ export function RevealScreen({
   }
 
   if (pick) {
-    const keys = keysFor(puzzle, pick, wrong);
     return (
       <View style={styles.root}>
         <Text style={styles.title}>Reveal {describePick(puzzle, pick)}?</Text>
@@ -166,16 +180,7 @@ export function RevealScreen({
         </Text>
         <View style={styles.row}>
           <Button label="Back" onPress={() => setPick(null)} />
-          <Button
-            label="Reveal"
-            strong
-            onPress={async () => {
-              if (ctx) {
-                await recordReveal(ctx, puzzleId, notePath, keys);
-              }
-              setShown(answerText(puzzle, pick, keys));
-            }}
-          />
+          <Button label="Reveal" strong onPress={() => reveal(pick)} />
         </View>
       </View>
     );
@@ -188,6 +193,10 @@ export function RevealScreen({
         <Text style={styles.title}>Reveal · {puzzle.title}</Text>
         <Button label="Close" onPress={() => close(false)} />
       </View>
+      <Text style={styles.warning}>
+        Use your finger here: pen strokes on this screen land in the puzzle
+        underneath.
+      </Text>
       <ScrollView contentContainerStyle={styles.scroll}>
         <Text style={styles.section}>A square</Text>
         <View style={{width: cell * puzzle.width}}>
@@ -285,6 +294,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {fontSize: 30, fontWeight: '700', color: '#000000', marginBottom: 12},
+  warning: {fontSize: 16, color: '#000000', marginBottom: 8},
   body: {fontSize: 20, color: '#000000', marginVertical: 16, lineHeight: 28},
   answer: {
     fontSize: 48,

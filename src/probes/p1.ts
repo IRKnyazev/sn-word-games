@@ -23,7 +23,15 @@ import {
   mapEntryToCells,
   matchesLetter,
 } from '../recognise/entries';
-import {percent, score, tally, type Score} from '../recognise/text';
+import {
+  percent,
+  recognisedText,
+  score,
+  tally,
+  type Score,
+} from '../recognise/text';
+
+export {recognisedText};
 import {describe} from '../sdk/result';
 import {ELEMENT_TYPE, type ElementLike} from '../sdk/types';
 import type {ProbeContext} from './context';
@@ -41,17 +49,6 @@ interface LevelStats {
 
 function newStats(): LevelStats {
   return {scores: [], calls: 0, ms: 0, failures: {}};
-}
-
-/** recognizeElements usually answers a string; log anything else as JSON. */
-export function recognisedText(value: unknown): string {
-  if (typeof value === 'string') {
-    return value;
-  }
-  if (value && typeof value === 'object' && 'text' in value) {
-    return String((value as {text: unknown}).text ?? '');
-  }
-  return value === null || value === undefined ? '' : JSON.stringify(value);
 }
 
 export async function readProbePage(
@@ -207,6 +204,7 @@ export async function readProbePage(
 
     // (a3) single squares again, strokes set to the fineliner pen type (10)
     let fineExact = 0;
+    let fineDiffers = 0;
     let fineForgiven = 0;
     let fineCalls = 0;
     const fineStart = ctx.now();
@@ -217,6 +215,9 @@ export async function readProbePage(
       }));
       const r = await recogniseResilient(recognise, part, {now: ctx.now});
       fineCalls += r.calls;
+      if (r.text !== texts.get(`cell ${c.id}`)) {
+        fineDiffers++;
+      }
       if (c.expected !== undefined) {
         const exact =
           letterTokens(r.text).join('').toUpperCase() === c.expected;
@@ -274,7 +275,7 @@ export async function readProbePage(
     let groupsTried = 0;
     for (const g of layout.groups.filter(x => x.level === 'word')) {
       const cells = g.cellIds.map(id => cellById.get(id)!);
-      if (cells.some(c => c.kind !== 'letter' || c.expected === undefined)) {
+      if (cells.some(c => c.kind !== 'letter')) {
         continue;
       }
       const hasInk = cells.map(c => strokesOf([c.id]).length > 0);
@@ -288,6 +289,10 @@ export async function readProbePage(
       );
       if (mapped) {
         groupsMapped++;
+      }
+      if (cells.some(c => c.expected === undefined)) {
+        // Crossword runs: no printed answer, so only the mapping rate counts.
+        continue;
       }
       cells.forEach((c, i) => {
         if (!hasInk[i]) {
@@ -319,12 +324,12 @@ export async function readProbePage(
     if (scored.length > 0) {
       summary.push(
         `per cell, look-alikes forgiven: ${cellForgiven}/${scored.length}`,
-        `fineliner per cell: ${fineExact}/${scored.length} exact, ${fineForgiven}/${scored.length} forgiven (${fineCalls} calls, ${fineMs} ms)`,
+        `fineliner per cell: ${fineExact}/${scored.length} exact, ${fineForgiven}/${scored.length} forgiven, ${fineDiffers}/${letterCells.length} read differently from the ink pen (${fineCalls} calls, ${fineMs} ms)`,
       );
     }
     if (groupsTried > 0) {
       summary.push(
-        `rows/words mapped to squares: ${mappedRight}/${mappedTotal} right (${groupsMapped} of ${groupsTried} mapped, rest read square by square)`,
+        `rows/words mapped to squares: ${mappedRight}/${mappedTotal} right; ${groupsMapped} of ${groupsTried} rows/words had a matching letter count`,
       );
     }
     if (assignment.unassigned.length > 0) {

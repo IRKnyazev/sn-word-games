@@ -15,6 +15,7 @@ function App(): React.JSX.Element {
   if (route.screen === 'reveal') {
     return (
       <RevealScreen
+        key={route.nonce}
         ctx={getContext()}
         puzzleId={route.puzzleId}
         notePath={route.notePath}

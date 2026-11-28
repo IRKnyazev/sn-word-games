@@ -6,7 +6,7 @@ import {useSyncExternalStore} from 'react';
 
 export type Route =
   | {screen: 'menu'}
-  | {screen: 'reveal'; puzzleId: string; notePath: string};
+  | {screen: 'reveal'; puzzleId: string; notePath: string; nonce: number};
 
 let current: Route = {screen: 'menu'};
 const listeners = new Set<() => void>();

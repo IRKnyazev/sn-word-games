@@ -177,7 +177,7 @@ describe('M1 scores on the probe pages', () => {
       'fineliner per cell: 50/52 exact, 52/52 forgiven',
     );
     expect(summary).toMatch(
-      /rows\/words mapped to squares: 52\/52 right \(5 of 5 mapped/,
+      /rows\/words mapped to squares: 52\/52 right; 5 of 5 rows\/words had a matching letter count/,
     );
   });
 

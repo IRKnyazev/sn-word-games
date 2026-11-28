@@ -13,6 +13,8 @@ real puzzle to solve (REVEAL is there if you're stuck).
 
 ## B. Recognition probe on your old probe note (nothing to rewrite)
 
+(If the old probe note is gone, skip to C.)
+
 3. Open `Note/SupernotePuzzles/Probe 2026-11-27 190927` (the first probe
    note, with your letters on pages 1–3).
 4. Page 1: tap **READ**. This now takes about a minute (it reads every
@@ -27,7 +29,8 @@ real puzzle to solve (REVEAL is there if you're stuck).
 8. Look at the page: is the grid sharp, are the clue numbers and clues easy
    to read, is anything under the toolbar?
 9. Fill in **three or four entries** with your pen, and make **one letter
-   deliberately wrong**. Tap **CHECK**.
+   deliberately wrong**, ideally one that looks like the right letter (an I
+   where an L belongs, a V for a K, an O for a Q...). Tap **CHECK**.
    - Expect ✓ in the box of each fully right entry, ✗ for entries with a
      wrong square, a slash in the top-right corner of the wrong square, and
      a dialog saying what was read for the wrong entries.

@@ -5,6 +5,41 @@ Device results from the owner's Manta beat docs and other plugins' notes.
 "Pending Pn" means the M0 probe will confirm or overturn it; M0 results
 are recorded in the first entry below.
 
+## 2026-11-28 — M1 review: stricter reading, no answers, marks by style
+
+- **Decision:** A letter the recogniser returns is always taken literally
+  (case-insensitive); only non-letter look-alikes measured in M0 (0→O, 2→Z,
+  5→S, 8→B, 6→G, >→D, ✓→V, ✗/×//→X, 1//→Y) are forgiven, and only when no
+  letter was read for that square. If across and down read different letters,
+  the square is read on its own to decide; if that fails it is "couldn't
+  read", never right.
+- **Why:** Forgiving "1" for I or L, or "v" for K, would mark a wrong letter
+  right (e.g. I written where L belongs) — a false ✓ is the worst failure.
+- **Rejected:** The first M1 table (I←1/l/|/!, L←1/|, K←v).
+
+- **Decision:** Logs and dialogs may show what the recogniser read from the
+  owner's own ink (for wrong squares and entries), never a puzzle answer.
+  Right squares are logged by status only; a look-alike that passes is shown
+  as what was read, not as the answer. Answers appear only on the REVEAL
+  screen after confirmation.
+- **Why:** M1 review found answers in the log and a look-alike pass showing
+  the answer letter in the dialog. Refines "No answers in logs".
+
+- **Decision:** Our marks are recognised by style and place: straight
+  fineliner (penType 10) lines in black, dark grey or white, inside a mark
+  zone. New marks are created first; old ones are found right before the
+  batch update, and only if the same note and page are still open. Grey
+  reveal triangles found on the page count as reveals even if the saved state
+  was lost (e.g. after reinstalling).
+- **Why:** The owner's own shapes in a clue box must never be deleted, and
+  element numbers can shift if the owner edits while CHECK runs.
+
+- **Decision:** Defer the floating-toolbar guard. A toolbar tap over CHECK
+  only runs a check; over REVEAL it only opens the Reveal screen, which needs
+  a confirmation before showing anything. Revisit if it annoys in practice.
+- **Why:** Both outcomes are harmless; a long-press would make every real
+  tap slower.
+
 ## 2026-11-27 — M0 device results (Manta, Chauvet 3.31.45)
 
 Evidence for all entries below: `docs/M0-RESULTS.md`.

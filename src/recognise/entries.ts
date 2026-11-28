@@ -9,16 +9,15 @@
  */
 
 /**
- * Characters the recogniser returned for a handwritten capital in M0 (plus
- * the lower-case letter). Used only when comparing with a known answer.
+ * Non-letter characters the recogniser returned for a handwritten capital in
+ * M0. A letter reading is always taken at face value (case-insensitive); only
+ * these non-letters are read as look-alikes, so a wrong letter is never
+ * forgiven (M1 review: I and L both reading "1" must not pass).
  */
 export const LOOKALIKES: Readonly<Record<string, readonly string[]>> = {
   B: ['8'],
   D: ['>'],
   G: ['6'],
-  I: ['1', 'l', '|', '!'],
-  K: ['v'],
-  L: ['1', '|'],
   O: ['0'],
   S: ['5', '$'],
   V: ['✓', '√'],
@@ -35,6 +34,7 @@ const DISPLAY: Readonly<Record<string, string>> = {
   '6': 'G',
   '8': 'B',
   $: 'S',
+  '>': 'D',
   '✓': 'V',
   '√': 'V',
   '✗': 'X',
@@ -43,13 +43,20 @@ const DISPLAY: Readonly<Record<string, string>> = {
 
 const LOOKALIKE_CHARS = new Set(Object.values(LOOKALIKES).flat());
 
-/** Does a recognised character stand for `answer` (A–Z)? */
+export function isLetter(ch: string | undefined): ch is string {
+  return !!ch && /^[a-z]$/i.test(ch);
+}
+
+/** Does a recognised character stand for `answer` (A–Z)? Letters must match exactly. */
 export function matchesLetter(read: string, answer: string): boolean {
   if (!read) {
     return false;
   }
   const a = answer.toUpperCase();
-  return read.toUpperCase() === a || (LOOKALIKES[a] ?? []).includes(read);
+  if (isLetter(read)) {
+    return read.toUpperCase() === a;
+  }
+  return (LOOKALIKES[a] ?? []).includes(read);
 }
 
 /** How to show a recognised character: letters upper-cased, clear look-alikes mapped. */
@@ -67,7 +74,7 @@ export function displayChar(read: string): string {
  */
 export function letterTokens(text: string | null | undefined): string[] {
   return [...(text ?? '')].filter(
-    ch => /^[a-z]$/i.test(ch) || LOOKALIKE_CHARS.has(ch),
+    ch => isLetter(ch) || LOOKALIKE_CHARS.has(ch),
   );
 }
 
@@ -104,22 +111,52 @@ export interface CellVerdict {
 }
 
 /**
- * Judges one square from its readings. Any reading that is the answer or a
- * look-alike of it makes the square right; otherwise the first reading is
- * shown as what was read.
+ * Judges one square from its readings (across, down, single).
+ *
+ * - Letters are taken literally. If the letters read agree, they decide.
+ * - If across and down read different letters, the single reading decides
+ *   when it is a letter; otherwise the square counts as unread.
+ * - Only when no letter was read at all is a non-letter look-alike of the
+ *   answer (0 for O, 2 for Z, ...) forgiven.
+ * - `read` is what the ink was read as, never the answer itself (unless the
+ *   ink was read as exactly that letter).
  */
 export function judgeCell(r: CellReadings, answer: string): CellVerdict {
   if (!r.hasInk) {
     return {status: 'empty', read: ''};
   }
+  const a = answer.toUpperCase();
   const candidates = [r.across, r.down, r.single].filter(
     (c): c is string => !!c,
   );
   if (candidates.length === 0) {
     return {status: 'unread', read: ''};
   }
-  if (candidates.some(c => matchesLetter(c, answer))) {
-    return {status: 'right', read: answer.toUpperCase()};
+  const letters = [
+    ...new Set(candidates.filter(isLetter).map(c => c.toUpperCase())),
+  ];
+  if (letters.length === 1) {
+    return {status: letters[0] === a ? 'right' : 'wrong', read: letters[0]};
+  }
+  if (letters.length > 1) {
+    if (isLetter(r.single)) {
+      const single = r.single.toUpperCase();
+      return {status: single === a ? 'right' : 'wrong', read: single};
+    }
+    return {status: 'unread', read: ''};
+  }
+  const lookalike = candidates.find(c => matchesLetter(c, a));
+  if (lookalike) {
+    return {status: 'right', read: displayChar(lookalike)};
   }
   return {status: 'wrong', read: displayChar(candidates[0])};
+}
+
+/** Squares whose across and down readings are different letters (read them alone). */
+export function conflicting(r: CellReadings): boolean {
+  return (
+    isLetter(r.across) &&
+    isLetter(r.down) &&
+    r.across.toUpperCase() !== r.down.toUpperCase()
+  );
 }

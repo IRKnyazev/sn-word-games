@@ -264,9 +264,7 @@ describe('buildGridPuzzle input handling', () => {
   it('rejects ragged rows', () => {
     const def = sampleDef();
     def.rows = ['SPAS#', 'TILE', 'ALIVE', 'TOKEN', '#TENT'];
-    expect(() => buildGridPuzzle(def)).toThrow(
-      'row 1 has 4 cells, expected 5',
-    );
+    expect(() => buildGridPuzzle(def)).toThrow('row 1 has 4 cells, expected 5');
   });
 
   it('rejects an empty grid', () => {

@@ -165,10 +165,26 @@ describe('checkPuzzle', () => {
     ).toBe(true);
   });
 
-  it('forgives look-alikes of the right letter', async () => {
-    // O in TOKEN and Z/... read as digits; Y absent; X... use measured misreads.
-    const {ctx} = setup(grid({'3-1': '0', '2-1': 'l', '1-2': '1'}));
+  it('forgives non-letter look-alikes of the right letter', async () => {
+    // Measured misreads: O as "0", S as "5", V as "✓"; lower case is fine.
+    const {ctx} = setup(grid({'3-1': '0', '0-3': '5', '2-3': '✓', '2-1': 'l'}));
     expect(await checkPuzzle(ctx)).toMatch(/^Solved!/);
+  });
+
+  it('never forgives a different letter (I written where L belongs)', async () => {
+    const {ctx} = setup(grid({'1-2': 'I'}));
+    const msg = await checkPuzzle(ctx);
+    expect(msg).toMatch(/5A read TIIES/);
+    expect(msg).toMatch(/3D read AIIKE/);
+  });
+
+  it('logs no answers: right squares by status only', async () => {
+    const {ctx} = setup(grid({'1-1': 'X'}));
+    await checkPuzzle(ctx);
+    const log = ctx.lines().join('\n');
+    expect(log).toMatch(/square 1-1: wrong \(read X\)/);
+    expect(log).toMatch(/square 0-0: right(?! \()/);
+    expect(log).not.toMatch(/TOKEN|ALIVE|SPAS|TENT|STAT|SEVEN|SENT/);
   });
 
   it('reads square by square when an entry comes back with the wrong letter count', async () => {
@@ -201,13 +217,37 @@ describe('checkPuzzle', () => {
 
   it('replaces only our marks: never strokes, never geometry outside mark zones', async () => {
     const box = layout.clueBoxes['5A'];
-    const oldMark = geometryEl(
-      [
-        {x: box.left + 10, y: box.top + 10},
-        {x: box.right - 10, y: box.bottom - 10},
-      ],
-      70,
-    );
+    const oldMark: ElementLike = {
+      ...geometryEl(
+        [
+          {x: box.left + 10, y: box.top + 10},
+          {x: box.right - 10, y: box.bottom - 10},
+        ],
+        70,
+      ),
+      geometry: {
+        type: 'straightLine',
+        penType: 10,
+        penColor: 0,
+        points: [
+          {x: box.left + 10, y: box.top + 10},
+          {x: box.right - 10, y: box.bottom - 10},
+        ],
+      },
+    };
+    // A shape the owner drew in a clue box with their own pen settings.
+    const ownersShapeInBox: ElementLike = {
+      ...geometryEl([{x: box.left + 5, y: box.top + 5}], 72),
+      geometry: {
+        type: 'GEO_polygon',
+        penType: 16,
+        penColor: 0,
+        points: [
+          {x: box.left + 5, y: box.top + 5},
+          {x: box.right - 5, y: box.bottom - 5},
+        ],
+      },
+    };
     const square = layout.cellRects[2][2]!;
     const usersShape = geometryEl(
       [
@@ -216,7 +256,7 @@ describe('checkPuzzle', () => {
       ],
       71,
     );
-    const strokes = [...grid(), oldMark, usersShape];
+    const strokes = [...grid(), oldMark, usersShape, ownersShapeInBox];
     const {sdk, ctx} = setup(strokes);
     await checkPuzzle(ctx);
     const [nums] = sdk.batchUpdatePageElements.mock.calls[0];
@@ -254,7 +294,7 @@ describe('reveal', () => {
     setRoute({screen: 'menu'});
     const sdk = fakeSdk(onPuzzle);
     await openReveal(testContext(sdk));
-    expect(getRoute()).toEqual({
+    expect(getRoute()).toMatchObject({
       screen: 'reveal',
       puzzleId: 'sample-1',
       notePath: NOTE,

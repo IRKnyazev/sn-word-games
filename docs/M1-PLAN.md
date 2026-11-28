@@ -28,10 +28,12 @@ removal of marks; REVEAL behind a confirmation). Builds on the M0 results
 - Each entry is recognised in one call. If the number of letters read equals
   the number of filled squares, the letters go to those squares in order.
   Otherwise each square of that entry is read on its own.
-- Every square has up to three readings (across, down, single). A reading
-  that is the right letter, or a look-alike of it (0 for O, 2 for Z, ✗ for
-  X, ✓ for V, ...), counts as right. Otherwise the first reading is what is
-  shown.
+- Every square has up to three readings (across, down, single). Letters are
+  taken literally; if across and down disagree, the square is read on its
+  own. Only when no letter was read is a non-letter look-alike of the right
+  letter (0 for O, 2 for Z, ✗ for X, ✓ for V, ...) forgiven. The dialog
+  shows what was read, never the answer.
+- Tiny dots (under 15 px, e.g. a stray pen tap) are ignored.
 - Old marks are replaced by new ones in one `batchUpdatePageElements` call
   (decision of 2026-11-27); only geometry inside our mark zones is touched.
 

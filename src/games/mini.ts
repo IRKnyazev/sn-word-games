@@ -93,11 +93,9 @@ export function checkSummary(
         return `row ${row + 1} col ${col + 1}`;
       })
       .join(', ');
-    lines.push(
-      `Couldn't read: ${where}${
-        unread.length > 4 ? '…' : ''
-      }. Try writing it again.`,
-    );
+    const more = unread.length > 4 ? ', …' : '';
+    const them = unread.length === 1 ? 'it' : 'them';
+    lines.push(`Couldn't read: ${where}${more}. Try writing ${them} again.`);
   }
   const empty = Object.values(r.cells).filter(v => v.status === 'empty').length;
   if (empty > 0) {
