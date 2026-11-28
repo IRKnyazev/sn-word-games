@@ -320,6 +320,117 @@ describe('checkPuzzle', () => {
     expect(nums).toEqual([80]);
   });
 
+  describe('tap-dot tidying edge cases', () => {
+    const check = layout.page.zones.find(z => z.id === 'CHECK')!.rect;
+    const dotAt = (x: number, y: number, extra = {}) =>
+      strokeWithPoints(
+        [
+          {x, y},
+          {x: x + 3, y: y + 2},
+        ],
+        extra,
+      );
+
+    it('keeps dots on another layer, unnumbered strokes, and dense or straddling strokes', async () => {
+      const dense = strokeWithPoints(
+        Array.from({length: 60}, (_, i) => ({
+          x: check.left + 50 + (i % 3),
+          y: check.top + 50,
+        })),
+        {numInPage: 90},
+      );
+      const straddling = dotAt(check.left - 10, check.top + 40, {
+        numInPage: 91,
+      });
+      const otherLayer = dotAt(check.left + 60, check.top + 60, {
+        numInPage: 92,
+        layerNum: 1,
+      });
+      const unnumbered = dotAt(check.left + 80, check.top + 60, {numInPage: 0});
+      const {sdk, ctx} = setup([
+        ...grid(),
+        dense,
+        straddling,
+        otherLayer,
+        unnumbered,
+      ]);
+      await checkPuzzle(ctx);
+      expect(sdk.insertPageElements).toHaveBeenCalled(); // no old marks, nothing deleted
+      expect(sdk.batchUpdatePageElements).not.toHaveBeenCalled();
+    });
+
+    it("a stroke whose points can't be read is never a dot, and CHECK still works", async () => {
+      const broken: ElementLike = {
+        uuid: 'broken',
+        type: 0,
+        layerNum: 0,
+        numInPage: 93,
+        stroke: {
+          penType: 10,
+          points: {
+            size: async () => {
+              throw new Error('206 cache full');
+            },
+            getRange: async () => [],
+          },
+        },
+      };
+      const {sdk, ctx} = setup([...grid(), broken]);
+      expect(await checkPuzzle(ctx)).toMatch(/^Solved!/);
+      expect(sdk.batchUpdatePageElements).not.toHaveBeenCalled();
+    });
+
+    const withDotAndOldMark = () => {
+      const box = layout.clueBoxes['1A'];
+      const oldMark: ElementLike = {
+        ...geometryEl([], 70),
+        geometry: {
+          type: 'straightLine',
+          penType: 10,
+          penColor: 0,
+          points: [
+            {x: box.left + 10, y: box.top + 10},
+            {x: box.right - 10, y: box.bottom - 10},
+          ],
+        },
+      };
+      return [
+        ...grid(),
+        oldMark,
+        dotAt(check.left + 100, check.top + 60, {numInPage: 80}),
+      ];
+    };
+
+    it('element list numbered differently but stable: marks replaced, dots left alone', async () => {
+      const {sdk, ctx} = setup(withDotAndOldMark(), {
+        getElementNumList: async () => ok([1, 2, 3]),
+      });
+      await checkPuzzle(ctx);
+      const [nums] = sdk.batchUpdatePageElements.mock.calls[0];
+      expect(nums).toEqual([70]);
+    });
+
+    it('element list unavailable: marks replaced, dots left alone', async () => {
+      const {sdk, ctx} = setup(withDotAndOldMark(), {
+        getElementNumList: async () => fail(100, 'no such API'),
+      });
+      await checkPuzzle(ctx);
+      const [nums] = sdk.batchUpdatePageElements.mock.calls[0];
+      expect(nums).toEqual([70]);
+    });
+
+    it('page still changing (owner writing): nothing is deleted or inserted', async () => {
+      let n = 0;
+      const {sdk, ctx} = setup(withDotAndOldMark(), {
+        getElementNumList: async () => ok([1000 + n++]),
+      });
+      const msg = await checkPuzzle(ctx);
+      expect(msg).toMatch(/Couldn't update the marks/);
+      expect(sdk.batchUpdatePageElements).not.toHaveBeenCalled();
+      expect(sdk.insertPageElements).not.toHaveBeenCalled();
+    });
+  });
+
   it("doesn't touch the page if the note changed while checking", async () => {
     let calls = 0;
     const {sdk, ctx} = setup(grid(), {

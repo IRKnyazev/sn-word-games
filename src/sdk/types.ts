@@ -110,6 +110,8 @@ export interface Sdk {
   // Reading
   getElements(page: number, path: string): Promise<Res<ElementLike[]>>;
   getLastElement(): Promise<Res<ElementLike | null>>;
+  /** Element numbers on a page (to see whether the page changed). */
+  getElementNumList(path: string, page: number): Promise<Res<number[]>>;
   recycle(elements: readonly ElementLike[]): void;
   recognize(elements: readonly ElementLike[], size: Size): Promise<Res<string>>;
 

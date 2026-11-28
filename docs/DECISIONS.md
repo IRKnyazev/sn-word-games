@@ -128,7 +128,8 @@ Evidence for all entries below: `docs/M0-RESULTS.md`.
 - **Decision:** Replace or remove our own marks with
   `batchUpdatePageElements` (delete our numbers, insert the new marks, in
   one call). Keep the lasso route as a fallback. Only ever target geometry
-  and pictures we placed, inside a known area; never strokes. Don't call
+  and pictures we placed, inside a known area; never strokes (exception
+  from 2026-11-28: pen-tap dots inside the printed buttons). Don't call
   `setLassoBoxState(2)` after `deleteLassoElements` (904). Never
   `deletePageElements`.
 - **Why:** Both routes persist after reopening the note. Plugin inserts

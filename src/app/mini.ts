@@ -3,9 +3,10 @@
  * only through the interfaces in ../sdk/types, so it runs against fakes in
  * tests.
  *
- * CHECK never saves the note and never touches the owner's ink: it reads
- * strokes, recognises each entry, then replaces our own marks (geometry in
- * our mark zones) in one batch update (decision of 2026-11-27).
+ * CHECK never saves the note. It reads strokes, recognises each entry, then
+ * replaces our own marks (geometry in our mark zones) in one batch update
+ * (decision of 2026-11-27). The only ink it ever removes is pen-tap dots
+ * inside the printed buttons (owner's decision of 2026-11-28).
  */
 import {PUZZLE_TEMPLATES} from '../assets/templates.generated';
 import {
@@ -177,9 +178,8 @@ export const DOT_PX = 15;
 
 /**
  * Reads the squares: one recognition per entry, mapped back to the squares.
- * A square is read on its own when its entry's letter count doesn't match,
- * the entry reading was partial (split after a failure), or the across and
- * down readings disagree.
+ * A square is read on its own only when no word gave it a reading, or its
+ * across and down words disagree (word readings outrank single readings).
  */
 export async function readSquares(
   ctx: ProbeContext,
@@ -193,6 +193,10 @@ export async function readSquares(
   const elements = elRes.value;
   try {
     const infos = await describeAll(elements);
+    const unreadable = infos.filter(i => i.readError !== undefined).length;
+    if (unreadable > 0) {
+      ctx.log.warn(TAG, `${unreadable} strokes couldn't be read; skipped`);
+    }
     const strokeIdx = infos
       .filter(
         i =>
@@ -334,6 +338,10 @@ export function isOurMark(w: PuzzlePage, i: ElementInfo): boolean {
 interface PageMarks {
   /** Element numbers to delete: our marks and tap dots on the buttons. */
   nums: number[];
+  /** Our marks only (no dots). */
+  marks: number[];
+  /** Every element number in the snapshot, sorted (to detect changes). */
+  allNums: number[];
   /** Squares that already carry a grey reveal triangle. */
   revealed: string[];
   dots: number;
@@ -348,14 +356,19 @@ const DOT_MAX_POINTS = 40;
  */
 async function dotBounds(el: ElementLike): Promise<Rect | null> {
   const acc = el.stroke?.points;
-  if (!acc) {
+  if (!acc || typeof acc.size !== 'function') {
     return null;
   }
-  const n = await acc.size();
-  if (!(n > 0) || n > DOT_MAX_POINTS) {
+  try {
+    const n = await acc.size();
+    if (!(n > 0) || n > DOT_MAX_POINTS) {
+      return null;
+    }
+    return boundsOfPoints(await acc.getRange(0, n));
+  } catch {
+    // A stroke we can't read is never treated as a dot.
     return null;
   }
-  return boundsOfPoints(await acc.getRange(0, n));
 }
 
 /**
@@ -366,6 +379,7 @@ async function dotBounds(el: ElementLike): Promise<Rect | null> {
 async function scanMarks(
   ctx: ProbeContext,
   w: PuzzlePage,
+  opts: {dots: boolean} = {dots: true},
 ): Promise<PageMarks | null> {
   const elRes = await ctx.sdk.getElements(w.page, w.path);
   if (!elRes.ok) {
@@ -393,7 +407,7 @@ async function scanMarks(
       .map(([k]) => k);
     const buttons = w.layout.page.zones.map(z => outset(z.rect, 4));
     const dots: number[] = [];
-    for (const el of elRes.value) {
+    for (const el of opts.dots ? elRes.value : []) {
       if (
         el.type !== ELEMENT_TYPE.stroke ||
         (el.layerNum !== undefined && el.layerNum !== 0) ||
@@ -413,12 +427,73 @@ async function scanMarks(
     }
     return {
       nums: [...ours.map(i => i.numInPage as number), ...dots],
+      marks: ours.map(i => i.numInPage as number),
       revealed,
       dots: dots.length,
+      allNums: elRes.value
+        .map(el => el.numInPage ?? 0)
+        .filter(n => n >= 1)
+        .sort((a, b) => a - b),
     };
   } finally {
     ctx.sdk.recycle(elRes.value);
   }
+}
+
+const sameNums = (a: readonly number[], b: readonly number[]) =>
+  a.length === b.length && a.every((n, i) => n === b[i]);
+
+/**
+ * scanMarks, checked against a fresh element list so element numbers can't
+ * have shifted (the owner writing or erasing during CHECK) before the batch
+ * deletes by number. getElementNumList's numbering hasn't been measured on
+ * the device, so: equal → go; differs → scan again; if the list is stable
+ * but never matches the scan, it numbers differently: go without tidying
+ * dots; if it keeps changing, give up and change nothing.
+ */
+async function scanStable(
+  ctx: ProbeContext,
+  w: PuzzlePage,
+): Promise<PageMarks | null> {
+  const listNow = async () => {
+    const r = await ctx.sdk.getElementNumList(w.path, w.page);
+    return r.ok && Array.isArray(r.value)
+      ? [...r.value].sort((a, b) => a - b)
+      : null;
+  };
+  const first = await scanMarks(ctx, w);
+  if (!first) {
+    return null;
+  }
+  const v1 = await listNow();
+  if (v1 === null) {
+    ctx.log.warn(TAG, 'marks: no element list; not tidying tap dots');
+    return {...first, nums: first.marks, dots: 0};
+  }
+  if (sameNums(v1, first.allNums)) {
+    return first;
+  }
+  const second = await scanMarks(ctx, w);
+  const v2 = await listNow();
+  if (!second || v2 === null) {
+    return null;
+  }
+  if (sameNums(v2, second.allNums)) {
+    return second;
+  }
+  if (sameNums(v1, v2)) {
+    ctx.log.warn(
+      TAG,
+      "marks: the element list doesn't match getElements; not tidying tap dots",
+      {
+        list: v2.length,
+        scanned: second.allNums.length,
+      },
+    );
+    return {...second, nums: second.marks, dots: 0};
+  }
+  ctx.log.warn(TAG, 'marks: the page kept changing; not touching it');
+  return null;
 }
 
 /**
@@ -444,7 +519,7 @@ export async function replaceMarks(
     if (created.length === 0) {
       return false;
     }
-    const found = await scanMarks(ctx, w);
+    const found = await scanStable(ctx, w);
     if (!found) {
       return false;
     }
@@ -524,7 +599,7 @@ export async function checkPuzzle(ctx: ProbeContext): Promise<string> {
     ctx.date().getTime(),
   );
   const state = await loadState(ctx, w);
-  const onPage = await scanMarks(ctx, w);
+  const onPage = await scanMarks(ctx, w, {dots: false});
   const revealed = new Set([...state.revealed, ...(onPage?.revealed ?? [])]);
   // Log statuses; what was read only where it differs from the answer (the
   // owner's own wrong ink), never the answer itself.

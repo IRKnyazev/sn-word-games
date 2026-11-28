@@ -116,6 +116,10 @@ export const deviceSdk: Sdk = {
     call<ElementLike[]>(() => PluginFileAPI.getElements(page, path), {
       timeoutMs: LONG,
     }).then(r => (r.ok ? {...r, value: r.value ?? []} : r)),
+  getElementNumList: (path, page) =>
+    call<number[]>(() => PluginFileAPI.getElementNumList(path, page), {
+      timeoutMs: SHORT,
+    }),
   getLastElement: () =>
     call(() => PluginFileAPI.getLastElement(), {timeoutMs: SHORT}),
   recycle: (elements: readonly ElementLike[]) => {

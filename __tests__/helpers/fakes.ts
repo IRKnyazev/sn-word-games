@@ -130,6 +130,13 @@ export function fakeSdk(
     saveCurrentNote: async () => ok(true),
     getElements: async () => ok([]),
     getLastElement: async () => ok(null),
+    // Mirrors whatever getElements returns, like an unchanged page.
+    getElementNumList: async (path: string, page: number) => {
+      const r = (await out.getElements(page, path)) as Res<ElementLike[]>;
+      return ok(
+        r.ok ? r.value.map(e => e.numInPage ?? 0).filter(n => n >= 1) : [],
+      );
+    },
     recycle: () => undefined,
     recognize: async () => ok(''),
     insertGeometry: async () => ok(0),
