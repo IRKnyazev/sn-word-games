@@ -202,42 +202,6 @@ export async function readProbePage(
       forgiven(texts.get(`cell ${c.id}`), c.expected!),
     ).length;
 
-    // (a3) single squares again, strokes set to the fineliner pen type (10)
-    let fineExact = 0;
-    let fineDiffers = 0;
-    let fineForgiven = 0;
-    let fineCalls = 0;
-    const fineStart = ctx.now();
-    for (const c of letterCells) {
-      const part = strokesOf([c.id]).map(el => ({
-        ...el,
-        stroke: el.stroke ? {...el.stroke, penType: 10} : el.stroke,
-      }));
-      const r = await recogniseResilient(recognise, part, {now: ctx.now});
-      fineCalls += r.calls;
-      if (r.text !== texts.get(`cell ${c.id}`)) {
-        fineDiffers++;
-      }
-      if (c.expected !== undefined) {
-        const exact =
-          letterTokens(r.text).join('').toUpperCase() === c.expected;
-        fineExact += exact ? 1 : 0;
-        fineForgiven += forgiven(r.text, c.expected) ? 1 : 0;
-        ctx.log.info(
-          TAG,
-          `${exact ? 'OK ' : 'BAD'} fineliner ${c.id} expected=${
-            c.expected
-          } got=${JSON.stringify(r.text)}`,
-        );
-      } else {
-        ctx.log.info(
-          TAG,
-          `--- fineliner ${c.id} got=${JSON.stringify(r.text)}`,
-        );
-      }
-    }
-    const fineMs = ctx.now() - fineStart;
-
     // (b) words/rows and (c) sections
     const expectedOf = (g: Group): string | undefined => {
       const cells = g.cellIds.map(id => cellById.get(id));
@@ -324,7 +288,6 @@ export async function readProbePage(
     if (scored.length > 0) {
       summary.push(
         `per cell, look-alikes forgiven: ${cellForgiven}/${scored.length}`,
-        `fineliner per cell: ${fineExact}/${scored.length} exact, ${fineForgiven}/${scored.length} forgiven, ${fineDiffers}/${letterCells.length} read differently from the ink pen (${fineCalls} calls, ${fineMs} ms)`,
       );
     }
     if (groupsTried > 0) {

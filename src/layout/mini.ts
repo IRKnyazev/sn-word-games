@@ -5,7 +5,7 @@
  * again for replacement.
  *
  * Designed in Manta pixels (1920×2560) and scaled for other page sizes.
- * Owner's M0 choices: 3 px grid lines; small bold clue numbers.
+ * Owner's choices: 4 px grid lines (M0 re-run); small bold clue numbers.
  */
 import type {GridPuzzle} from '../model/grid';
 import {cellKey} from '../model/grid';
@@ -123,7 +123,7 @@ export function miniLayout(p: GridPuzzle, size: Size = MANTA_PAGE): MiniLayout {
         row.push(null);
         continue;
       }
-      box(rect, 3);
+      box(rect, 4);
       if (p.numbers[r][c] > 0) {
         text(left + 10, top + 38, String(p.numbers[r][c]), 32, {weight: 700});
       }

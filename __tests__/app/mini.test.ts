@@ -23,6 +23,7 @@ import {
   memoryStore,
   ok,
   strokeIn,
+  strokeWithPoints,
   testContext,
 } from '../helpers/fakes';
 
@@ -200,8 +201,29 @@ describe('checkPuzzle', () => {
     });
     const msg = await checkPuzzle(ctx);
     expect(msg).toMatch(/^Solved!/);
-    // 10 entry calls + single reads for the squares of 1A and 1D (7 squares, one shared).
-    expect(sdk.recognize.mock.calls.length).toBe(10 + 7);
+    // 10 entry calls + one single read: only square 0-0 (in both broken
+    // entries) has no word reading; the others are read by their crossing words.
+    expect(sdk.recognize.mock.calls.length).toBe(10 + 1);
+  });
+
+  it('M1 device case: a weak single reading never overrides the word (I as T, K as V)', async () => {
+    // 3D came back "A L I K -" (E as "-"); squares read alone gave T and V.
+    const strokes = grid({'4-4': 'I', '1-4': 'S'});
+    const {ctx} = setup(strokes, {
+      recognize: async (els: Tagged[]) => {
+        const text = els.map(e => e.tag).join('');
+        if (els.length === 1) {
+          return ok({I: 'T', K: 'V'}[text] ?? text);
+        }
+        return ok(text === 'ALIKE' ? 'A\nL\nI\nK\n-' : text);
+      },
+    });
+    const msg = await checkPuzzle(ctx);
+    // Only the deliberate mistake (TENI / SENI) is wrong.
+    expect(msg).toMatch(/8 of 10 entries right/);
+    expect(msg).toMatch(/9A read TENI/);
+    expect(msg).toMatch(/6D read SENI/);
+    expect(msg).not.toMatch(/7A|8A|3D/);
   });
 
   it('reports empty and unreadable squares without calling them wrong', async () => {
@@ -261,6 +283,53 @@ describe('checkPuzzle', () => {
     await checkPuzzle(ctx);
     const [nums] = sdk.batchUpdatePageElements.mock.calls[0];
     expect(nums).toEqual([70]);
+  });
+
+  it('tidies pen-tap dots on the printed buttons, and nothing else', async () => {
+    const check = layout.page.zones.find(z => z.id === 'CHECK')!.rect;
+    const square = layout.cellRects[1][1]!;
+    const dotOnButton = strokeWithPoints(
+      [
+        {x: check.left + 100, y: check.top + 60},
+        {x: check.left + 103, y: check.top + 62},
+      ],
+      {numInPage: 80},
+    );
+    const dotInSquare = strokeWithPoints(
+      [
+        {x: square.left + 100, y: square.top + 100},
+        {x: square.left + 102, y: square.top + 101},
+      ],
+      {numInPage: 81},
+    );
+    const lineOverButton = strokeWithPoints(
+      [
+        {x: check.left + 10, y: check.top + 60},
+        {x: check.right - 10, y: check.top + 60},
+      ],
+      {numInPage: 82},
+    );
+    const {sdk, ctx} = setup([
+      ...grid(),
+      dotOnButton,
+      dotInSquare,
+      lineOverButton,
+    ]);
+    await checkPuzzle(ctx);
+    const [nums] = sdk.batchUpdatePageElements.mock.calls[0];
+    expect(nums).toEqual([80]);
+  });
+
+  it("doesn't touch the page if the note changed while checking", async () => {
+    let calls = 0;
+    const {sdk, ctx} = setup(grid(), {
+      getCurrentFilePath: async () =>
+        ok(++calls > 1 ? '/storage/emulated/0/Note/Diary.note' : NOTE),
+    });
+    const msg = await checkPuzzle(ctx);
+    expect(msg).toMatch(/Couldn't update the marks/);
+    expect(sdk.insertPageElements).not.toHaveBeenCalled();
+    expect(sdk.batchUpdatePageElements).not.toHaveBeenCalled();
   });
 
   it('says when it is not on a puzzle page', async () => {

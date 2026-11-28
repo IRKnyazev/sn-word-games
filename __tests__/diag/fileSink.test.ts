@@ -32,9 +32,21 @@ describe('fileSink', () => {
     expect(files.written.get('/r/log.txt')).toBe('123456\nnext\n');
   });
 
-  it('propagates write errors so the logger keeps the lines', async () => {
+  it('makes the folder again if it was deleted, then retries once', async () => {
     const files = fakeFiles();
-    (files.appendUtf8 as jest.Mock).mockRejectedValueOnce(new Error('EACCES'));
+    const sink = fileSink(files, '/r/log/log.txt');
+    await sink.append('a\n');
+    (files.appendUtf8 as jest.Mock).mockRejectedValueOnce(new Error('ENOENT'));
+    await sink.append('b\n');
+    expect(files.mkdir).toHaveBeenCalledTimes(2);
+    expect(files.written.get('/r/log/log.txt')).toBe('a\nb\n');
+  });
+
+  it('propagates a write error that persists, so the logger keeps the lines', async () => {
+    const files = fakeFiles();
+    (files.appendUtf8 as jest.Mock)
+      .mockRejectedValueOnce(new Error('EACCES'))
+      .mockRejectedValueOnce(new Error('EACCES'));
     const sink = fileSink(files, '/r/log.txt');
     await expect(sink.append('x')).rejects.toThrow('EACCES');
   });

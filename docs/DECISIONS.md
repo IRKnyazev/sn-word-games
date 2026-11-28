@@ -5,6 +5,50 @@ Device results from the owner's Manta beat docs and other plugins' notes.
 "Pending Pn" means the M0 probe will confirm or overturn it; M0 results
 are recorded in the first entry below.
 
+## 2026-11-28 — M1 device results (M1.1)
+
+Evidence: `logMO.txt` and the screenshots uploaded on 2026-11-28 (M0
+re-run and M1 test on the owner's Manta).
+
+- **Decision:** Word readings outrank single-square readings. A square is
+  read on its own only when no word gave it a reading, or its across and down
+  words disagree; then the single reading may only pick between those two
+  letters. A "-" (or "_", "?") in a word reading holds the place of a letter
+  that couldn't be read, when that makes the word fit its squares.
+- **Why:** On the device ALIVE, TOKEN and ALIKE were marked wrong although
+  the across words were read right ("A LI VE", "TO KEN"): 3D came back
+  "A L I K -", so its squares were read alone, giving I→T and K→V, and the
+  single reading overrode the word. Probe re-run: rows read whole and mapped
+  back were 50/52 and 29/30 right, single squares 43/52 and 26/34.
+- **Rejected:** Forgiving I/T or K/V (would mark real mistakes right).
+
+- **Decision:** A printed button fires only when `canHandwrite()` answers
+  `true`. An error counts as "not on the page".
+- **Why:** In the file manager's New Folder screen the on-screen keyboard
+  sits over TAP; `canHandwrite()` answered error 118 ("handwriting app is not
+  open") and the old guard let errors through.
+
+- **Decision (owner's choice):** Keep finger and pen taps on printed buttons.
+  The plugin can't tell a tap on the floating toolbar from a tap on the page,
+  so the owner keeps the toolbar away from the buttons.
+- **Rejected:** Pen-only buttons confirmed by the tap's ink dot; a finger
+  double-tap.
+
+- **Decision (owner's choice):** Tidy pen-tap dots: strokes under 15 px
+  inside a printed button area are removed together with our marks whenever
+  CHECK or REVEAL redraws them. No other ink is ever touched.
+
+- **Decision:** Drop the "fineliner" recognition experiment.
+- **Why:** 0 of 52 squares read differently: the firmware ignores a pen
+  type changed on the plugin's copy of a stroke.
+
+- **Decision:** Mini grid lines 4 px (owner's choice from the P3 strip on
+  the re-run); clue numbers stay small and bold.
+
+- **Note:** The tick marks along the top and left edges of the probe pages
+  are the printed ruler (every 100 px), not a background showing through;
+  the page fits the Manta exactly.
+
 ## 2026-11-28 — M1 review: stricter reading, no answers, marks by style
 
 - **Decision:** A letter the recogniser returns is always taken literally

@@ -1,6 +1,6 @@
 import {probeZones} from '../../src/layout/probe';
 import {armP4, createMotionHandler} from '../../src/probes/p4';
-import {fakeSdk, ok, testContext} from '../helpers/fakes';
+import {fail, fakeSdk, ok, testContext} from '../helpers/fakes';
 
 const zone = (id: string) => probeZones().find(z => z.id === id)!.rect;
 const centreOf = (id: string) => {
@@ -104,6 +104,17 @@ describe('page buttons', () => {
 
   it('ignores taps that pass through the top menu (canHandwrite false)', async () => {
     const sdk = fakeSdk({canHandwrite: async () => ok(false)});
+    const ctx = testContext(sdk);
+    const handler = createMotionHandler(ctx, noActions());
+    tapAt(handler, centreOf('TAP'));
+    await flush();
+    expect(sdk.showDialog).not.toHaveBeenCalled();
+  });
+
+  it('ignores taps when the note app is not on screen (118, e.g. the file manager keyboard)', async () => {
+    const sdk = fakeSdk({
+      canHandwrite: async () => fail(118, 'The handwriting app is not open'),
+    });
     const ctx = testContext(sdk);
     const handler = createMotionHandler(ctx, noActions());
     tapAt(handler, centreOf('TAP'));

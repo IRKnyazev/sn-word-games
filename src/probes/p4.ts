@@ -123,11 +123,14 @@ export async function handleTap(
       ? PUZZLE_ZONES
       : [];
   const button = zones.find(z => contains(z.rect, tap.at))?.id ?? null;
-  const overMenu = hw.ok && hw.value === false;
+  // The note must say it is on screen and taking handwriting. An error
+  // (e.g. 118 "handwriting app not open" in the file manager, where the
+  // keyboard sits over the buttons) or false (a menu over the page) blocks.
+  const onPage = hw.ok && hw.value === true;
   const now = ctx.now();
   const debounced = now - ctx.state.lastFireAt < TAP_DEBOUNCE_MS;
   const busy = ctx.state.isBusy(now);
-  const fire = button !== null && !overMenu && !debounced && !busy;
+  const fire = button !== null && onPage && !debounced && !busy;
   const loud = armed || kind !== 'none';
   if (loud) {
     ctx.log.info(

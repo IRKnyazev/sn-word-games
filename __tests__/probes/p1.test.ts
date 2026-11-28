@@ -160,7 +160,7 @@ describe('layout choice', () => {
 describe('M1 scores on the probe pages', () => {
   const [letters] = probePages();
 
-  it('adds forgiven, fineliner and mapped scores', async () => {
+  it('adds forgiven and mapped scores', async () => {
     // Every single square reads "0" for O (a look-alike); rows read with spaces.
     const strokes = letters.cells.map(c =>
       strokeIn(c.rect, {tag: c.expected === 'O' ? '0' : c.expected}),
@@ -173,31 +173,9 @@ describe('M1 scores on the probe pages', () => {
     const summary = await readProbePage(testContext(sdk), 'menu');
     expect(summary).toContain('per cell: 50/52');
     expect(summary).toContain('per cell, look-alikes forgiven: 52/52');
-    expect(summary).toContain(
-      'fineliner per cell: 50/52 exact, 52/52 forgiven',
-    );
+    expect(summary).not.toContain('fineliner');
     expect(summary).toMatch(
       /rows\/words mapped to squares: 52\/52 right; 5 of 5 rows\/words had a matching letter count/,
     );
-  });
-
-  it('sends fineliner copies with pen type 10 and leaves the originals alone', async () => {
-    const strokes = letters.cells.slice(0, 2).map(c => {
-      const el = strokeIn(c.rect, {tag: c.expected});
-      el.stroke!.penType = 16; // the owner's ink pen
-      return el;
-    });
-    const seen: number[] = [];
-    const sdk = fakeSdk({
-      getElements: async () => ok(strokes),
-      recognize: async (els: Tagged[]) => {
-        seen.push(...els.map(e => e.stroke?.penType ?? -1));
-        return ok(els.map(e => e.tag).join(''));
-      },
-    });
-    await readProbePage(testContext(sdk), 'menu');
-    expect(seen).toContain(16);
-    expect(seen).toContain(10);
-    expect(strokes.every(s => s.stroke?.penType === 16)).toBe(true);
   });
 });

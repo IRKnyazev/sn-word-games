@@ -269,10 +269,24 @@ describe('judgeCell', () => {
     },
   );
 
-  it('lets the single reading decide when across and down disagree', () => {
+  it('never lets a single reading override the word reading (M1: I alone read as T)', () => {
+    expect(judgeCell({hasInk: true, across: 'I', single: 'T'}, 'I')).toEqual({
+      status: 'right',
+      read: 'I',
+    });
+    expect(
+      judgeCell({hasInk: true, across: 'K', down: 'K', single: 'V'}, 'K'),
+    ).toEqual({status: 'right', read: 'K'});
+  });
+
+  it('lets the single reading pick between disagreeing across and down', () => {
+    expect(
+      judgeCell({hasInk: true, across: 'X', down: 'K', single: 'K'}, 'K'),
+    ).toEqual({status: 'right', read: 'K'});
+    // A single reading that matches neither word reading doesn't decide.
     expect(
       judgeCell({hasInk: true, across: 'X', down: 'Y', single: 'K'}, 'K'),
-    ).toEqual({status: 'right', read: 'K'});
+    ).toEqual({status: 'unread', read: ''});
     // Across and down disagree and there is no single reading: unread.
     expect(judgeCell({hasInk: true, across: 'X', down: 'k'}, 'K')).toEqual({
       status: 'unread',
@@ -304,13 +318,13 @@ describe('judgeCell', () => {
   });
 
   it('is wrong when no reading matches, showing the first reading', () => {
-    // Conflicting letters: the single reading is what's shown.
+    // Word readings agree (or there's only one): they decide, not the single.
     expect(
-      judgeCell({hasInk: true, across: 'b', down: 'C', single: 'D'}, 'A'),
-    ).toEqual({status: 'wrong', read: 'D'});
+      judgeCell({hasInk: true, across: 'b', down: 'C', single: 'C'}, 'A'),
+    ).toEqual({status: 'wrong', read: 'C'});
     expect(judgeCell({hasInk: true, down: 'C', single: 'D'}, 'A')).toEqual({
       status: 'wrong',
-      read: 'D',
+      read: 'C',
     });
     expect(judgeCell({hasInk: true, across: 'b', down: 'b'}, 'A')).toEqual({
       status: 'wrong',
@@ -409,5 +423,28 @@ describe('M0 misreads of the right letter count as right', () => {
     expect(judge('VOX', '✓0✗')).toEqual(Array(3).fill('right'));
     // "v" is the letter V and "1" is not a look-alike of I: both wrong.
     expect(judge('KID', 'v1>')).toEqual(['wrong', 'wrong', 'right']);
+  });
+});
+
+describe('mapEntryToCells with placeholders', () => {
+  it('uses "-" as an unreadable square when the letters alone are one short', () => {
+    const text = 'A\nL\nI\nK\n-';
+    const tokens = letterTokens(text);
+    expect(tokens).toEqual(['A', 'L', 'I', 'K']);
+    expect(
+      mapEntryToCells(tokens, [true, true, true, true, true], text),
+    ).toEqual(['A', 'L', 'I', 'K', null]);
+  });
+
+  it('prefers the plain letters when they already fit', () => {
+    expect(mapEntryToCells(['A', 'B'], [true, true], 'A-B')).toEqual([
+      'A',
+      'B',
+    ]);
+  });
+
+  it('still gives up when neither fits', () => {
+    expect(mapEntryToCells(['A'], [true, true, true], 'A-')).toBeNull();
+    expect(mapEntryToCells(['A'], [true, true], undefined)).toBeNull();
   });
 });

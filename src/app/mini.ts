@@ -15,7 +15,13 @@ import {
   marksFor,
   type CheckResult,
 } from '../games/mini';
-import type {Size} from '../layout/geometry';
+import {
+  boundsOfPoints,
+  containsRect,
+  outset,
+  type Rect,
+  type Size,
+} from '../layout/geometry';
 import {miniLayout, type MiniLayout} from '../layout/mini';
 import {MANTA_PAGE} from '../layout/probe';
 import {assignStrokes, type StrokeBox} from '../ink/assign';
@@ -259,7 +265,7 @@ export async function readSquares(
       entryText[e.id] = r.text;
       const tokens = letterTokens(r.text);
       // A partial reading (part of it failed) may be misaligned: don't map it.
-      const mapped = r.partial ? null : mapEntryToCells(tokens, hasInk);
+      const mapped = r.partial ? null : mapEntryToCells(tokens, hasInk, r.text);
       ctx.log.info(TAG, `${e.id}: ${mapped ? 'mapped' : 'not mapped'}`, {
         letters: tokens.length,
         inked: hasInk.filter(Boolean).length,
@@ -272,13 +278,14 @@ export async function readSquares(
         }
         if (mapped) {
           readings[k][e.direction] = mapped[i] ?? undefined;
-        } else {
-          needSingle.add(k);
         }
       });
     }
+    // Read a square on its own only when no word gave it a reading, or the
+    // across and down words disagree. A weak single reading never overrides
+    // an agreeing word reading (M1: I read as "T" alone, right in ALIVE).
     for (const [k, r] of Object.entries(readings)) {
-      if (conflicting(r)) {
+      if (r.hasInk && ((!r.across && !r.down) || conflicting(r))) {
         needSingle.add(k);
       }
     }
@@ -325,12 +332,37 @@ export function isOurMark(w: PuzzlePage, i: ElementInfo): boolean {
 }
 
 interface PageMarks {
+  /** Element numbers to delete: our marks and tap dots on the buttons. */
   nums: number[];
   /** Squares that already carry a grey reveal triangle. */
   revealed: string[];
+  dots: number;
 }
 
-/** Finds our marks on the page; reads geometry only (never the owner's strokes). */
+/** Strokes with this many points or fewer may be tap dots. */
+const DOT_MAX_POINTS = 40;
+
+/**
+ * Bounds of a stroke if it is short enough to be a dot (cheap: the point
+ * count is checked before any points are read).
+ */
+async function dotBounds(el: ElementLike): Promise<Rect | null> {
+  const acc = el.stroke?.points;
+  if (!acc) {
+    return null;
+  }
+  const n = await acc.size();
+  if (!(n > 0) || n > DOT_MAX_POINTS) {
+    return null;
+  }
+  return boundsOfPoints(await acc.getRange(0, n));
+}
+
+/**
+ * Finds our marks on the page, plus pen-tap dots inside the printed buttons
+ * (owner's decision of 2026-11-28: tidy them). Never reads or touches any
+ * other stroke.
+ */
 async function scanMarks(
   ctx: ProbeContext,
   w: PuzzlePage,
@@ -359,7 +391,31 @@ async function scanMarks(
         ),
       )
       .map(([k]) => k);
-    return {nums: ours.map(i => i.numInPage as number), revealed};
+    const buttons = w.layout.page.zones.map(z => outset(z.rect, 4));
+    const dots: number[] = [];
+    for (const el of elRes.value) {
+      if (
+        el.type !== ELEMENT_TYPE.stroke ||
+        (el.layerNum !== undefined && el.layerNum !== 0) ||
+        (el.numInPage ?? 0) < 1
+      ) {
+        continue;
+      }
+      const b = await dotBounds(el);
+      if (
+        b &&
+        b.right - b.left < DOT_PX &&
+        b.bottom - b.top < DOT_PX &&
+        buttons.some(z => containsRect(z, b))
+      ) {
+        dots.push(el.numInPage as number);
+      }
+    }
+    return {
+      nums: [...ours.map(i => i.numInPage as number), ...dots],
+      revealed,
+      dots: dots.length,
+    };
   } finally {
     ctx.sdk.recycle(elRes.value);
   }
@@ -409,9 +465,9 @@ export async function replaceMarks(
         : await ctx.sdk.insertPageElements(created, w.page);
     ctx.log.info(
       TAG,
-      `marks: removed ${found.nums.length}, added ${created.length}: ${describe(
-        res,
-      )}`,
+      `marks: removed ${found.nums.length} (${found.dots} tap dots), added ${
+        created.length
+      }: ${describe(res)}`,
     );
     return res.ok;
   } finally {

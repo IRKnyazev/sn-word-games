@@ -26,7 +26,13 @@ export function fileSink(
       } catch {
         // Rotation is best-effort; never stop logging because of it.
       }
-      await files.appendUtf8(path, text);
+      try {
+        await files.appendUtf8(path, text);
+      } catch {
+        // The folder may have been deleted since: make it again, retry once.
+        await files.mkdir(dir);
+        await files.appendUtf8(path, text);
+      }
     },
   };
 }

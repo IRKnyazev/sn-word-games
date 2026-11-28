@@ -79,20 +79,40 @@ export function letterTokens(text: string | null | undefined): string[] {
 }
 
 /**
+ * Characters the recogniser returns for a letter it couldn't make out (M1:
+ * the E of ALIKE came back as "-"). They hold a square's place in an entry
+ * but give it no reading.
+ */
+export const PLACEHOLDERS: ReadonlySet<string> = new Set(['-', '_', '?']);
+
+/**
  * Splits an entry's reading over its squares: the tokens go, in order, to the
  * squares that have ink. Returns null when the counts differ (then each
- * square is read on its own).
+ * square is read on its own). If the letters alone don't fit, placeholder
+ * characters in `text` are tried as unreadable squares.
  */
 export function mapEntryToCells(
   tokens: readonly string[],
   hasInk: readonly boolean[],
+  text?: string | null,
 ): (string | null)[] | null {
   const filled = hasInk.filter(Boolean).length;
-  if (filled === 0 || tokens.length !== filled) {
+  if (filled === 0) {
     return null;
   }
-  let t = 0;
-  return hasInk.map(ink => (ink ? tokens[t++] : null));
+  const spread = (ts: readonly (string | null)[]) => {
+    let t = 0;
+    return hasInk.map(ink => (ink ? ts[t++] : null));
+  };
+  if (tokens.length === filled) {
+    return spread(tokens);
+  }
+  const withGaps = [...(text ?? '')]
+    .filter(
+      ch => isLetter(ch) || LOOKALIKE_CHARS.has(ch) || PLACEHOLDERS.has(ch),
+    )
+    .map(ch => (PLACEHOLDERS.has(ch) ? null : ch));
+  return text && withGaps.length === filled ? spread(withGaps) : null;
 }
 
 export type CellStatus = 'right' | 'wrong' | 'empty' | 'unread';
@@ -111,11 +131,14 @@ export interface CellVerdict {
 }
 
 /**
- * Judges one square from its readings (across, down, single).
+ * Judges one square from its readings. Word readings (across, down) are much
+ * more reliable than a square read on its own (M0/M1: ~96% vs ~80%), so:
  *
- * - Letters are taken literally. If the letters read agree, they decide.
- * - If across and down read different letters, the single reading decides
- *   when it is a letter; otherwise the square counts as unread.
+ * - Letters are taken literally. If the word readings agree on a letter, it
+ *   decides; a single reading never overrides it.
+ * - If across and down read different letters, the single reading picks
+ *   between them; if it matches neither, the square counts as unread.
+ * - With no word reading, a single letter reading decides.
  * - Only when no letter was read at all is a non-letter look-alike of the
  *   answer (0 for O, 2 for Z, ...) forgiven.
  * - `read` is what the ink was read as, never the answer itself (unless the
@@ -126,23 +149,29 @@ export function judgeCell(r: CellReadings, answer: string): CellVerdict {
     return {status: 'empty', read: ''};
   }
   const a = answer.toUpperCase();
+  const verdict = (letter: string): CellVerdict => ({
+    status: letter === a ? 'right' : 'wrong',
+    read: letter,
+  });
+  const word = [
+    ...new Set([r.across, r.down].filter(isLetter).map(c => c.toUpperCase())),
+  ];
+  const single = isLetter(r.single) ? r.single.toUpperCase() : undefined;
+  if (word.length === 1) {
+    return verdict(word[0]);
+  }
+  if (word.length > 1) {
+    return single && word.includes(single)
+      ? verdict(single)
+      : {status: 'unread', read: ''};
+  }
+  if (single) {
+    return verdict(single);
+  }
   const candidates = [r.across, r.down, r.single].filter(
     (c): c is string => !!c,
   );
   if (candidates.length === 0) {
-    return {status: 'unread', read: ''};
-  }
-  const letters = [
-    ...new Set(candidates.filter(isLetter).map(c => c.toUpperCase())),
-  ];
-  if (letters.length === 1) {
-    return {status: letters[0] === a ? 'right' : 'wrong', read: letters[0]};
-  }
-  if (letters.length > 1) {
-    if (isLetter(r.single)) {
-      const single = r.single.toUpperCase();
-      return {status: single === a ? 'right' : 'wrong', read: single};
-    }
     return {status: 'unread', read: ''};
   }
   const lookalike = candidates.find(c => matchesLetter(c, a));
