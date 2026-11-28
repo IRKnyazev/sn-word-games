@@ -50,3 +50,14 @@ export function tally(scores: readonly Score[]): Tally {
 export function percent(t: Tally): string {
   return t.total === 0 ? '—' : `${Math.round((100 * t.exact) / t.total)}%`;
 }
+
+/** recognizeElements usually answers a string; log anything else as JSON. */
+export function recognisedText(value: unknown): string {
+  if (typeof value === 'string') {
+    return value;
+  }
+  if (value && typeof value === 'object' && 'text' in value) {
+    return String((value as {text: unknown}).text ?? '');
+  }
+  return value === null || value === undefined ? '' : JSON.stringify(value);
+}

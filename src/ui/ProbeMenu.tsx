@@ -82,7 +82,7 @@ export function ProbeMenu({ctx, sdkVersion, header}: Props): React.JSX.Element {
   return (
     <View style={styles.root}>
       <View style={styles.topBar}>
-        <Text style={styles.title}>Puzzles · Probes</Text>
+        <Text style={styles.title}>Puzzles</Text>
         <Pressable
           style={styles.closeButton}
           onPress={close}

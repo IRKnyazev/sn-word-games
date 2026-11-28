@@ -1,0 +1,1242 @@
+2026-11-28 13:46:47.157 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== Setup: Environment info — 2026-11-28 13:47:10.398 =====
+2026-11-28 13:47:10.446 INFO [env] Supernote Puzzles v0.1.0 (versionCode 1018, 5854397, built 2026-11-28T03:46Z) · sn-plugin-lib 0.2.3 · firmware Chauvet 3.31.45 (user-reported)
+2026-11-28 13:47:10.535 INFO [env] environment {"deviceType":5,"pageDisplaySize":{"height":2560,"width":1920},"window":{"width":1024,"height":1365.3333333333333,"scale":1.875},"pluginDir":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0","externalRoot":"/storage/emulated/0","logFile":"/storage/emulated/0/Document/SupernotePuzzles/log.txt","currentPath":"/storage/emulated/0/Note/20261127_190736.note","currentPage":0,"canHandwrite":false,"penInfo":{"color":0,"width":600,"type":16},"pageSize":{"height":2560,"width":1920},"totalPages":1,"pageTemplate":{"md5":"0","name":"style_white_a5x2"},"permission.read":1,"permission.write":1,"permission.internet":1,"templatesOnDevice":{"p1-letters":false,"p1-words":false,"p3-crossword":false}}
+2026-11-28 13:47:10.535 INFO [Setup: Environment info] done {"summary":"Supernote Puzzles v0.1.0 (versionCode 1018, 5854397, built 2026-11-28T03:46Z) · sn-plugin-lib 0.2.3 · firmware Chauvet 3.31.45 (user-reported)\ndevice type 5, page {\"height\":2560,\"width\":1920}\nopen file: /storage/emulated/0/Note/20261127_190736.note page 0\nlog file: /storage/emulated/0/Document/SupernotePuzzles/log.txt"}
+2026-11-28 13:47:10.549 WARN [log] could not write the log file yet; lines kept in memory
+
+===== Setup: Create probe note — 2026-11-28 13:47:28.988 =====
+2026-11-28 13:47:29.112 INFO [png] wrote /storage/emulated/0/MyStyle/SupernotePuzzles/p1-letters-8733f9fd31.png {"bytes":93591}
+2026-11-28 13:47:29.166 INFO [png] wrote /storage/emulated/0/MyStyle/SupernotePuzzles/p1-words-fd1ec1ff65.png {"bytes":100209}
+2026-11-28 13:47:29.181 INFO [png] wrote /storage/emulated/0/MyStyle/SupernotePuzzles/p3-crossword-48d0102b09.png {"bytes":111828}
+2026-11-28 13:47:29.250 INFO [note] createNote ok 63ms {"notePath":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","template":"/storage/emulated/0/MyStyle/SupernotePuzzles/p1-letters-8733f9fd31.png"}
+2026-11-28 13:47:29.355 INFO [note] insertNotePage(page=1) ok 95ms
+2026-11-28 13:47:29.464 INFO [note] insertNotePage(page=2) ok 90ms
+2026-11-28 13:47:29.480 INFO [note] getNoteTotalPageNum 3
+2026-11-28 13:47:29.495 INFO [note] page 1 template {"md5":"afdc24e0eb433681ab6cdad857e3d686_212705","name":"user_p1-letters-8733f9fd31"}
+2026-11-28 13:47:29.509 INFO [note] page 2 template {"md5":"6910db3aeedd8f8dd51fd025bd43b8a8_212706","name":"user_p1-words-fd1ec1ff65"}
+2026-11-28 13:47:29.522 INFO [note] page 3 template {"md5":"3cb872486fad45cb6304cd8bd91ba630_212707","name":"user_p3-crossword-48d0102b09"}
+2026-11-28 13:47:29.523 INFO [note] page order p1-letters, p1-words, p3-crossword (expected p1-letters, p1-words, p3-crossword)
+2026-11-28 13:47:29.525 INFO [note] closePluginView ok 1ms
+2026-11-28 13:47:29.615 INFO [note] openNote ok 90ms
+2026-11-28 13:47:29.616 INFO [Setup: Create probe note] done {"summary":"Created and opened \"Probe 2026-11-28 134729.note\" (3 pages)."}
+2026-11-28 13:47:29.638 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 13:52:20.674 INFO [P4] tap READ by finger at (1662,2386) moved=20 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+
+===== P1 READ (page button) — 2026-11-28 13:52:20.674 =====
+2026-11-28 13:52:20.716 INFO [P1] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":0}
+2026-11-28 13:52:20.763 INFO [P1] reading p1-letters (page 1) from button {"size":{"width":1920,"height":2560}}
+2026-11-28 13:52:20.902 INFO [P1] getElements ok 139ms {"count":90}
+2026-11-28 13:52:21.257 INFO [P1] element census (read in 492 ms) {"byType":{"0":90},"byPen":{"16":90},"byLayer":{"0":90}}
+2026-11-28 13:52:21.258 INFO [P1] strokes=90 coordinate frame=px
+2026-11-28 13:52:21.321 INFO [P1] assignment {"cellsWithInk":52,"unassigned":0,"ambiguous":0}
+2026-11-28 13:52:21.794 INFO [P1] OK  cell A-A expected=A got="A" {"strokes":2,"calls":1,"ms":467}
+2026-11-28 13:52:22.212 INFO [P1] OK  cell A-B expected=B got="B" {"strokes":2,"calls":1,"ms":418}
+2026-11-28 13:52:22.591 INFO [P1] OK  cell A-C expected=C got="C" {"strokes":1,"calls":1,"ms":377}
+2026-11-28 13:52:22.997 INFO [P1] OK  cell A-D expected=D got="D" {"strokes":2,"calls":1,"ms":406}
+2026-11-28 13:52:23.412 INFO [P1] OK  cell A-E expected=E got="E" {"strokes":3,"calls":1,"ms":414}
+2026-11-28 13:52:23.812 INFO [P1] OK  cell A-F expected=F got="F" {"strokes":3,"calls":1,"ms":400}
+2026-11-28 13:52:24.212 INFO [P1] OK  cell A-G expected=G got="G" {"strokes":1,"calls":1,"ms":400}
+2026-11-28 13:52:24.618 INFO [P1] OK  cell A-H expected=H got="H" {"strokes":3,"calls":1,"ms":405}
+2026-11-28 13:52:25.035 INFO [P1] OK  cell A-I expected=I got="I" {"strokes":3,"calls":1,"ms":416}
+2026-11-28 13:52:25.417 INFO [P1] OK  cell A-J expected=J got="J" {"strokes":2,"calls":1,"ms":382}
+2026-11-28 13:52:25.809 INFO [P1] OK  cell A-K expected=K got="k" {"strokes":2,"calls":1,"ms":392}
+2026-11-28 13:52:26.182 INFO [P1] OK  cell A-L expected=L got="L" {"strokes":1,"calls":1,"ms":372}
+2026-11-28 13:52:26.599 INFO [P1] OK  cell A-M expected=M got="M" {"strokes":1,"calls":1,"ms":417}
+2026-11-28 13:52:26.990 INFO [P1] OK  cell A-N expected=N got="N" {"strokes":1,"calls":1,"ms":390}
+2026-11-28 13:52:27.248 INFO [P1] BAD cell A-O expected=O got="" {"strokes":1,"calls":1,"ms":257}
+2026-11-28 13:52:27.651 INFO [P1] OK  cell A-P expected=P got="p" {"strokes":2,"calls":1,"ms":401}
+2026-11-28 13:52:28.049 INFO [P1] OK  cell A-Q expected=Q got="Q" {"strokes":2,"calls":1,"ms":398}
+2026-11-28 13:52:28.448 INFO [P1] OK  cell A-R expected=R got="R" {"strokes":2,"calls":1,"ms":399}
+2026-11-28 13:52:28.836 INFO [P1] OK  cell A-S expected=S got="s" {"strokes":1,"calls":1,"ms":386}
+2026-11-28 13:52:29.226 INFO [P1] OK  cell A-T expected=T got="T" {"strokes":2,"calls":1,"ms":389}
+2026-11-28 13:52:29.478 INFO [P1] BAD cell A-U expected=U got="" {"strokes":1,"calls":1,"ms":252}
+2026-11-28 13:52:29.862 INFO [P1] OK  cell A-V expected=V got="v" {"strokes":1,"calls":1,"ms":384}
+2026-11-28 13:52:30.266 INFO [P1] OK  cell A-W expected=W got="w" {"strokes":1,"calls":1,"ms":404}
+2026-11-28 13:52:30.654 INFO [P1] BAD cell A-X expected=X got="✗" {"strokes":2,"calls":1,"ms":385}
+2026-11-28 13:52:31.035 INFO [P1] OK  cell A-Y expected=Y got="Y" {"strokes":2,"calls":1,"ms":380}
+2026-11-28 13:52:31.418 INFO [P1] BAD cell A-Z expected=Z got="2" {"strokes":1,"calls":1,"ms":382}
+2026-11-28 13:52:31.827 INFO [P1] OK  cell B-A expected=A got="A" {"strokes":2,"calls":1,"ms":409}
+2026-11-28 13:52:32.253 INFO [P1] OK  cell B-B expected=B got="B" {"strokes":2,"calls":1,"ms":424}
+2026-11-28 13:52:32.631 INFO [P1] OK  cell B-C expected=C got="C" {"strokes":1,"calls":1,"ms":378}
+2026-11-28 13:52:33.042 INFO [P1] BAD cell B-D expected=D got="P" {"strokes":2,"calls":1,"ms":410}
+2026-11-28 13:52:33.459 INFO [P1] OK  cell B-E expected=E got="E" {"strokes":3,"calls":1,"ms":417}
+2026-11-28 13:52:33.856 INFO [P1] OK  cell B-F expected=F got="F" {"strokes":3,"calls":1,"ms":397}
+2026-11-28 13:52:34.238 INFO [P1] OK  cell B-G expected=G got="G" {"strokes":1,"calls":1,"ms":382}
+2026-11-28 13:52:34.637 INFO [P1] OK  cell B-H expected=H got="H" {"strokes":3,"calls":1,"ms":399}
+2026-11-28 13:52:35.049 INFO [P1] OK  cell B-I expected=I got="I" {"strokes":3,"calls":1,"ms":411}
+2026-11-28 13:52:35.306 INFO [P1] BAD cell B-J expected=J got="" {"strokes":2,"calls":1,"ms":257}
+2026-11-28 13:52:35.702 INFO [P1] OK  cell B-K expected=K got="K" {"strokes":2,"calls":1,"ms":396}
+2026-11-28 13:52:36.077 INFO [P1] OK  cell B-L expected=L got="L" {"strokes":1,"calls":1,"ms":375}
+2026-11-28 13:52:36.485 INFO [P1] OK  cell B-M expected=M got="M" {"strokes":1,"calls":1,"ms":408}
+2026-11-28 13:52:36.872 INFO [P1] OK  cell B-N expected=N got="N" {"strokes":1,"calls":1,"ms":386}
+2026-11-28 13:52:37.125 INFO [P1] BAD cell B-O expected=O got="" {"strokes":1,"calls":1,"ms":253}
+2026-11-28 13:52:37.518 INFO [P1] OK  cell B-P expected=P got="P" {"strokes":2,"calls":1,"ms":393}
+2026-11-28 13:52:37.905 INFO [P1] OK  cell B-Q expected=Q got="Q" {"strokes":2,"calls":1,"ms":386}
+2026-11-28 13:52:38.316 INFO [P1] OK  cell B-R expected=R got="R" {"strokes":2,"calls":1,"ms":411}
+2026-11-28 13:52:38.693 INFO [P1] OK  cell B-S expected=S got="S" {"strokes":1,"calls":1,"ms":377}
+2026-11-28 13:52:39.063 INFO [P1] BAD cell B-T expected=T got="-" {"strokes":2,"calls":1,"ms":368}
+2026-11-28 13:52:39.438 INFO [P1] OK  cell B-U expected=U got="U" {"strokes":1,"calls":1,"ms":375}
+2026-11-28 13:52:39.820 INFO [P1] OK  cell B-V expected=V got="V" {"strokes":1,"calls":1,"ms":381}
+2026-11-28 13:52:40.221 INFO [P1] OK  cell B-W expected=W got="w" {"strokes":1,"calls":1,"ms":400}
+2026-11-28 13:52:40.609 INFO [P1] BAD cell B-X expected=X got="✗" {"strokes":2,"calls":1,"ms":388}
+2026-11-28 13:52:42.119 INFO [P1] OK  cell B-Y expected=Y got="Y" {"strokes":2,"calls":1,"ms":1509}
+2026-11-28 13:52:42.830 INFO [P1] OK  cell B-Z expected=Z got="Z" {"strokes":1,"calls":1,"ms":710}
+2026-11-28 13:52:43.226 INFO [P1] OK  fineliner A-A expected=A got="A"
+2026-11-28 13:52:43.642 INFO [P1] OK  fineliner A-B expected=B got="B"
+2026-11-28 13:52:44.023 INFO [P1] OK  fineliner A-C expected=C got="C"
+2026-11-28 13:52:44.417 INFO [P1] OK  fineliner A-D expected=D got="D"
+2026-11-28 13:52:44.831 INFO [P1] OK  fineliner A-E expected=E got="E"
+2026-11-28 13:52:45.229 INFO [P1] OK  fineliner A-F expected=F got="F"
+2026-11-28 13:52:45.628 INFO [P1] OK  fineliner A-G expected=G got="G"
+2026-11-28 13:52:46.032 INFO [P1] OK  fineliner A-H expected=H got="H"
+2026-11-28 13:52:46.451 INFO [P1] OK  fineliner A-I expected=I got="I"
+2026-11-28 13:52:46.835 INFO [P1] OK  fineliner A-J expected=J got="J"
+2026-11-28 13:52:47.227 INFO [P1] OK  fineliner A-K expected=K got="k"
+2026-11-28 13:52:47.603 INFO [P1] OK  fineliner A-L expected=L got="L"
+2026-11-28 13:52:48.013 INFO [P1] OK  fineliner A-M expected=M got="M"
+2026-11-28 13:52:48.403 INFO [P1] OK  fineliner A-N expected=N got="N"
+2026-11-28 13:52:48.664 INFO [P1] BAD fineliner A-O expected=O got=""
+2026-11-28 13:52:49.054 INFO [P1] OK  fineliner A-P expected=P got="p"
+2026-11-28 13:52:49.441 INFO [P1] OK  fineliner A-Q expected=Q got="Q"
+2026-11-28 13:52:49.843 INFO [P1] OK  fineliner A-R expected=R got="R"
+2026-11-28 13:52:50.230 INFO [P1] OK  fineliner A-S expected=S got="s"
+2026-11-28 13:52:50.639 INFO [P1] OK  fineliner A-T expected=T got="T"
+2026-11-28 13:52:50.896 INFO [P1] BAD fineliner A-U expected=U got=""
+2026-11-28 13:52:51.266 INFO [P1] OK  fineliner A-V expected=V got="v"
+2026-11-28 13:52:51.673 INFO [P1] OK  fineliner A-W expected=W got="w"
+2026-11-28 13:52:52.058 INFO [P1] BAD fineliner A-X expected=X got="✗"
+2026-11-28 13:52:52.439 INFO [P1] OK  fineliner A-Y expected=Y got="Y"
+2026-11-28 13:52:52.827 INFO [P1] BAD fineliner A-Z expected=Z got="2"
+2026-11-28 13:52:53.238 INFO [P1] OK  fineliner B-A expected=A got="A"
+2026-11-28 13:52:53.655 INFO [P1] OK  fineliner B-B expected=B got="B"
+2026-11-28 13:52:54.032 INFO [P1] OK  fineliner B-C expected=C got="C"
+2026-11-28 13:52:54.446 INFO [P1] BAD fineliner B-D expected=D got="P"
+2026-11-28 13:52:54.865 INFO [P1] OK  fineliner B-E expected=E got="E"
+2026-11-28 13:52:55.260 INFO [P1] OK  fineliner B-F expected=F got="F"
+2026-11-28 13:52:55.642 INFO [P1] OK  fineliner B-G expected=G got="G"
+2026-11-28 13:52:56.045 INFO [P1] OK  fineliner B-H expected=H got="H"
+2026-11-28 13:52:56.462 INFO [P1] OK  fineliner B-I expected=I got="I"
+2026-11-28 13:52:56.718 INFO [P1] BAD fineliner B-J expected=J got=""
+2026-11-28 13:52:57.111 INFO [P1] OK  fineliner B-K expected=K got="K"
+2026-11-28 13:52:57.484 INFO [P1] OK  fineliner B-L expected=L got="L"
+2026-11-28 13:52:57.894 INFO [P1] OK  fineliner B-M expected=M got="M"
+2026-11-28 13:52:58.285 INFO [P1] OK  fineliner B-N expected=N got="N"
+2026-11-28 13:52:58.538 INFO [P1] BAD fineliner B-O expected=O got=""
+2026-11-28 13:52:58.930 INFO [P1] OK  fineliner B-P expected=P got="P"
+2026-11-28 13:52:59.320 INFO [P1] OK  fineliner B-Q expected=Q got="Q"
+2026-11-28 13:52:59.745 INFO [P1] OK  fineliner B-R expected=R got="R"
+2026-11-28 13:53:00.124 INFO [P1] OK  fineliner B-S expected=S got="S"
+2026-11-28 13:53:00.492 INFO [P1] BAD fineliner B-T expected=T got="-"
+2026-11-28 13:53:00.869 INFO [P1] OK  fineliner B-U expected=U got="U"
+2026-11-28 13:53:01.245 INFO [P1] OK  fineliner B-V expected=V got="V"
+2026-11-28 13:53:01.643 INFO [P1] OK  fineliner B-W expected=W got="w"
+2026-11-28 13:53:02.027 INFO [P1] BAD fineliner B-X expected=X got="✗"
+2026-11-28 13:53:02.407 INFO [P1] OK  fineliner B-Y expected=Y got="Y"
+2026-11-28 13:53:02.796 INFO [P1] OK  fineliner B-Z expected=Z got="Z"
+2026-11-28 13:53:03.826 INFO [P1] BAD word A-row1 expected=ABCDEFGHI got="A B C D E F G # I" {"strokes":20,"calls":1,"ms":1027}
+2026-11-28 13:53:04.697 INFO [P1] BAD word A-row2 expected=JKLMNOPQR got="JKL.MN O P A R" {"strokes":14,"calls":1,"ms":871}
+2026-11-28 13:53:05.449 INFO [P1] OK  word A-row3 expected=STUVWXYZ got="S T U V W X Y Z" {"strokes":11,"calls":1,"ms":752}
+2026-11-28 13:53:07.102 INFO [P1] BAD section A expected=ABCDEFGHIJKLMNOPQRSTUVWXYZ got="                                            ABCDEFGHIJKL.MN O P A R S T U V W X Y Z" {"strokes":45,"calls":1,"ms":1650}
+2026-11-28 13:53:08.327 INFO [P1] OK  word B-row1 expected=ABCDEFGHIJKLM got="A B C D E F G H I J K L M" {"strokes":26,"calls":1,"ms":1225}
+2026-11-28 13:53:09.366 INFO [P1] BAD word B-row2 expected=NOPQRSTUVWXYZ got="NO PARS T U V W ✗ Y Z" {"strokes":19,"calls":1,"ms":1038}
+2026-11-28 13:53:10.811 INFO [P1] BAD section B expected=ABCDEFGHIJKLMNOPQRSTUVWXYZ got="A B C D E F G H I J K L M NO PARS T U V W ✗ Y Z" {"strokes":45,"calls":1,"ms":1443}
+2026-11-28 13:53:10.819 INFO [P1] summary ["P1 · Letters: 90 strokes in 52 cells (frame px)","per cell: 43/52 (83%), 52 calls, 21473 ms","per word/row: 2/5 (40%), 5 calls, 4913 ms","per section: 0/2 (0%), 2 calls, 3093 ms","per cell, look-alikes forgiven: 46/52","fineliner per cell: 43/52 exact, 46/52 forgiven, 0/52 read differently from the ink pen (52 calls, 19964 ms)","rows/words mapped to squares: 50/52 right; 4 of 5 rows/words had a matching letter count"]
+2026-11-28 13:53:10.826 INFO [P1 READ (page button)] done {"summary":"P1 · Letters: 90 strokes in 52 cells (frame px)\nper cell: 43/52 (83%), 52 calls, 21473 ms\nper word/row: 2/5 (40%), 5 calls, 4913 ms\nper section: 0/2 (0%), 2 calls, 3093 ms\nper cell, look-alikes forgiven: 46/52\nfineliner per cell: 43/52 exact, 46/52 forgiven, 0/52 read differently from the ink pen (52 calls, 19964 ms)\nrows/words mapped to squares: 50/52 right; 4 of 5 rows/words had a matching letter count"}
+2026-11-28 13:53:10.904 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 13:55:08.418 INFO [P4] tap READ by finger at (1689,2402) moved=5 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+
+===== P1 READ (page button) — 2026-11-28 13:55:08.419 =====
+2026-11-28 13:55:08.429 INFO [P1] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":1}
+2026-11-28 13:55:08.476 INFO [P1] reading p1-words (page 2) from button {"size":{"width":1920,"height":2560}}
+2026-11-28 13:55:08.621 INFO [P1] getElements ok 145ms {"count":90}
+2026-11-28 13:55:09.001 INFO [P1] element census (read in 525 ms) {"byType":{"0":90},"byPen":{"16":90},"byLayer":{"0":90}}
+2026-11-28 13:55:09.002 INFO [P1] strokes=90 coordinate frame=px
+2026-11-28 13:55:09.039 INFO [P1] assignment {"cellsWithInk":34,"unassigned":1,"ambiguous":0}
+2026-11-28 13:55:09.039 INFO [P1] unassigned stroke #89 [823,2101 → 932,2277]
+2026-11-28 13:55:09.434 INFO [P1] OK  cell C1-1 expected=Q got="Q" {"strokes":2,"calls":1,"ms":394}
+2026-11-28 13:55:09.812 INFO [P1] OK  cell C1-2 expected=U got="U" {"strokes":1,"calls":1,"ms":377}
+2026-11-28 13:55:10.179 INFO [P1] BAD cell C1-3 expected=I got="-" {"strokes":3,"calls":1,"ms":367}
+2026-11-28 13:55:10.609 INFO [P1] OK  cell C1-4 expected=R got="R" {"strokes":2,"calls":1,"ms":430}
+2026-11-28 13:55:10.993 INFO [P1] BAD cell C1-5 expected=K got="V" {"strokes":2,"calls":1,"ms":383}
+2026-11-28 13:55:11.405 INFO [P1] OK  cell C2-1 expected=J got="J" {"strokes":2,"calls":1,"ms":412}
+2026-11-28 13:55:11.666 INFO [P1] BAD cell C2-2 expected=U got="" {"strokes":1,"calls":1,"ms":260}
+2026-11-28 13:55:12.065 INFO [P1] OK  cell C2-3 expected=M got="M" {"strokes":1,"calls":1,"ms":399}
+2026-11-28 13:55:12.458 INFO [P1] OK  cell C2-4 expected=P got="p" {"strokes":2,"calls":1,"ms":393}
+2026-11-28 13:55:12.838 INFO [P1] OK  cell C2-5 expected=Y got="Y" {"strokes":2,"calls":1,"ms":379}
+2026-11-28 13:55:13.242 INFO [P1] OK  cell C3-1 expected=W got="W" {"strokes":1,"calls":1,"ms":403}
+2026-11-28 13:55:13.641 INFO [P1] OK  cell C3-2 expected=H got="H" {"strokes":3,"calls":1,"ms":398}
+2026-11-28 13:55:14.034 INFO [P1] OK  cell C3-3 expected=A got="A" {"strokes":2,"calls":1,"ms":393}
+2026-11-28 13:55:14.423 INFO [P1] OK  cell C3-4 expected=R got="R" {"strokes":2,"calls":1,"ms":388}
+2026-11-28 13:55:14.822 INFO [P1] OK  cell C3-5 expected=F got="F" {"strokes":3,"calls":1,"ms":398}
+2026-11-28 13:55:15.205 INFO [P1] OK  cell C4-1 expected=G got="G" {"strokes":1,"calls":1,"ms":382}
+2026-11-28 13:55:15.461 INFO [P1] BAD cell C4-2 expected=L got="" {"strokes":1,"calls":1,"ms":256}
+2026-11-28 13:55:15.711 INFO [P1] BAD cell C4-3 expected=O got="" {"strokes":1,"calls":1,"ms":249}
+2026-11-28 13:55:16.080 INFO [P1] OK  cell C4-4 expected=V got="v" {"strokes":1,"calls":1,"ms":368}
+2026-11-28 13:55:16.536 INFO [P1] OK  cell C4-5 expected=E got="E" {"strokes":3,"calls":1,"ms":456}
+2026-11-28 13:55:16.952 INFO [P1] OK  cell C5-1 expected=B got="B" {"strokes":2,"calls":1,"ms":416}
+2026-11-28 13:55:17.204 INFO [P1] BAD cell C5-2 expected=O got="" {"strokes":1,"calls":1,"ms":252}
+2026-11-28 13:55:17.588 INFO [P1] OK  cell C5-3 expected=X got="X" {"strokes":2,"calls":1,"ms":383}
+2026-11-28 13:55:18.007 INFO [P1] OK  cell C5-4 expected=E got="E" {"strokes":3,"calls":1,"ms":419}
+2026-11-28 13:55:18.388 INFO [P1] BAD cell C5-5 expected=D got="o" {"strokes":2,"calls":1,"ms":381}
+2026-11-28 13:55:18.763 INFO [P1] OK  cell C6-1 expected=S got="s" {"strokes":1,"calls":1,"ms":375}
+2026-11-28 13:55:19.135 INFO [P1] OK  cell C6-2 expected=C got="C" {"strokes":1,"calls":1,"ms":372}
+2026-11-28 13:55:19.555 INFO [P1] OK  cell C6-3 expected=E got="E" {"strokes":3,"calls":1,"ms":418}
+2026-11-28 13:55:19.946 INFO [P1] OK  cell C6-4 expected=N got="N" {"strokes":1,"calls":1,"ms":391}
+2026-11-28 13:55:20.336 INFO [P1] OK  cell C6-5 expected=T got="T" {"strokes":2,"calls":1,"ms":389}
+2026-11-28 13:55:21.192 INFO [P1] OK  cell D1 expected=PUZZLE got="PUZZLE" {"strokes":9,"calls":1,"ms":854}
+2026-11-28 13:55:22.068 INFO [P1] OK  cell D2 expected=LANTERN got="lantern" {"strokes":6,"calls":1,"ms":876}
+2026-11-28 13:55:23.133 INFO [P1] OK  cell D3 expected=JUKEBOX got="JUKEBOX" {"strokes":13,"calls":1,"ms":1064}
+2026-11-28 13:55:23.862 INFO [P1] BAD cell D4 expected=WHISKY got="whisk" {"strokes":7,"calls":1,"ms":728}
+2026-11-28 13:55:24.258 INFO [P1] OK  fineliner C1-1 expected=Q got="Q"
+2026-11-28 13:55:24.635 INFO [P1] OK  fineliner C1-2 expected=U got="U"
+2026-11-28 13:55:25.002 INFO [P1] BAD fineliner C1-3 expected=I got="-"
+2026-11-28 13:55:25.431 INFO [P1] OK  fineliner C1-4 expected=R got="R"
+2026-11-28 13:55:25.811 INFO [P1] BAD fineliner C1-5 expected=K got="V"
+2026-11-28 13:55:26.220 INFO [P1] OK  fineliner C2-1 expected=J got="J"
+2026-11-28 13:55:26.474 INFO [P1] BAD fineliner C2-2 expected=U got=""
+2026-11-28 13:55:26.880 INFO [P1] OK  fineliner C2-3 expected=M got="M"
+2026-11-28 13:55:27.280 INFO [P1] OK  fineliner C2-4 expected=P got="p"
+2026-11-28 13:55:27.658 INFO [P1] OK  fineliner C2-5 expected=Y got="Y"
+2026-11-28 13:55:28.062 INFO [P1] OK  fineliner C3-1 expected=W got="W"
+2026-11-28 13:55:28.459 INFO [P1] OK  fineliner C3-2 expected=H got="H"
+2026-11-28 13:55:28.852 INFO [P1] OK  fineliner C3-3 expected=A got="A"
+2026-11-28 13:55:29.240 INFO [P1] OK  fineliner C3-4 expected=R got="R"
+2026-11-28 13:55:30.084 INFO [P1] OK  fineliner C3-5 expected=F got="F"
+2026-11-28 13:55:30.800 INFO [P1] OK  fineliner C4-1 expected=G got="G"
+2026-11-28 13:55:31.056 INFO [P1] BAD fineliner C4-2 expected=L got=""
+2026-11-28 13:55:31.307 INFO [P1] BAD fineliner C4-3 expected=O got=""
+2026-11-28 13:55:31.676 INFO [P1] OK  fineliner C4-4 expected=V got="v"
+2026-11-28 13:55:32.130 INFO [P1] OK  fineliner C4-5 expected=E got="E"
+2026-11-28 13:55:32.544 INFO [P1] OK  fineliner C5-1 expected=B got="B"
+2026-11-28 13:55:32.802 INFO [P1] BAD fineliner C5-2 expected=O got=""
+2026-11-28 13:55:33.183 INFO [P1] OK  fineliner C5-3 expected=X got="X"
+2026-11-28 13:55:33.601 INFO [P1] OK  fineliner C5-4 expected=E got="E"
+2026-11-28 13:55:33.985 INFO [P1] BAD fineliner C5-5 expected=D got="o"
+2026-11-28 13:55:34.362 INFO [P1] OK  fineliner C6-1 expected=S got="s"
+2026-11-28 13:55:34.734 INFO [P1] OK  fineliner C6-2 expected=C got="C"
+2026-11-28 13:55:35.148 INFO [P1] OK  fineliner C6-3 expected=E got="E"
+2026-11-28 13:55:35.546 INFO [P1] OK  fineliner C6-4 expected=N got="N"
+2026-11-28 13:55:35.942 INFO [P1] OK  fineliner C6-5 expected=T got="T"
+2026-11-28 13:55:36.601 INFO [P1] OK  word C-row1 expected=QUIRK got="Q U I R K" {"strokes":10,"calls":1,"ms":659}
+2026-11-28 13:55:37.229 INFO [P1] OK  word C-row2 expected=JUMPY got="J U M P Y" {"strokes":8,"calls":1,"ms":626}
+2026-11-28 13:55:37.909 INFO [P1] OK  word C-row3 expected=WHARF got="W H A R F" {"strokes":11,"calls":1,"ms":679}
+2026-11-28 13:55:38.554 INFO [P1] OK  word C-row4 expected=GLOVE got="GLO.VE" {"strokes":7,"calls":1,"ms":644}
+2026-11-28 13:55:39.234 INFO [P1] OK  word C-row5 expected=BOXED got="BO X ED" {"strokes":10,"calls":1,"ms":680}
+2026-11-28 13:55:39.861 INFO [P1] BAD word C-row6 expected=SCENT got="SC.INT" {"strokes":8,"calls":1,"ms":626}
+2026-11-28 13:55:41.492 INFO [P1] BAD section C expected=QUIRKJUMPYWHARFGLOVEBOXEDSCENT got="Q U I R K\nJ U M P Y\n  WHARFGLO.VE\nB O ✗ ED\nSC.INT" {"strokes":54,"calls":1,"ms":1628}
+2026-11-28 13:55:42.843 INFO [P1] BAD section D expected=PUZZLELANTERNJUKEBOXWHISKY got="PUZZLE\nlantern\nJUKEBOX\nwhisk" {"strokes":35,"calls":1,"ms":1350}
+2026-11-28 13:55:42.845 INFO [P1] summary ["P1 · Words: 90 strokes in 34 cells (frame px)","per cell: 26/34 (76%), 34 calls, 14803 ms","per word/row: 5/6 (83%), 6 calls, 3914 ms","per section: 0/2 (0%), 2 calls, 2978 ms","per cell, look-alikes forgiven: 23/30","fineliner per cell: 23/30 exact, 23/30 forgiven, 0/30 read differently from the ink pen (30 calls, 12078 ms)","rows/words mapped to squares: 29/30 right; 6 of 6 rows/words had a matching letter count","1 strokes outside any cell"]
+2026-11-28 13:55:42.850 INFO [P1 READ (page button)] done {"summary":"P1 · Words: 90 strokes in 34 cells (frame px)\nper cell: 26/34 (76%), 34 calls, 14803 ms\nper word/row: 5/6 (83%), 6 calls, 3914 ms\nper section: 0/2 (0%), 2 calls, 2978 ms\nper cell, look-alikes forgiven: 23/30\nfineliner per cell: 23/30 exact, 23/30 forgiven, 0/30 read differently from the ink pen (30 calls, 12078 ms)\nrows/words mapped to squares: 29/30 right; 6 of 6 rows/words had a matching letter count\n1 strokes outside any cell"}
+2026-11-28 13:55:42.975 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 13:57:12.340 INFO [P4] tap READ by finger at (1686,2378) moved=6 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+
+===== P1 READ (page button) — 2026-11-28 13:57:12.340 =====
+2026-11-28 13:57:12.351 INFO [P1] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":2}
+2026-11-28 13:57:12.400 INFO [P1] reading p3-crossword (page 3) from button {"size":{"width":1920,"height":2560}}
+2026-11-28 13:57:12.507 INFO [P1] getElements ok 106ms {"count":62}
+2026-11-28 13:57:12.741 INFO [P1] element census (read in 340 ms) {"byType":{"0":62},"byPen":{"16":62},"byLayer":{"0":62}}
+2026-11-28 13:57:12.741 INFO [P1] strokes=62 coordinate frame=px
+2026-11-28 13:57:12.892 INFO [P1] assignment {"cellsWithInk":40,"unassigned":0,"ambiguous":0}
+2026-11-28 13:57:13.300 INFO [P1] --- cell G-3-1 got="P" {"strokes":2,"calls":1,"ms":407}
+2026-11-28 13:57:13.683 INFO [P1] --- cell G-3-2 got="A" {"strokes":2,"calls":1,"ms":382}
+2026-11-28 13:57:14.115 INFO [P1] --- cell G-3-3 got="R" {"strokes":2,"calls":1,"ms":431}
+2026-11-28 13:57:14.511 INFO [P1] --- cell G-3-4 got="A" {"strokes":2,"calls":1,"ms":396}
+2026-11-28 13:57:14.897 INFO [P1] --- cell G-3-5 got="N" {"strokes":1,"calls":1,"ms":386}
+2026-11-28 13:57:15.151 INFO [P1] --- cell G-3-6 got="" {"strokes":1,"calls":1,"ms":253}
+2026-11-28 13:57:15.592 INFO [P1] --- cell G-3-7 got="I" {"strokes":3,"calls":1,"ms":441}
+2026-11-28 13:57:15.994 INFO [P1] --- cell G-3-8 got="D" {"strokes":2,"calls":1,"ms":401}
+2026-11-28 13:57:16.367 INFO [P1] --- cell G-4-8 got="e" {"strokes":1,"calls":1,"ms":372}
+2026-11-28 13:57:16.774 INFO [P1] --- cell G-4-14 got="F" {"strokes":3,"calls":1,"ms":406}
+2026-11-28 13:57:17.029 INFO [P1] --- cell G-5-8 got="" {"strokes":1,"calls":1,"ms":255}
+2026-11-28 13:57:17.400 INFO [P1] --- cell G-5-14 got="L" {"strokes":1,"calls":1,"ms":371}
+2026-11-28 13:57:17.769 INFO [P1] --- cell G-6-8 got="e" {"strokes":1,"calls":1,"ms":367}
+2026-11-28 13:57:18.141 INFO [P1] --- cell G-6-14 got="0" {"strokes":1,"calls":1,"ms":372}
+2026-11-28 13:57:18.396 INFO [P1] --- cell G-7-8 got="" {"strokes":1,"calls":1,"ms":255}
+2026-11-28 13:57:18.797 INFO [P1] --- cell G-7-14 got="W" {"strokes":1,"calls":1,"ms":400}
+2026-11-28 13:57:19.056 INFO [P1] --- cell G-8-2 got="" {"strokes":1,"calls":1,"ms":258}
+2026-11-28 13:57:19.487 INFO [P1] --- cell G-8-6 got="B" {"strokes":2,"calls":1,"ms":431}
+2026-11-28 13:57:19.901 INFO [P1] --- cell G-8-7 got="R" {"strokes":2,"calls":1,"ms":414}
+2026-11-28 13:57:20.289 INFO [P1] --- cell G-8-8 got="0" {"strokes":1,"calls":1,"ms":386}
+2026-11-28 13:57:20.684 INFO [P1] --- cell G-8-9 got="k" {"strokes":2,"calls":1,"ms":395}
+2026-11-28 13:57:21.103 INFO [P1] --- cell G-8-10 got="E" {"strokes":3,"calls":1,"ms":418}
+2026-11-28 13:57:21.516 INFO [P1] --- cell G-8-14 got="E" {"strokes":3,"calls":1,"ms":413}
+2026-11-28 13:57:21.907 INFO [P1] --- cell G-9-2 got="N" {"strokes":1,"calls":1,"ms":390}
+2026-11-28 13:57:22.309 INFO [P1] --- cell G-9-8 got="p" {"strokes":2,"calls":1,"ms":401}
+2026-11-28 13:57:22.715 INFO [P1] --- cell G-9-14 got="R" {"strokes":2,"calls":1,"ms":406}
+2026-11-28 13:57:23.086 INFO [P1] --- cell G-10-2 got="S" {"strokes":1,"calls":1,"ms":371}
+2026-11-28 13:57:23.457 INFO [P1] --- cell G-10-8 got="i" {"strokes":2,"calls":1,"ms":370}
+2026-11-28 13:57:23.859 INFO [P1] --- cell G-11-2 got="A" {"strokes":2,"calls":1,"ms":401}
+2026-11-28 13:57:24.248 INFO [P1] --- cell G-11-8 got="n" {"strokes":1,"calls":1,"ms":388}
+2026-11-28 13:57:24.649 INFO [P1] --- cell G-12-2 got="N" {"strokes":1,"calls":1,"ms":401}
+2026-11-28 13:57:25.020 INFO [P1] --- cell G-12-9 got="r" {"strokes":1,"calls":1,"ms":371}
+2026-11-28 13:57:25.412 INFO [P1] --- cell G-12-10 got="O" {"strokes":1,"calls":1,"ms":391}
+2026-11-28 13:57:25.802 INFO [P1] --- cell G-12-11 got="S" {"strokes":1,"calls":1,"ms":390}
+2026-11-28 13:57:26.226 INFO [P1] --- cell G-13-2 got="E" {"strokes":3,"calls":1,"ms":423}
+2026-11-28 13:57:26.600 INFO [P1] --- cell G-13-8 got="J" {"strokes":1,"calls":1,"ms":372}
+2026-11-28 13:57:26.998 INFO [P1] --- cell G-13-11 got="0" {"strokes":1,"calls":1,"ms":398}
+2026-11-28 13:57:27.367 INFO [P1] --- cell G-13-12 got="v" {"strokes":1,"calls":1,"ms":368}
+2026-11-28 13:57:27.754 INFO [P1] --- cell G-13-13 got="e" {"strokes":1,"calls":1,"ms":386}
+2026-11-28 13:57:28.124 INFO [P1] --- cell G-13-14 got="r" {"strokes":1,"calls":1,"ms":369}
+2026-11-28 13:57:28.522 INFO [P1] --- fineliner G-3-1 got="P"
+2026-11-28 13:57:28.904 INFO [P1] --- fineliner G-3-2 got="A"
+2026-11-28 13:57:29.341 INFO [P1] --- fineliner G-3-3 got="R"
+2026-11-28 13:57:29.739 INFO [P1] --- fineliner G-3-4 got="A"
+2026-11-28 13:57:30.128 INFO [P1] --- fineliner G-3-5 got="N"
+2026-11-28 13:57:30.383 INFO [P1] --- fineliner G-3-6 got=""
+2026-11-28 13:57:30.820 INFO [P1] --- fineliner G-3-7 got="I"
+2026-11-28 13:57:31.222 INFO [P1] --- fineliner G-3-8 got="D"
+2026-11-28 13:57:31.594 INFO [P1] --- fineliner G-4-8 got="e"
+2026-11-28 13:57:31.993 INFO [P1] --- fineliner G-4-14 got="F"
+2026-11-28 13:57:32.248 INFO [P1] --- fineliner G-5-8 got=""
+2026-11-28 13:57:33.927 INFO [P1] --- fineliner G-5-14 got="L"
+2026-11-28 13:57:34.340 INFO [P1] --- fineliner G-6-8 got="e"
+2026-11-28 13:57:35.352 INFO [P1] --- fineliner G-6-14 got="0"
+2026-11-28 13:57:35.917 INFO [P1] --- fineliner G-7-8 got=""
+2026-11-28 13:57:36.322 INFO [P1] --- fineliner G-7-14 got="W"
+2026-11-28 13:57:36.577 INFO [P1] --- fineliner G-8-2 got=""
+2026-11-28 13:57:37.007 INFO [P1] --- fineliner G-8-6 got="B"
+2026-11-28 13:57:37.425 INFO [P1] --- fineliner G-8-7 got="R"
+2026-11-28 13:57:37.815 INFO [P1] --- fineliner G-8-8 got="0"
+2026-11-28 13:57:38.212 INFO [P1] --- fineliner G-8-9 got="k"
+2026-11-28 13:57:38.632 INFO [P1] --- fineliner G-8-10 got="E"
+2026-11-28 13:57:39.047 INFO [P1] --- fineliner G-8-14 got="E"
+2026-11-28 13:57:39.439 INFO [P1] --- fineliner G-9-2 got="N"
+2026-11-28 13:57:39.826 INFO [P1] --- fineliner G-9-8 got="p"
+2026-11-28 13:57:40.234 INFO [P1] --- fineliner G-9-14 got="R"
+2026-11-28 13:57:40.619 INFO [P1] --- fineliner G-10-2 got="S"
+2026-11-28 13:57:40.998 INFO [P1] --- fineliner G-10-8 got="i"
+2026-11-28 13:57:41.410 INFO [P1] --- fineliner G-11-2 got="A"
+2026-11-28 13:57:41.797 INFO [P1] --- fineliner G-11-8 got="n"
+2026-11-28 13:57:42.186 INFO [P1] --- fineliner G-12-2 got="N"
+2026-11-28 13:57:42.562 INFO [P1] --- fineliner G-12-9 got="r"
+2026-11-28 13:57:42.953 INFO [P1] --- fineliner G-12-10 got="O"
+2026-11-28 13:57:43.342 INFO [P1] --- fineliner G-12-11 got="S"
+2026-11-28 13:57:43.756 INFO [P1] --- fineliner G-13-2 got="E"
+2026-11-28 13:57:44.129 INFO [P1] --- fineliner G-13-8 got="J"
+2026-11-28 13:57:44.527 INFO [P1] --- fineliner G-13-11 got="0"
+2026-11-28 13:57:44.905 INFO [P1] --- fineliner G-13-12 got="v"
+2026-11-28 13:57:45.290 INFO [P1] --- fineliner G-13-13 got="e"
+2026-11-28 13:57:45.661 INFO [P1] --- fineliner G-13-14 got="r"
+2026-11-28 13:57:46.542 INFO [P1] --- word G-across7 got="PARANO.IO" {"strokes":15,"calls":1,"ms":879}
+2026-11-28 13:57:46.921 INFO [P1] --- word G-across9 got="e" {"strokes":1,"calls":1,"ms":378}
+2026-11-28 13:57:47.325 INFO [P1] --- word G-across10 got="F" {"strokes":3,"calls":1,"ms":404}
+2026-11-28 13:57:47.580 INFO [P1] --- word G-across12 got="" {"strokes":1,"calls":1,"ms":254}
+2026-11-28 13:57:47.974 INFO [P1] --- word G-across13 got="L" {"strokes":1,"calls":1,"ms":394}
+2026-11-28 13:57:48.345 INFO [P1] --- word G-across15 got="e" {"strokes":1,"calls":1,"ms":370}
+2026-11-28 13:57:48.720 INFO [P1] --- word G-across16 got="0" {"strokes":1,"calls":1,"ms":375}
+2026-11-28 13:57:48.976 INFO [P1] --- word G-across18 got="" {"strokes":1,"calls":1,"ms":256}
+2026-11-28 13:57:49.382 INFO [P1] --- word G-across19 got="W" {"strokes":1,"calls":1,"ms":405}
+2026-11-28 13:57:49.636 INFO [P1] --- word G-across20 got="" {"strokes":1,"calls":1,"ms":254}
+2026-11-28 13:57:50.362 INFO [P1] --- word G-across21 got="BROKE" {"strokes":10,"calls":1,"ms":726}
+2026-11-28 13:57:50.781 INFO [P1] --- word G-across22 got="E" {"strokes":3,"calls":1,"ms":419}
+2026-11-28 13:57:51.181 INFO [P1] --- word G-across23 got="N" {"strokes":1,"calls":1,"ms":400}
+2026-11-28 13:57:51.566 INFO [P1] --- word G-across24 got="p" {"strokes":2,"calls":1,"ms":383}
+2026-11-28 13:57:51.973 INFO [P1] --- word G-across25 got="R" {"strokes":2,"calls":1,"ms":406}
+2026-11-28 13:57:52.347 INFO [P1] --- word G-across26 got="S" {"strokes":1,"calls":1,"ms":374}
+2026-11-28 13:57:52.725 INFO [P1] --- word G-across27 got="i" {"strokes":2,"calls":1,"ms":378}
+2026-11-28 13:57:53.137 INFO [P1] --- word G-across29 got="A" {"strokes":2,"calls":1,"ms":411}
+2026-11-28 13:57:53.528 INFO [P1] --- word G-across30 got="n" {"strokes":1,"calls":1,"ms":390}
+2026-11-28 13:57:53.916 INFO [P1] --- word G-across32 got="N" {"strokes":1,"calls":1,"ms":388}
+2026-11-28 13:57:54.382 INFO [P1] --- word G-across33 got="ros" {"strokes":3,"calls":1,"ms":466}
+2026-11-28 13:57:55.033 INFO [P1] --- word G-across35 got="Eg over" {"strokes":8,"calls":1,"ms":650}
+2026-11-28 13:57:56.800 INFO [P1] --- section G got="PARANO.IO\n                    e F\n                      V L e O\n                      I W\n  I BROKE E N P R S i\n  A n\n  N ros\n  E S over" {"strokes":62,"calls":1,"ms":1765}
+2026-11-28 13:57:56.804 INFO [P1] summary ["P3 · Crossword template: 62 strokes in 40 cells (frame px)","per cell: 0/0 (—), 40 calls, 15206 ms","per word/row: 0/0 (—), 22 calls, 9360 ms","per section: 0/0 (—), 1 calls, 1765 ms","rows/words mapped to squares: 0/0 right; 19 of 22 rows/words had a matching letter count"]
+2026-11-28 13:57:56.807 INFO [P1 READ (page button)] done {"summary":"P3 · Crossword template: 62 strokes in 40 cells (frame px)\nper cell: 0/0 (—), 40 calls, 15206 ms\nper word/row: 0/0 (—), 22 calls, 9360 ms\nper section: 0/0 (—), 1 calls, 1765 ms\nrows/words mapped to squares: 0/0 right; 19 of 22 rows/words had a matching letter count"}
+2026-11-28 13:57:56.969 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 13:58:08.107 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P2 Coordinates: Arm (10 min) — 2026-11-28 13:58:18.523 =====
+2026-11-28 13:58:18.556 INFO [P2] armed for 10 minutes; pen-up listener registered
+2026-11-28 13:58:18.557 INFO [P2 Coordinates: Arm (10 min)] done {"summary":"P2 armed for 10 minutes. Go to page 3 and draw one straight line across the P2 target box, then run \"P2 report\"."}
+2026-11-28 13:58:18.731 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 13:58:33.803 INFO [P2] pen-up skipped: type=0 penType=4 (not ink)
+2026-11-28 13:58:42.279 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P2 Coordinates: Report — 2026-11-28 13:58:47.736 =====
+2026-11-28 13:58:47.808 INFO [P2] device {"pageDisplaySize":{"height":2560,"width":1920},"deviceType":5,"window":{"width":1024,"height":1365.3333333333333,"scale":1.875}}
+2026-11-28 13:58:47.814 INFO [P2] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":2}
+2026-11-28 13:58:47.882 INFO [P2] target [1380,2010 → 1800,2210] on page 3, page size 1920×2560
+2026-11-28 13:58:48.364 INFO [P2] getLastElement type=0 bounds=[76,318 → 1743,1892] → px, misses target
+2026-11-28 13:58:48.365 INFO [P2] motion pen action=0 at (1536,381) outside target
+2026-11-28 13:58:48.365 INFO [P2] motion pen action=1 at (1539,381) outside target
+2026-11-28 13:58:48.366 INFO [P2] motion pen action=0 at (1618,79) outside target
+2026-11-28 13:58:48.366 INFO [P2] motion pen action=1 at (1616,79) outside target
+2026-11-28 13:58:48.366 INFO [P2] motion pen action=0 at (1344,376) outside target
+2026-11-28 13:58:48.366 INFO [P2] motion pen action=1 at (1342,375) outside target
+2026-11-28 13:58:48.366 INFO [P2] summary ["getElements: 63 strokes, 0 at the target","pen-up: nothing captured (arm P2 first, then draw)","motion: 6 pen down/up events logged"]
+2026-11-28 13:58:48.367 INFO [P2 Coordinates: Report] done {"summary":"getElements: 63 strokes, 0 at the target\npen-up: nothing captured (arm P2 first, then draw)\nmotion: 6 pen down/up events logged"}
+2026-11-28 13:58:48.538 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 13:59:34.124 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P4 Page buttons: Log taps (10 min) — 2026-11-28 13:59:41.159 =====
+2026-11-28 13:59:41.192 INFO [P4] armed for 10 minutes: logging every pen/finger down and up
+2026-11-28 13:59:41.193 INFO [P4 Page buttons: Log taps (10 min)] done {"summary":"P4 logging on for 10 minutes. Tap TAP with a finger, then with the pen; then open another note and tap the same spot; then tap TAP while the top menu is open over it."}
+2026-11-28 13:59:41.377 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 13:59:49.440 INFO [P4] motion action=0 tool=finger at (1177,1472) pointers=1
+2026-11-28 13:59:49.642 INFO [P4] motion action=1 tool=finger at (1671,1394) pointers=1
+2026-11-28 13:59:50.592 INFO [P4] motion action=0 tool=finger at (1169,1498) pointers=1
+2026-11-28 13:59:50.751 INFO [P4] motion action=1 tool=finger at (1721,1425) pointers=1
+2026-11-28 13:59:52.660 INFO [P4] motion action=0 tool=finger at (307,2374) pointers=1
+2026-11-28 13:59:52.848 INFO [P4] motion action=1 tool=finger at (307,2374) pointers=1
+2026-11-28 13:59:52.870 INFO [P4] tap TAP by finger at (307,2374) moved=0 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+2026-11-28 13:59:54.588 INFO [P4] motion action=0 tool=finger at (1287,1354) pointers=1
+2026-11-28 13:59:54.664 INFO [P4] motion action=1 tool=finger at (1287,1354) pointers=1
+2026-11-28 13:59:54.681 INFO [P4] dialog ok 1810ms
+2026-11-28 13:59:55.563 INFO [P4] motion action=0 tool=finger at (1457,1282) pointers=1
+2026-11-28 13:59:55.767 INFO [P4] motion action=1 tool=finger at (600,1421) pointers=1
+2026-11-28 13:59:56.903 INFO [P4] motion action=0 tool=finger at (321,2380) pointers=1
+2026-11-28 13:59:57.050 INFO [P4] motion action=1 tool=finger at (321,2380) pointers=1
+2026-11-28 13:59:57.074 INFO [P4] tap TAP by finger at (321,2380) moved=0 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+2026-11-28 13:59:58.217 INFO [P4] motion action=0 tool=finger at (1354,1369) pointers=1
+2026-11-28 13:59:58.364 INFO [P4] motion action=1 tool=finger at (1359,1372) pointers=1
+2026-11-28 13:59:58.379 INFO [P4] dialog ok 1305ms
+2026-11-28 13:59:59.064 INFO [P4] motion action=0 tool=finger at (1404,1353) pointers=1
+2026-11-28 13:59:59.242 INFO [P4] motion action=1 tool=finger at (626,1573) pointers=1
+2026-11-28 14:00:00.381 INFO [P4] motion action=0 tool=finger at (345,2381) pointers=1
+2026-11-28 14:00:00.530 INFO [P4] motion action=1 tool=finger at (345,2381) pointers=1
+2026-11-28 14:00:00.551 INFO [P4] tap TAP by finger at (345,2381) moved=0 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+2026-11-28 14:00:01.468 INFO [P4] motion action=0 tool=finger at (1305,1377) pointers=1
+2026-11-28 14:00:01.575 INFO [P4] motion action=1 tool=finger at (1305,1377) pointers=1
+2026-11-28 14:00:01.589 INFO [P4] dialog ok 1038ms
+2026-11-28 14:00:02.107 INFO [P4] motion action=0 tool=finger at (617,1714) pointers=1
+2026-11-28 14:00:02.313 INFO [P4] motion action=1 tool=finger at (1443,1657) pointers=1
+2026-11-28 14:00:03.255 INFO [P4] motion action=0 tool=finger at (633,1685) pointers=1
+2026-11-28 14:00:03.386 INFO [P4] motion action=1 tool=finger at (1149,1700) pointers=1
+2026-11-28 14:00:11.244 INFO [P4] motion action=0 tool=pen at (339,2334) pointers=1
+2026-11-28 14:00:11.321 INFO [P4] motion action=1 tool=pen at (337,2337) pointers=1
+2026-11-28 14:00:11.348 INFO [P4] tap TAP by pen at (337,2337) moved=4 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+2026-11-28 14:00:11.353 INFO [P2] pen-up skipped: type=0 penType=4 (not ink)
+2026-11-28 14:00:12.836 INFO [P4] motion action=0 tool=pen at (1291,1382) pointers=1
+2026-11-28 14:00:12.872 INFO [P4] motion action=1 tool=pen at (1286,1385) pointers=1
+2026-11-28 14:00:12.892 INFO [P4] dialog ok 1543ms
+2026-11-28 14:00:13.549 INFO [P4] motion action=0 tool=finger at (1197,1482) pointers=1
+2026-11-28 14:00:13.671 INFO [P4] motion action=1 tool=finger at (349,1752) pointers=1
+2026-11-28 14:00:15.319 INFO [P4] motion action=0 tool=pen at (340,2353) pointers=1
+2026-11-28 14:00:15.370 INFO [P4] motion action=1 tool=pen at (344,2349) pointers=1
+2026-11-28 14:00:15.402 INFO [P4] tap TAP by pen at (344,2349) moved=6 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+2026-11-28 14:00:15.404 INFO [P2] pen-up skipped: type=0 penType=4 (not ink)
+2026-11-28 14:00:16.800 INFO [P4] motion action=0 tool=finger at (1323,1378) pointers=1
+2026-11-28 14:00:16.935 INFO [P4] motion action=1 tool=finger at (1323,1378) pointers=1
+2026-11-28 14:00:16.949 INFO [P4] dialog ok 1546ms
+2026-11-28 14:00:17.587 INFO [P4] motion action=0 tool=finger at (1482,1426) pointers=1
+2026-11-28 14:00:17.820 INFO [P4] motion action=1 tool=finger at (503,1732) pointers=1
+2026-11-28 14:00:19.269 INFO [P4] motion action=0 tool=pen at (333,2339) pointers=1
+2026-11-28 14:00:19.324 INFO [P4] motion action=1 tool=pen at (335,2341) pointers=1
+2026-11-28 14:00:19.354 INFO [P4] tap TAP by pen at (335,2341) moved=3 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+2026-11-28 14:00:19.356 INFO [P2] pen-up skipped: type=0 penType=4 (not ink)
+2026-11-28 14:00:20.573 INFO [P4] motion action=0 tool=pen at (1262,1381) pointers=1
+2026-11-28 14:00:20.593 INFO [P4] motion action=1 tool=pen at (1262,1382) pointers=1
+2026-11-28 14:00:20.610 INFO [P4] dialog ok 1256ms
+2026-11-28 14:00:32.348 INFO [P4] motion action=0 tool=finger at (315,2392) pointers=1
+2026-11-28 14:00:33.777 INFO [P4] motion action=1 tool=finger at (696,2004) pointers=1
+2026-11-28 14:00:36.391 INFO [P4] motion action=0 tool=pen at (342,2343) pointers=1
+2026-11-28 14:00:37.460 INFO [P4] motion action=1 tool=pen at (495,2194) pointers=1
+2026-11-28 14:00:37.495 INFO [P2] pen-up skipped: type=0 penType=4 (not ink)
+2026-11-28 14:00:38.829 INFO [P4] motion action=0 tool=finger at (1005,1490) pointers=1
+2026-11-28 14:00:38.937 INFO [P4] motion action=1 tool=finger at (1336,1506) pointers=1
+2026-11-28 14:00:40.359 INFO [P4] motion action=0 tool=finger at (360,2376) pointers=1
+2026-11-28 14:00:41.563 INFO [P4] motion action=1 tool=finger at (694,2005) pointers=1
+2026-11-28 14:00:44.129 INFO [P4] motion action=0 tool=pen at (292,2333) pointers=1
+2026-11-28 14:00:44.879 INFO [P4] motion action=1 tool=pen at (197,2069) pointers=1
+2026-11-28 14:00:44.907 INFO [P2] pen-up skipped: type=0 penType=4 (not ink)
+2026-11-28 14:00:45.735 INFO [P4] motion action=0 tool=finger at (582,1734) pointers=1
+2026-11-28 14:00:45.911 INFO [P4] motion action=1 tool=finger at (1180,1790) pointers=1
+2026-11-28 14:00:47.248 INFO [P4] motion action=0 tool=finger at (311,2356) pointers=1
+2026-11-28 14:00:48.425 INFO [P4] motion action=1 tool=finger at (569,1965) pointers=1
+2026-11-28 14:01:13.984 INFO [P4] motion action=0 tool=finger at (297,2558) pointers=1
+2026-11-28 14:01:14.106 INFO [P4] motion action=1 tool=finger at (297,2558) pointers=1
+2026-11-28 14:01:16.178 INFO [P4] motion action=0 tool=finger at (277,2330) pointers=1
+2026-11-28 14:01:16.312 INFO [P4] motion action=1 tool=finger at (277,2330) pointers=1
+2026-11-28 14:01:16.334 INFO [P4] tap TAP by finger at (277,2330) moved=0 → ignored {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":false,"note":"probe","debounced":false,"busy":false}
+2026-11-28 14:01:17.581 INFO [P4] motion action=0 tool=pen at (290,2296) pointers=1
+2026-11-28 14:01:17.692 INFO [P4] motion action=1 tool=pen at (292,2294) pointers=1
+2026-11-28 14:01:17.725 INFO [P4] tap TAP by pen at (292,2294) moved=3 → ignored {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":false,"note":"probe","debounced":false,"busy":false}
+2026-11-28 14:01:19.405 INFO [P4] motion action=0 tool=pen at (294,2520) pointers=1
+2026-11-28 14:01:19.482 INFO [P4] motion action=1 tool=pen at (302,2519) pointers=1
+2026-11-28 14:01:20.400 INFO [P4] motion action=0 tool=pen at (311,2308) pointers=1
+2026-11-28 14:01:20.507 INFO [P4] motion action=1 tool=pen at (311,2304) pointers=1
+2026-11-28 14:01:20.530 INFO [P4] tap TAP by pen at (311,2304) moved=4 → ignored {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":false,"note":"probe","debounced":false,"busy":false}
+2026-11-28 14:01:23.422 INFO [P4] motion action=0 tool=finger at (1870,61) pointers=1
+2026-11-28 14:01:26.483 INFO [P4] motion action=1 tool=finger at (760,2354) pointers=1
+2026-11-28 14:01:27.598 INFO [P4] motion action=0 tool=pen at (1847,59) pointers=1
+2026-11-28 14:01:29.139 INFO [P4] motion action=1 tool=pen at (491,2065) pointers=1
+2026-11-28 14:01:29.198 INFO [P2] pen-up skipped: type=0 penType=4 (not ink)
+2026-11-28 14:01:30.343 INFO [P4] motion action=0 tool=pen at (1858,60) pointers=1
+2026-11-28 14:01:32.535 INFO [P4] motion action=1 tool=pen at (1872,168) pointers=1
+2026-11-28 14:01:33.382 INFO [P4] motion action=0 tool=finger at (1873,36) pointers=1
+2026-11-28 14:01:36.245 INFO [P4] motion action=1 tool=finger at (1766,369) pointers=1
+2026-11-28 14:01:36.538 INFO [P4] motion action=0 tool=finger at (1764,85) pointers=1
+2026-11-28 14:01:40.671 INFO [P4] motion action=1 tool=finger at (1500,2357) pointers=1
+2026-11-28 14:01:41.716 INFO [P4] motion action=0 tool=pen at (308,2299) pointers=1
+2026-11-28 14:01:41.770 INFO [P4] motion action=1 tool=pen at (302,2306) pointers=1
+2026-11-28 14:01:41.797 INFO [P4] tap TAP by pen at (302,2306) moved=9 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+2026-11-28 14:01:43.251 INFO [P4] motion action=0 tool=pen at (1301,1351) pointers=1
+2026-11-28 14:01:43.278 INFO [P4] motion action=1 tool=pen at (1289,1340) pointers=1
+2026-11-28 14:01:43.298 INFO [P4] dialog ok 1499ms
+2026-11-28 14:02:18.257 INFO [P4] motion action=0 tool=finger at (1726,1057) pointers=1
+2026-11-28 14:02:18.378 INFO [P4] motion action=1 tool=finger at (1732,1057) pointers=1
+2026-11-28 14:02:20.613 INFO [P4] motion action=0 tool=finger at (1407,2374) pointers=1
+2026-11-28 14:02:21.848 INFO [P4] motion action=1 tool=finger at (1406,12) pointers=1
+2026-11-28 14:02:22.630 INFO [P4] motion action=0 tool=finger at (1363,2336) pointers=1
+2026-11-28 14:02:25.314 INFO [P4] motion action=1 tool=finger at (1746,90) pointers=1
+2026-11-28 14:02:43.442 INFO [P4] motion action=0 tool=finger at (57,41) pointers=1
+2026-11-28 14:02:43.535 INFO [P4] motion action=1 tool=finger at (57,41) pointers=1
+2026-11-28 14:02:45.518 INFO [P4] motion action=0 tool=finger at (292,184) pointers=1
+2026-11-28 14:02:45.626 INFO [P4] motion action=1 tool=finger at (284,184) pointers=1
+2026-11-28 14:02:46.907 INFO [P4] motion action=0 tool=finger at (751,1349) pointers=1
+2026-11-28 14:02:46.986 INFO [P4] motion action=1 tool=finger at (751,1349) pointers=1
+2026-11-28 14:02:49.152 INFO [P4] motion action=0 tool=finger at (328,2340) pointers=1
+2026-11-28 14:02:49.288 INFO [P4] motion action=1 tool=finger at (333,2344) pointers=1
+2026-11-28 14:02:49.296 INFO [P4] tap TAP by finger at (333,2344) moved=6 → ignored {"path":"/storage/emulated/0/Note/20261107_075222.note","canHandwrite":true,"note":"none","debounced":false,"busy":false}
+2026-11-28 14:02:49.780 INFO [P4] motion action=0 tool=finger at (326,2392) pointers=1
+2026-11-28 14:02:49.917 INFO [P4] motion action=1 tool=finger at (330,2398) pointers=1
+2026-11-28 14:02:49.925 INFO [P4] tap TAP by finger at (330,2398) moved=7 → ignored {"path":"/storage/emulated/0/Note/20261107_075222.note","canHandwrite":true,"note":"none","debounced":false,"busy":false}
+2026-11-28 14:02:50.347 INFO [P4] motion action=0 tool=finger at (255,2388) pointers=1
+2026-11-28 14:02:50.512 INFO [P4] motion action=1 tool=finger at (260,2389) pointers=1
+2026-11-28 14:02:50.520 INFO [P4] tap TAP by finger at (260,2389) moved=5 → ignored {"path":"/storage/emulated/0/Note/20261107_075222.note","canHandwrite":true,"note":"none","debounced":false,"busy":false}
+2026-11-28 14:02:50.943 INFO [P4] motion action=0 tool=finger at (417,2420) pointers=1
+2026-11-28 14:02:51.094 INFO [P4] motion action=1 tool=finger at (417,2420) pointers=1
+2026-11-28 14:02:51.222 INFO [P4] motion action=0 tool=finger at (531,2380) pointers=1
+2026-11-28 14:02:51.290 INFO [P4] motion action=1 tool=finger at (531,2380) pointers=1
+2026-11-28 14:02:51.403 INFO [P4] motion action=0 tool=finger at (162,2437) pointers=1
+2026-11-28 14:02:51.638 INFO [P4] motion action=1 tool=finger at (228,2405) pointers=1
+2026-11-28 14:02:51.737 INFO [P4] motion action=0 tool=finger at (467,2305) pointers=1
+2026-11-28 14:02:51.763 INFO [P4] motion action=1 tool=finger at (467,2305) pointers=1
+2026-11-28 14:02:51.934 INFO [P4] motion action=0 tool=finger at (240,2374) pointers=1
+2026-11-28 14:02:52.002 INFO [P4] motion action=1 tool=finger at (240,2374) pointers=1
+2026-11-28 14:02:52.009 INFO [P4] tap TAP by finger at (240,2374) moved=0 → ignored {"path":"/storage/emulated/0/Note/20261107_075222.note","canHandwrite":true,"note":"none","debounced":false,"busy":false}
+2026-11-28 14:02:52.260 INFO [P4] motion action=0 tool=finger at (41,54) pointers=1
+2026-11-28 14:02:52.342 INFO [P4] motion action=1 tool=finger at (35,54) pointers=1
+2026-11-28 14:02:55.693 INFO [P4] motion action=0 tool=finger at (1683,578) pointers=1
+2026-11-28 14:02:55.745 INFO [P4] motion action=1 tool=finger at (1683,578) pointers=1
+2026-11-28 14:02:56.623 INFO [P4] motion action=0 tool=finger at (297,769) pointers=1
+2026-11-28 14:02:56.672 INFO [P4] motion action=1 tool=finger at (297,769) pointers=1
+2026-11-28 14:03:01.381 INFO [P4] motion action=0 tool=finger at (301,2348) pointers=1
+2026-11-28 14:03:01.544 INFO [P4] motion action=1 tool=finger at (301,2348) pointers=1
+2026-11-28 14:03:01.565 INFO [P4] tap TAP by finger at (301,2348) moved=0 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+2026-11-28 14:03:02.527 INFO [P4] motion action=0 tool=finger at (1265,1362) pointers=1
+2026-11-28 14:03:02.547 INFO [P4] motion action=1 tool=finger at (1265,1362) pointers=1
+2026-11-28 14:03:02.561 INFO [P4] dialog ok 996ms
+2026-11-28 14:03:13.940 INFO [P4] motion action=0 tool=pen at (1589,71) pointers=1
+2026-11-28 14:03:13.974 INFO [P4] motion action=1 tool=pen at (1594,69) pointers=1
+2026-11-28 14:03:14.981 INFO [P4] motion action=0 tool=pen at (1366,362) pointers=1
+2026-11-28 14:03:15.027 INFO [P4] motion action=1 tool=pen at (1369,358) pointers=1
+2026-11-28 14:03:15.106 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P5 Network: Fetch today's feeds — 2026-11-28 14:03:21.189 =====
+2026-11-28 14:03:34.887 INFO [P5] wordle HTTP 200 in 13650 ms, 106 bytes {"url":"https://www.nytimes.com/svc/wordle/v2/2026-11-28.json","contentType":"application/json","keys":["days_since_launch","editor","id","print_date","solution"],"solutionLength":5,"printDate":"2026-11-28"}
+2026-11-28 14:03:35.032 INFO [P5] connections HTTP 200 in 144 ms, 790 bytes {"url":"https://www.nytimes.com/svc/connections/v2/2026-11-28.json","contentType":"application/json","keys":["categories","editor","id","print_date","status","stream","tags"],"categories":4,"cardsPerCategory":[4,4,4,4]}
+2026-11-28 14:03:35.032 INFO [P5 Network: Fetch today's feeds] done {"summary":"wordle: HTTP 200, 13650 ms, 106 bytes\nconnections: HTTP 200, 144 ms, 790 bytes"}
+2026-11-28 14:03:35.290 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:03:55.522 INFO [P4] motion action=0 tool=finger at (1500,1310) pointers=1
+2026-11-28 14:03:55.671 INFO [P4] motion action=1 tool=finger at (1060,1364) pointers=1
+2026-11-28 14:03:59.069 INFO [P4] motion action=0 tool=pen at (1613,73) pointers=1
+2026-11-28 14:03:59.098 INFO [P4] motion action=1 tool=pen at (1631,67) pointers=1
+2026-11-28 14:04:00.009 INFO [P4] motion action=0 tool=pen at (1385,365) pointers=1
+2026-11-28 14:04:00.043 INFO [P4] motion action=1 tool=pen at (1385,366) pointers=1
+2026-11-28 14:04:00.101 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P6 Feedback: Insert marks — 2026-11-28 14:04:03.316 =====
+2026-11-28 14:04:03.425 INFO [P6] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":1}
+2026-11-28 14:04:03.528 INFO [png] wrote /storage/emulated/0/MyStyle/SupernotePuzzles/tile-dark-03e3b2e3d2.png {"bytes":261}
+2026-11-28 14:04:03.539 INFO [png] wrote /storage/emulated/0/MyStyle/SupernotePuzzles/tile-light-1836d897b7.png {"bytes":261}
+2026-11-28 14:04:04.198 INFO [P6] before: page has 90 elements; in P6 box {"strokes":0,"geometry":0,"pictures":0,"picturesAnywhere":[]}
+2026-11-28 14:04:04.370 INFO [P6] ✓ line 1 insertGeometry: ok 162ms result=true
+2026-11-28 14:04:04.667 INFO [P6] ✓ line 2 insertGeometry: ok 297ms result=true
+2026-11-28 14:04:04.914 INFO [P6] ✗ line 1 insertGeometry: ok 247ms result=true
+2026-11-28 14:04:05.242 INFO [P6] ✗ line 2 insertGeometry: ok 328ms result=true
+2026-11-28 14:04:05.595 INFO [P6] □ geometry element insertPageElements: ok 349ms
+2026-11-28 14:04:05.771 INFO [P6] dark tile insertImage (host places it): ok 176ms path=/storage/emulated/0/MyStyle/SupernotePuzzles/tile-dark-03e3b2e3d2.png
+2026-11-28 14:04:06.111 INFO [P6] light tile picture element insertPageElements: ok 335ms rect=[1560,630 → 1660,730]
+2026-11-28 14:04:06.934 INFO [P6] after: page has 97 elements; in P6 box {"strokes":0,"geometry":5,"pictures":1,"picturesAnywhere":["#86 [1560,630 → 1660,730]","#102 [910,1230 → 1010,1330]"]}
+2026-11-28 14:04:06.950 INFO [P6] landed: +5 geometry in box (expected 5), +1 pictures in box {"picturesAnywhere":["#86 [1560,630 → 1660,730]","#102 [910,1230 → 1010,1330]"]}
+2026-11-28 14:04:06.950 INFO [P6 Feedback: Insert marks] done {"summary":"ok  ✓ line 1 insertGeometry\nok  ✓ line 2 insertGeometry\nok  ✗ line 1 insertGeometry\nok  ✗ line 2 insertGeometry\nok  □ geometry element insertPageElements\nok  dark tile insertImage (host places it)\nok  light tile picture element insertPageElements\nlanded in box: +5 geometry (of 5), +1 pictures\npictures on page: #86 [1560,630 → 1660,730]; #102 [910,1230 → 1010,1330]\nNow close this screen and look at the box. Try Undo once: what disappears?"}
+2026-11-28 14:04:07.214 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:04:16.945 INFO [P4] motion action=0 tool=finger at (1311,1612) pointers=1
+2026-11-28 14:04:17.135 INFO [P4] motion action=1 tool=finger at (1311,1612) pointers=1
+2026-11-28 14:05:43.573 INFO [P4] motion action=0 tool=finger at (1263,53) pointers=1
+2026-11-28 14:05:43.694 INFO [P4] motion action=1 tool=finger at (1272,53) pointers=1
+2026-11-28 14:05:58.397 INFO [P4] motion action=0 tool=finger at (1419,26) pointers=1
+2026-11-28 14:05:58.533 INFO [P4] motion action=1 tool=finger at (1428,28) pointers=1
+2026-11-28 14:06:00.492 INFO [P4] motion action=0 tool=finger at (1293,65) pointers=1
+2026-11-28 14:06:00.643 INFO [P4] motion action=1 tool=finger at (1298,65) pointers=1
+2026-11-28 14:06:02.338 INFO [P4] motion action=0 tool=finger at (1401,49) pointers=1
+2026-11-28 14:06:02.486 INFO [P4] motion action=1 tool=finger at (1401,49) pointers=1
+2026-11-28 14:06:17.703 INFO [P4] motion action=0 tool=pen at (1634,63) pointers=1
+2026-11-28 14:06:17.752 INFO [P4] motion action=1 tool=pen at (1622,67) pointers=1
+2026-11-28 14:06:19.388 INFO [P4] motion action=0 tool=pen at (1380,383) pointers=1
+2026-11-28 14:06:19.436 INFO [P4] motion action=1 tool=pen at (1374,378) pointers=1
+2026-11-28 14:06:19.606 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P6 Feedback: Remove via lasso — 2026-11-28 14:06:21.645 =====
+2026-11-28 14:06:21.732 INFO [P6] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":1}
+2026-11-28 14:06:22.133 INFO [P6] lassoElements [1524,344 → 1816,756] ok 297ms
+2026-11-28 14:06:22.284 INFO [P6] getLassoElements ok 149ms
+2026-11-28 14:06:22.285 INFO [P6] selected type=700 num=94 bounds=[1560,530 → 1610,580]
+2026-11-28 14:06:22.286 INFO [P6] selected type=700 num=96 bounds=[1610,480 → 1690,580]
+2026-11-28 14:06:22.286 INFO [P6] selected type=700 num=98 bounds=[1710,480 → 1790,580]
+2026-11-28 14:06:22.286 INFO [P6] selected type=700 num=100 bounds=[1710,480 → 1790,580]
+2026-11-28 14:06:22.286 INFO [P6] selected type=700 num=85 bounds=[1690,630 → 1790,730]
+2026-11-28 14:06:22.287 INFO [P6] selected type=200 num=86 bounds=[1560,630 → 1660,730]
+2026-11-28 14:06:22.563 INFO [P6] deleteLassoElements ok 276ms
+2026-11-28 14:06:22.604 INFO [P6] setLassoBoxState(2) ERR 904 No lasso action has been performed. Cannot call the API! 40ms
+2026-11-28 14:06:23.162 INFO [P6] after lasso delete: page has 90 elements; in P6 box {"strokes":0,"geometry":0,"pictures":0,"picturesAnywhere":[]}
+2026-11-28 14:06:23.168 INFO [P6 Feedback: Remove via lasso] done {"summary":"Lasso selected 6; delete ok 276ms\nleft in box: 0 geometry, 0 pictures\nNow: does Undo bring them back? Then close and reopen the note and run \"P6 status\"."}
+2026-11-28 14:06:23.462 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:06:36.746 INFO [P4] motion action=0 tool=pen at (1301,1474) pointers=1
+2026-11-28 14:06:36.819 INFO [P4] motion action=1 tool=pen at (1292,1476) pointers=1
+2026-11-28 14:06:38.011 INFO [P4] motion action=0 tool=pen at (1261,67) pointers=1
+2026-11-28 14:06:38.072 INFO [P4] motion action=1 tool=pen at (1269,54) pointers=1
+2026-11-28 14:06:53.119 INFO [P4] motion action=0 tool=pen at (66,39) pointers=1
+2026-11-28 14:06:53.170 INFO [P4] motion action=1 tool=pen at (53,35) pointers=1
+2026-11-28 14:06:58.973 INFO [P4] motion action=0 tool=pen at (324,492) pointers=1
+2026-11-28 14:06:59.022 INFO [P4] motion action=1 tool=pen at (313,487) pointers=1
+2026-11-28 14:07:01.594 INFO [P4] motion action=0 tool=pen at (1623,78) pointers=1
+2026-11-28 14:07:01.638 INFO [P4] motion action=1 tool=pen at (1622,78) pointers=1
+2026-11-28 14:07:02.733 INFO [P4] motion action=0 tool=pen at (1415,390) pointers=1
+2026-11-28 14:07:02.776 INFO [P4] motion action=1 tool=pen at (1406,385) pointers=1
+2026-11-28 14:07:02.848 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P6 Feedback: Status — 2026-11-28 14:07:05.041 =====
+2026-11-28 14:07:05.094 INFO [P6] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":1}
+2026-11-28 14:07:05.709 INFO [P6] status: page has 96 elements; in P6 box {"strokes":0,"geometry":5,"pictures":1,"picturesAnywhere":["#86 [1560,630 → 1660,730]"]}
+2026-11-28 14:07:05.716 INFO [P6 Feedback: Status] done {"summary":"P6 box: 5 geometry, 1 pictures, 0 strokes.\nPictures on page: #86 [1560,630 → 1660,730]"}
+2026-11-28 14:07:06.007 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:07:32.094 INFO [P4] motion action=0 tool=pen at (1744,82) pointers=1
+2026-11-28 14:07:32.139 INFO [P4] motion action=1 tool=pen at (1741,75) pointers=1
+2026-11-28 14:07:33.414 INFO [P4] motion action=0 tool=pen at (1093,683) pointers=1
+2026-11-28 14:07:33.480 INFO [P4] motion action=1 tool=pen at (1095,697) pointers=1
+2026-11-28 14:07:34.117 INFO [P4] motion action=0 tool=pen at (1603,78) pointers=1
+2026-11-28 14:07:34.153 INFO [P4] motion action=1 tool=pen at (1605,73) pointers=1
+2026-11-28 14:07:34.971 INFO [P4] motion action=0 tool=pen at (1452,357) pointers=1
+2026-11-28 14:07:35.024 INFO [P4] motion action=1 tool=pen at (1447,349) pointers=1
+2026-11-28 14:07:35.078 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P6 Feedback: Remove via lasso — 2026-11-28 14:07:36.637 =====
+2026-11-28 14:07:36.709 INFO [P6] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":1}
+2026-11-28 14:07:37.100 INFO [P6] lassoElements [1524,344 → 1816,756] ok 311ms
+2026-11-28 14:07:37.298 INFO [P6] getLassoElements ok 197ms
+2026-11-28 14:07:37.299 INFO [P6] selected type=700 num=94 bounds=[1560,530 → 1610,580]
+2026-11-28 14:07:37.300 INFO [P6] selected type=700 num=96 bounds=[1610,480 → 1690,580]
+2026-11-28 14:07:37.300 INFO [P6] selected type=700 num=98 bounds=[1710,480 → 1790,580]
+2026-11-28 14:07:37.300 INFO [P6] selected type=700 num=100 bounds=[1710,480 → 1790,580]
+2026-11-28 14:07:37.300 INFO [P6] selected type=700 num=85 bounds=[1690,630 → 1790,730]
+2026-11-28 14:07:37.300 INFO [P6] selected type=200 num=86 bounds=[1560,630 → 1660,730]
+2026-11-28 14:07:37.565 INFO [P6] deleteLassoElements ok 264ms
+2026-11-28 14:07:37.570 INFO [P6] setLassoBoxState(2) ERR 904 No lasso action has been performed. Cannot call the API! 4ms
+2026-11-28 14:07:38.176 INFO [P6] after lasso delete: page has 90 elements; in P6 box {"strokes":0,"geometry":0,"pictures":0,"picturesAnywhere":[]}
+2026-11-28 14:07:38.182 INFO [P6 Feedback: Remove via lasso] done {"summary":"Lasso selected 6; delete ok 264ms\nleft in box: 0 geometry, 0 pictures\nNow: does Undo bring them back? Then close and reopen the note and run \"P6 status\"."}
+2026-11-28 14:07:38.488 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:07:39.074 INFO [P4] motion action=0 tool=finger at (51,10) pointers=1
+2026-11-28 14:07:39.210 INFO [P4] motion action=1 tool=finger at (46,0) pointers=1
+2026-11-28 14:07:41.097 INFO [P4] motion action=0 tool=pen at (1277,1420) pointers=1
+2026-11-28 14:07:41.136 INFO [P4] motion action=1 tool=pen at (1260,1432) pointers=1
+2026-11-28 14:07:41.754 INFO [P4] motion action=0 tool=finger at (41,37) pointers=1
+2026-11-28 14:07:41.850 INFO [P4] motion action=1 tool=finger at (41,37) pointers=1
+2026-11-28 14:07:44.223 INFO [P4] motion action=0 tool=finger at (216,576) pointers=1
+2026-11-28 14:07:44.344 INFO [P4] motion action=1 tool=finger at (216,576) pointers=1
+2026-11-28 14:07:46.273 INFO [P4] motion action=0 tool=pen at (1610,74) pointers=1
+2026-11-28 14:07:46.303 INFO [P4] motion action=1 tool=pen at (1604,73) pointers=1
+2026-11-28 14:07:47.767 INFO [P4] motion action=0 tool=pen at (1396,380) pointers=1
+2026-11-28 14:07:47.775 INFO [P4] motion action=1 tool=pen at (1396,379) pointers=1
+2026-11-28 14:07:47.828 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P6 Feedback: Status — 2026-11-28 14:07:49.311 =====
+2026-11-28 14:07:49.358 INFO [P6] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":1}
+2026-11-28 14:07:50.016 INFO [P6] status: page has 90 elements; in P6 box {"strokes":0,"geometry":0,"pictures":0,"picturesAnywhere":[]}
+2026-11-28 14:07:50.032 INFO [P6 Feedback: Status] done {"summary":"P6 box: 0 geometry, 0 pictures, 0 strokes.\nPictures on page: none"}
+2026-11-28 14:07:50.339 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:07:59.118 INFO [P4] motion action=0 tool=pen at (1604,69) pointers=1
+2026-11-28 14:07:59.145 INFO [P4] motion action=1 tool=pen at (1593,75) pointers=1
+2026-11-28 14:08:00.112 INFO [P4] motion action=0 tool=pen at (1400,380) pointers=1
+2026-11-28 14:08:00.134 INFO [P4] motion action=1 tool=pen at (1401,379) pointers=1
+2026-11-28 14:08:00.186 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P6 Feedback: Insert marks — 2026-11-28 14:08:03.146 =====
+2026-11-28 14:08:03.241 INFO [P6] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":1}
+2026-11-28 14:08:03.961 INFO [P6] before: page has 90 elements; in P6 box {"strokes":0,"geometry":0,"pictures":0,"picturesAnywhere":[]}
+2026-11-28 14:08:04.124 INFO [P6] ✓ line 1 insertGeometry: ok 156ms result=true
+2026-11-28 14:08:04.469 INFO [P6] ✓ line 2 insertGeometry: ok 345ms result=true
+2026-11-28 14:08:04.725 INFO [P6] ✗ line 1 insertGeometry: ok 256ms result=true
+2026-11-28 14:08:05.029 INFO [P6] ✗ line 2 insertGeometry: ok 303ms result=true
+2026-11-28 14:08:05.363 INFO [P6] □ geometry element insertPageElements: ok 330ms
+2026-11-28 14:08:05.538 INFO [P6] dark tile insertImage (host places it): ok 175ms path=/storage/emulated/0/MyStyle/SupernotePuzzles/tile-dark-03e3b2e3d2.png
+2026-11-28 14:08:05.828 INFO [P6] light tile picture element insertPageElements: ok 285ms rect=[1560,630 → 1660,730]
+2026-11-28 14:08:06.641 INFO [P6] after: page has 97 elements; in P6 box {"strokes":0,"geometry":5,"pictures":1,"picturesAnywhere":["#86 [1560,630 → 1660,730]","#102 [910,1230 → 1010,1330]"]}
+2026-11-28 14:08:06.647 INFO [P6] landed: +5 geometry in box (expected 5), +1 pictures in box {"picturesAnywhere":["#86 [1560,630 → 1660,730]","#102 [910,1230 → 1010,1330]"]}
+2026-11-28 14:08:06.647 INFO [P6 Feedback: Insert marks] done {"summary":"ok  ✓ line 1 insertGeometry\nok  ✓ line 2 insertGeometry\nok  ✗ line 1 insertGeometry\nok  ✗ line 2 insertGeometry\nok  □ geometry element insertPageElements\nok  dark tile insertImage (host places it)\nok  light tile picture element insertPageElements\nlanded in box: +5 geometry (of 5), +1 pictures\npictures on page: #86 [1560,630 → 1660,730]; #102 [910,1230 → 1010,1330]\nNow close this screen and look at the box. Try Undo once: what disappears?"}
+2026-11-28 14:08:06.975 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:08:08.356 INFO [P4] motion action=0 tool=pen at (1259,1586) pointers=1
+2026-11-28 14:08:08.402 INFO [P4] motion action=1 tool=pen at (1254,1593) pointers=1
+2026-11-28 14:08:09.093 INFO [P4] motion action=0 tool=pen at (1616,83) pointers=1
+2026-11-28 14:08:09.129 INFO [P4] motion action=1 tool=pen at (1616,74) pointers=1
+2026-11-28 14:08:10.244 INFO [P4] motion action=0 tool=pen at (1411,352) pointers=1
+2026-11-28 14:08:10.259 INFO [P4] motion action=1 tool=pen at (1412,348) pointers=1
+2026-11-28 14:08:10.420 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P6 Feedback: Remove via batch — 2026-11-28 14:08:11.634 =====
+2026-11-28 14:08:11.727 INFO [P6] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":1}
+2026-11-28 14:08:12.496 INFO [P6] marks in box to delete: 94, 96, 98, 100, 85, 86
+2026-11-28 14:08:12.787 INFO [P6] batchUpdatePageElements(delete 6, insert 1) ok 284ms
+2026-11-28 14:08:12.811 INFO [P6] after batch update: page has 0 elements; in P6 box {"strokes":0,"geometry":0,"pictures":0,"picturesAnywhere":[]}
+2026-11-28 14:08:12.811 INFO [P6 Feedback: Remove via batch] done {"summary":"batchUpdatePageElements ok 284ms\nleft in box: 0 geometry (1 is the white hairline), 0 pictures\nNow: does Undo bring them back? Then close and reopen the note and run \"P6 status\"."}
+2026-11-28 14:08:13.191 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:08:15.513 INFO [P4] motion action=0 tool=pen at (1294,1447) pointers=1
+2026-11-28 14:08:15.591 INFO [P4] motion action=1 tool=pen at (1289,1448) pointers=1
+2026-11-28 14:08:18.369 INFO [P4] motion action=0 tool=pen at (1232,60) pointers=1
+2026-11-28 14:08:18.420 INFO [P4] motion action=1 tool=pen at (1211,56) pointers=1
+2026-11-28 14:08:34.124 INFO [P4] motion action=0 tool=finger at (41,44) pointers=1
+2026-11-28 14:08:34.241 INFO [P4] motion action=1 tool=finger at (46,54) pointers=1
+2026-11-28 14:08:35.741 INFO [P4] motion action=0 tool=finger at (230,574) pointers=1
+2026-11-28 14:08:35.851 INFO [P4] motion action=1 tool=finger at (230,574) pointers=1
+2026-11-28 14:08:38.297 INFO [P4] motion action=0 tool=finger at (1629,42) pointers=1
+2026-11-28 14:08:38.390 INFO [P4] motion action=1 tool=finger at (1637,44) pointers=1
+2026-11-28 14:08:39.609 INFO [P4] motion action=0 tool=finger at (1381,385) pointers=1
+2026-11-28 14:08:39.700 INFO [P4] motion action=1 tool=finger at (1381,385) pointers=1
+2026-11-28 14:08:39.758 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P6 Feedback: Status — 2026-11-28 14:08:42.190 =====
+2026-11-28 14:08:42.238 INFO [P6] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":1}
+2026-11-28 14:08:42.789 INFO [P6] status: page has 91 elements; in P6 box {"strokes":0,"geometry":0,"pictures":0,"picturesAnywhere":[]}
+2026-11-28 14:08:42.794 INFO [P6 Feedback: Status] done {"summary":"P6 box: 0 geometry, 0 pictures, 0 strokes.\nPictures on page: none"}
+2026-11-28 14:08:43.128 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:08:51.642 INFO [P4] motion action=0 tool=pen at (398,51) pointers=1
+2026-11-28 14:08:51.672 INFO [P4] motion action=1 tool=pen at (408,35) pointers=1
+2026-11-28 14:08:56.244 INFO [P4] motion action=0 tool=pen at (1611,1386) pointers=1
+2026-11-28 14:08:58.052 INFO [P4] motion action=1 tool=pen at (1754,1163) pointers=1
+2026-11-28 14:09:01.538 INFO [P4] motion action=0 tool=pen at (1612,64) pointers=1
+2026-11-28 14:09:01.550 INFO [P4] motion action=1 tool=pen at (1611,62) pointers=1
+2026-11-28 14:09:02.898 INFO [P4] motion action=0 tool=pen at (1380,371) pointers=1
+2026-11-28 14:09:02.951 INFO [P4] motion action=1 tool=pen at (1380,368) pointers=1
+2026-11-28 14:09:03.118 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== P6 Feedback: Save note — 2026-11-28 14:09:04.493 =====
+2026-11-28 14:09:04.570 INFO [P6] saveCurrentNote ok 70ms
+2026-11-28 14:09:04.571 INFO [P6 Feedback: Save note] done {"summary":"saveCurrentNote ok 70ms.\nNow try Undo on something you wrote before saving: does it still undo?"}
+2026-11-28 14:09:04.968 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:09:10.256 INFO [P4] motion action=0 tool=pen at (1270,1389) pointers=1
+2026-11-28 14:09:10.317 INFO [P4] motion action=1 tool=pen at (1263,1392) pointers=1
+2026-11-28 14:09:11.073 INFO [P4] motion action=0 tool=pen at (1254,61) pointers=1
+2026-11-28 14:09:11.102 INFO [P4] motion action=1 tool=pen at (1259,59) pointers=1
+2026-11-28 14:09:28.424 INFO [P4] motion action=0 tool=pen at (1618,72) pointers=1
+2026-11-28 14:09:28.473 INFO [P4] motion action=1 tool=pen at (1615,71) pointers=1
+2026-11-28 14:09:29.925 INFO [P4] motion action=0 tool=pen at (1370,376) pointers=1
+2026-11-28 14:09:29.987 INFO [P4] motion action=1 tool=pen at (1367,371) pointers=1
+2026-11-28 14:09:30.206 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== Setup: Create probe note — 2026-11-28 14:11:15.868 =====
+2026-11-28 14:11:16.012 INFO [note] createNote ok 69ms {"notePath":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 141115.note","template":"/storage/emulated/0/MyStyle/SupernotePuzzles/p1-letters-8733f9fd31.png"}
+2026-11-28 14:11:16.132 INFO [note] insertNotePage(page=1) ok 108ms
+2026-11-28 14:11:16.241 INFO [note] insertNotePage(page=2) ok 93ms
+2026-11-28 14:11:16.258 INFO [note] getNoteTotalPageNum 3
+2026-11-28 14:11:16.276 INFO [note] page 1 template {"md5":"afdc24e0eb433681ab6cdad857e3d686_212705","name":"user_p1-letters-8733f9fd31"}
+2026-11-28 14:11:16.298 INFO [note] page 2 template {"md5":"6910db3aeedd8f8dd51fd025bd43b8a8_212706","name":"user_p1-words-fd1ec1ff65"}
+2026-11-28 14:11:16.313 INFO [note] page 3 template {"md5":"3cb872486fad45cb6304cd8bd91ba630_212707","name":"user_p3-crossword-48d0102b09"}
+2026-11-28 14:11:16.313 INFO [note] page order p1-letters, p1-words, p3-crossword (expected p1-letters, p1-words, p3-crossword)
+2026-11-28 14:11:16.315 INFO [note] closePluginView ok 1ms
+2026-11-28 14:11:16.378 INFO [note] openNote ok 62ms
+2026-11-28 14:11:16.378 INFO [Setup: Create probe note] done {"summary":"Created and opened \"Probe 2026-11-28 141115.note\" (3 pages)."}
+2026-11-28 14:11:16.797 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:11:25.294 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+2026-11-28 14:12:10.521 INFO [P4] tap READ by finger at (1716,2396) moved=0 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":true,"note":"probe","debounced":false,"busy":false}
+
+===== P1 READ (page button) — 2026-11-28 14:12:10.521 =====
+2026-11-28 14:12:10.531 INFO [P1] context {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","page":0}
+2026-11-28 14:12:10.579 INFO [P1] reading p1-letters (page 1) from button {"size":{"width":1920,"height":2560}}
+2026-11-28 14:12:10.715 INFO [P1] getElements ok 134ms {"count":90}
+2026-11-28 14:12:11.034 INFO [P1] element census (read in 454 ms) {"byType":{"0":90},"byPen":{"16":90},"byLayer":{"0":90}}
+2026-11-28 14:12:11.035 INFO [P1] strokes=90 coordinate frame=px
+2026-11-28 14:12:11.096 INFO [P1] assignment {"cellsWithInk":52,"unassigned":0,"ambiguous":0}
+2026-11-28 14:12:11.509 INFO [P1] OK  cell A-A expected=A got="A" {"strokes":2,"calls":1,"ms":412}
+2026-11-28 14:12:11.926 INFO [P1] OK  cell A-B expected=B got="B" {"strokes":2,"calls":1,"ms":416}
+2026-11-28 14:12:12.303 INFO [P1] OK  cell A-C expected=C got="C" {"strokes":1,"calls":1,"ms":376}
+2026-11-28 14:12:12.699 INFO [P1] OK  cell A-D expected=D got="D" {"strokes":2,"calls":1,"ms":395}
+2026-11-28 14:12:13.107 INFO [P1] OK  cell A-E expected=E got="E" {"strokes":3,"calls":1,"ms":408}
+2026-11-28 14:12:13.510 INFO [P1] OK  cell A-F expected=F got="F" {"strokes":3,"calls":1,"ms":402}
+2026-11-28 14:12:13.918 INFO [P1] OK  cell A-G expected=G got="G" {"strokes":1,"calls":1,"ms":406}
+2026-11-28 14:12:14.324 INFO [P1] OK  cell A-H expected=H got="H" {"strokes":3,"calls":1,"ms":405}
+2026-11-28 14:12:14.734 INFO [P1] OK  cell A-I expected=I got="I" {"strokes":3,"calls":1,"ms":410}
+2026-11-28 14:12:15.117 INFO [P1] OK  cell A-J expected=J got="J" {"strokes":2,"calls":1,"ms":382}
+2026-11-28 14:12:15.507 INFO [P1] OK  cell A-K expected=K got="k" {"strokes":2,"calls":1,"ms":390}
+2026-11-28 14:12:15.881 INFO [P1] OK  cell A-L expected=L got="L" {"strokes":1,"calls":1,"ms":374}
+2026-11-28 14:12:16.294 INFO [P1] OK  cell A-M expected=M got="M" {"strokes":1,"calls":1,"ms":413}
+2026-11-28 14:12:16.683 INFO [P1] OK  cell A-N expected=N got="N" {"strokes":1,"calls":1,"ms":387}
+2026-11-28 14:12:16.939 INFO [P1] BAD cell A-O expected=O got="" {"strokes":1,"calls":1,"ms":256}
+2026-11-28 14:12:17.336 INFO [P1] OK  cell A-P expected=P got="p" {"strokes":2,"calls":1,"ms":396}
+2026-11-28 14:12:17.724 INFO [P1] OK  cell A-Q expected=Q got="Q" {"strokes":2,"calls":1,"ms":388}
+2026-11-28 14:12:18.125 INFO [P1] OK  cell A-R expected=R got="R" {"strokes":2,"calls":1,"ms":399}
+2026-11-28 14:12:18.513 INFO [P1] OK  cell A-S expected=S got="s" {"strokes":1,"calls":1,"ms":388}
+2026-11-28 14:12:18.900 INFO [P1] OK  cell A-T expected=T got="T" {"strokes":2,"calls":1,"ms":386}
+2026-11-28 14:12:19.153 INFO [P1] BAD cell A-U expected=U got="" {"strokes":1,"calls":1,"ms":252}
+2026-11-28 14:12:19.530 INFO [P1] OK  cell A-V expected=V got="v" {"strokes":1,"calls":1,"ms":376}
+2026-11-28 14:12:19.935 INFO [P1] OK  cell A-W expected=W got="w" {"strokes":1,"calls":1,"ms":404}
+2026-11-28 14:12:20.323 INFO [P1] BAD cell A-X expected=X got="✗" {"strokes":2,"calls":1,"ms":387}
+2026-11-28 14:12:20.702 INFO [P1] OK  cell A-Y expected=Y got="Y" {"strokes":2,"calls":1,"ms":379}
+2026-11-28 14:12:21.088 INFO [P1] BAD cell A-Z expected=Z got="2" {"strokes":1,"calls":1,"ms":384}
+2026-11-28 14:12:21.498 INFO [P1] OK  cell B-A expected=A got="A" {"strokes":2,"calls":1,"ms":409}
+2026-11-28 14:12:21.912 INFO [P1] OK  cell B-B expected=B got="B" {"strokes":2,"calls":1,"ms":414}
+2026-11-28 14:12:22.289 INFO [P1] OK  cell B-C expected=C got="C" {"strokes":1,"calls":1,"ms":376}
+2026-11-28 14:12:22.704 INFO [P1] BAD cell B-D expected=D got="P" {"strokes":2,"calls":1,"ms":414}
+2026-11-28 14:12:23.129 INFO [P1] OK  cell B-E expected=E got="E" {"strokes":3,"calls":1,"ms":425}
+2026-11-28 14:12:23.526 INFO [P1] OK  cell B-F expected=F got="F" {"strokes":3,"calls":1,"ms":397}
+2026-11-28 14:12:23.909 INFO [P1] OK  cell B-G expected=G got="G" {"strokes":1,"calls":1,"ms":383}
+2026-11-28 14:12:24.313 INFO [P1] OK  cell B-H expected=H got="H" {"strokes":3,"calls":1,"ms":403}
+2026-11-28 14:12:24.727 INFO [P1] OK  cell B-I expected=I got="I" {"strokes":3,"calls":1,"ms":413}
+2026-11-28 14:12:24.992 INFO [P1] BAD cell B-J expected=J got="" {"strokes":2,"calls":1,"ms":265}
+2026-11-28 14:12:25.391 INFO [P1] OK  cell B-K expected=K got="K" {"strokes":2,"calls":1,"ms":398}
+2026-11-28 14:12:25.773 INFO [P1] OK  cell B-L expected=L got="L" {"strokes":1,"calls":1,"ms":382}
+2026-11-28 14:12:26.184 INFO [P1] OK  cell B-M expected=M got="M" {"strokes":1,"calls":1,"ms":411}
+2026-11-28 14:12:26.579 INFO [P1] OK  cell B-N expected=N got="N" {"strokes":1,"calls":1,"ms":394}
+2026-11-28 14:12:26.837 INFO [P1] BAD cell B-O expected=O got="" {"strokes":1,"calls":1,"ms":256}
+2026-11-28 14:12:27.231 INFO [P1] OK  cell B-P expected=P got="P" {"strokes":2,"calls":1,"ms":393}
+2026-11-28 14:12:27.622 INFO [P1] OK  cell B-Q expected=Q got="Q" {"strokes":2,"calls":1,"ms":391}
+2026-11-28 14:12:28.047 INFO [P1] OK  cell B-R expected=R got="R" {"strokes":2,"calls":1,"ms":425}
+2026-11-28 14:12:28.421 INFO [P1] OK  cell B-S expected=S got="S" {"strokes":1,"calls":1,"ms":374}
+2026-11-28 14:12:28.792 INFO [P1] BAD cell B-T expected=T got="-" {"strokes":2,"calls":1,"ms":369}
+2026-11-28 14:12:29.171 INFO [P1] OK  cell B-U expected=U got="U" {"strokes":1,"calls":1,"ms":379}
+2026-11-28 14:12:29.551 INFO [P1] OK  cell B-V expected=V got="V" {"strokes":1,"calls":1,"ms":380}
+2026-11-28 14:12:29.952 INFO [P1] OK  cell B-W expected=W got="w" {"strokes":1,"calls":1,"ms":401}
+2026-11-28 14:12:30.339 INFO [P1] BAD cell B-X expected=X got="✗" {"strokes":2,"calls":1,"ms":386}
+2026-11-28 14:12:30.721 INFO [P1] OK  cell B-Y expected=Y got="Y" {"strokes":2,"calls":1,"ms":381}
+2026-11-28 14:12:31.108 INFO [P1] OK  cell B-Z expected=Z got="Z" {"strokes":1,"calls":1,"ms":387}
+2026-11-28 14:12:31.507 INFO [P1] OK  fineliner A-A expected=A got="A"
+2026-11-28 14:12:31.925 INFO [P1] OK  fineliner A-B expected=B got="B"
+2026-11-28 14:12:32.302 INFO [P1] OK  fineliner A-C expected=C got="C"
+2026-11-28 14:12:32.707 INFO [P1] OK  fineliner A-D expected=D got="D"
+2026-11-28 14:12:33.127 INFO [P1] OK  fineliner A-E expected=E got="E"
+2026-11-28 14:12:33.525 INFO [P1] OK  fineliner A-F expected=F got="F"
+2026-11-28 14:12:33.921 INFO [P1] OK  fineliner A-G expected=G got="G"
+2026-11-28 14:12:34.323 INFO [P1] OK  fineliner A-H expected=H got="H"
+2026-11-28 14:12:35.209 INFO [P1] OK  fineliner A-I expected=I got="I"
+2026-11-28 14:12:35.595 INFO [P1] OK  fineliner A-J expected=J got="J"
+2026-11-28 14:12:35.990 INFO [P1] OK  fineliner A-K expected=K got="k"
+2026-11-28 14:12:40.294 INFO [P1] OK  fineliner A-L expected=L got="L"
+2026-11-28 14:12:40.971 INFO [P1] OK  fineliner A-M expected=M got="M"
+2026-11-28 14:12:41.366 INFO [P1] OK  fineliner A-N expected=N got="N"
+2026-11-28 14:12:41.626 INFO [P1] BAD fineliner A-O expected=O got=""
+2026-11-28 14:12:42.018 INFO [P1] OK  fineliner A-P expected=P got="p"
+2026-11-28 14:12:42.411 INFO [P1] OK  fineliner A-Q expected=Q got="Q"
+2026-11-28 14:12:42.808 INFO [P1] OK  fineliner A-R expected=R got="R"
+2026-11-28 14:12:43.199 INFO [P1] OK  fineliner A-S expected=S got="s"
+2026-11-28 14:12:43.590 INFO [P1] OK  fineliner A-T expected=T got="T"
+2026-11-28 14:12:43.847 INFO [P1] BAD fineliner A-U expected=U got=""
+2026-11-28 14:12:44.220 INFO [P1] OK  fineliner A-V expected=V got="v"
+2026-11-28 14:12:44.628 INFO [P1] OK  fineliner A-W expected=W got="w"
+2026-11-28 14:12:45.010 INFO [P1] BAD fineliner A-X expected=X got="✗"
+2026-11-28 14:12:45.393 INFO [P1] OK  fineliner A-Y expected=Y got="Y"
+2026-11-28 14:12:45.777 INFO [P1] BAD fineliner A-Z expected=Z got="2"
+2026-11-28 14:12:46.186 INFO [P1] OK  fineliner B-A expected=A got="A"
+2026-11-28 14:12:46.603 INFO [P1] OK  fineliner B-B expected=B got="B"
+2026-11-28 14:12:46.981 INFO [P1] OK  fineliner B-C expected=C got="C"
+2026-11-28 14:12:47.395 INFO [P1] BAD fineliner B-D expected=D got="P"
+2026-11-28 14:12:47.812 INFO [P1] OK  fineliner B-E expected=E got="E"
+2026-11-28 14:12:48.208 INFO [P1] OK  fineliner B-F expected=F got="F"
+2026-11-28 14:12:48.589 INFO [P1] OK  fineliner B-G expected=G got="G"
+2026-11-28 14:12:48.990 INFO [P1] OK  fineliner B-H expected=H got="H"
+2026-11-28 14:12:49.405 INFO [P1] OK  fineliner B-I expected=I got="I"
+2026-11-28 14:12:49.667 INFO [P1] BAD fineliner B-J expected=J got=""
+2026-11-28 14:12:50.069 INFO [P1] OK  fineliner B-K expected=K got="K"
+2026-11-28 14:12:50.448 INFO [P1] OK  fineliner B-L expected=L got="L"
+2026-11-28 14:12:50.860 INFO [P1] OK  fineliner B-M expected=M got="M"
+2026-11-28 14:12:51.247 INFO [P1] OK  fineliner B-N expected=N got="N"
+2026-11-28 14:12:51.545 INFO [P1] BAD fineliner B-O expected=O got=""
+2026-11-28 14:12:52.292 INFO [P1] OK  fineliner B-P expected=P got="P"
+2026-11-28 14:12:52.319 INFO [P1] BAD fineliner B-Q expected=Q got=""
+2026-11-28 14:12:52.335 INFO [P1] BAD fineliner B-R expected=R got=""
+2026-11-28 14:12:52.340 INFO [P1] BAD fineliner B-S expected=S got=""
+2026-11-28 14:12:52.359 INFO [P1] BAD fineliner B-T expected=T got=""
+2026-11-28 14:12:52.367 INFO [P1] BAD fineliner B-U expected=U got=""
+2026-11-28 14:12:52.375 INFO [P1] BAD fineliner B-V expected=V got=""
+2026-11-28 14:12:52.381 INFO [P1] BAD fineliner B-W expected=W got=""
+2026-11-28 14:12:52.398 INFO [P1] BAD fineliner B-X expected=X got=""
+2026-11-28 14:12:52.413 INFO [P1] BAD fineliner B-Y expected=Y got=""
+2026-11-28 14:12:52.417 INFO [P1] BAD fineliner B-Z expected=Z got=""
+2026-11-28 14:12:52.591 INFO [P1] BAD word A-row1 expected=ABCDEFGHI got="" {"strokes":20,"calls":31,"ms":172,"partial":true}
+2026-11-28 14:12:52.709 INFO [P1] BAD word A-row2 expected=JKLMNOPQR got="" {"strokes":14,"calls":27,"ms":117,"partial":true}
+2026-11-28 14:12:52.784 INFO [P1] BAD word A-row3 expected=STUVWXYZ got="" {"strokes":11,"calls":21,"ms":73,"partial":true}
+2026-11-28 14:12:53.013 INFO [P1] BAD section A expected=ABCDEFGHIJKLMNOPQRSTUVWXYZ got="" {"strokes":45,"calls":31,"ms":229,"partial":true}
+2026-11-28 14:12:53.155 INFO [P1] BAD word B-row1 expected=ABCDEFGHIJKLM got="" {"strokes":26,"calls":31,"ms":140,"partial":true}
+2026-11-28 14:12:53.282 INFO [P1] BAD word B-row2 expected=NOPQRSTUVWXYZ got="" {"strokes":19,"calls":31,"ms":127,"partial":true}
+2026-11-28 14:12:53.465 INFO [P1] BAD section B expected=ABCDEFGHIJKLMNOPQRSTUVWXYZ got="" {"strokes":45,"calls":31,"ms":181,"partial":true}
+2026-11-28 14:12:53.469 INFO [P1] summary ["P1 · Letters: 90 strokes in 52 cells (frame px)","per cell: 43/52 (83%), 52 calls, 19977 ms","per word/row: 0/5 (0%), 141 calls, 629 ms, failures 118×141","per section: 0/2 (0%), 62 calls, 410 ms, failures 118×62","per cell, look-alikes forgiven: 46/52","fineliner per cell: 35/52 exact, 37/52 forgiven, 10/52 read differently from the ink pen (62 calls, 21306 ms)","rows/words mapped to squares: 46/52 right; 0 of 5 rows/words had a matching letter count"]
+2026-11-28 14:12:53.476 INFO [P1 READ (page button)] done {"summary":"P1 · Letters: 90 strokes in 52 cells (frame px)\nper cell: 43/52 (83%), 52 calls, 19977 ms\nper word/row: 0/5 (0%), 141 calls, 629 ms, failures 118×141\nper section: 0/2 (0%), 62 calls, 410 ms, failures 118×62\nper cell, look-alikes forgiven: 46/52\nfineliner per cell: 35/52 exact, 37/52 forgiven, 10/52 read differently from the ink pen (62 calls, 21306 ms)\nrows/words mapped to squares: 46/52 right; 0 of 5 rows/words had a matching letter count"}
+2026-11-28 14:12:53.904 WARN [log] could not write the log file yet; lines kept in memory
+2026-11-28 14:13:25.659 INFO [P4] tap TAP by pen at (171,2353) moved=4 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":"ERR 118 The handwriting app is not open, so related APIs cannot be called. 2ms","note":"probe","debounced":false,"busy":false}
+2026-11-28 14:13:27.211 INFO [P4] dialog ok 1552ms
+2026-11-28 14:13:42.293 INFO [P4] tap TAP by pen at (157,2362) moved=12 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":"ERR 118 The handwriting app is not open, so related APIs cannot be called. 3ms","note":"probe","debounced":false,"busy":false}
+2026-11-28 14:14:44.758 INFO [P4] dialog ok 62465ms
+2026-11-28 14:15:06.935 INFO [P4] tap TAP by pen at (306,2336) moved=7 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Probe 2026-11-28 134729.note","canHandwrite":"ERR 118 The handwriting app is not open, so related APIs cannot be called. 3ms","note":"probe","debounced":false,"busy":false}
+2026-11-28 14:15:08.243 INFO [P4] dialog ok 1307ms
+2026-11-28 14:15:16.050 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+2026-11-28 14:16:02.698 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== Play: Start sample Mini — 2026-11-28 14:16:06.280 =====
+2026-11-28 14:16:06.413 INFO [mini] createNote ok 69ms {"notePath":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","template":"/storage/emulated/0/MyStyle/SupernotePuzzles/mini-sample-1-2a894ad29f.png"}
+2026-11-28 14:16:06.529 INFO [mini] openNote ok 95ms
+2026-11-28 14:16:06.530 INFO [Play: Start sample Mini] done {"summary":"Sample Mini: write your answers, then tap CHECK."}
+2026-11-28 14:17:54.333 INFO [P4] tap CHECK by finger at (1625,2362) moved=4 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+
+===== Mini CHECK — 2026-11-28 14:17:54.333 =====
+2026-11-28 14:17:54.651 INFO [mini] read 42 strokes (frame px) {"cellsWithInk":23,"dotsIgnored":0,"unassigned":0,"ambiguous":0}
+2026-11-28 14:17:55.197 INFO [mini] 1A: mapped {"letters":4,"inked":4,"ms":546}
+2026-11-28 14:17:55.752 INFO [mini] 5A: mapped {"letters":5,"inked":5,"ms":554}
+2026-11-28 14:17:56.401 INFO [mini] 7A: mapped {"letters":5,"inked":5,"ms":649}
+2026-11-28 14:17:57.057 INFO [mini] 8A: mapped {"letters":5,"inked":5,"ms":654}
+2026-11-28 14:17:57.716 INFO [mini] 9A: mapped {"letters":4,"inked":4,"ms":658}
+2026-11-28 14:17:58.305 INFO [mini] 1D: mapped {"letters":4,"inked":4,"ms":589}
+2026-11-28 14:17:58.883 INFO [mini] 2D: mapped {"letters":5,"inked":5,"ms":577}
+2026-11-28 14:17:59.549 INFO [mini] 3D: not mapped {"letters":4,"inked":5,"ms":665}
+2026-11-28 14:18:00.257 INFO [mini] 4D: mapped {"letters":5,"inked":5,"ms":708}
+2026-11-28 14:18:00.893 INFO [mini] 6D: mapped {"letters":4,"inked":4,"ms":635}
+2026-11-28 14:18:01.292 INFO [mini] square 0-2 read on its own {"letters":1,"ms":398}
+2026-11-28 14:18:01.665 INFO [mini] square 1-2 read on its own {"letters":1,"ms":372}
+2026-11-28 14:18:02.048 INFO [mini] square 2-2 read on its own {"letters":1,"ms":382}
+2026-11-28 14:18:02.433 INFO [mini] square 3-2 read on its own {"letters":1,"ms":383}
+2026-11-28 14:18:02.846 INFO [mini] square 4-2 read on its own {"letters":1,"ms":413}
+2026-11-28 14:18:02.942 INFO [mini] square 0-0: right
+2026-11-28 14:18:02.942 INFO [mini] square 0-1: right
+2026-11-28 14:18:02.942 INFO [mini] square 0-2: right
+2026-11-28 14:18:02.942 INFO [mini] square 0-3: right
+2026-11-28 14:18:02.942 INFO [mini] square 1-0: right
+2026-11-28 14:18:02.942 INFO [mini] square 1-1: right
+2026-11-28 14:18:02.943 INFO [mini] square 1-2: right
+2026-11-28 14:18:02.943 INFO [mini] square 1-3: right
+2026-11-28 14:18:02.943 INFO [mini] square 1-4: right
+2026-11-28 14:18:02.943 INFO [mini] square 2-0: right
+2026-11-28 14:18:02.943 INFO [mini] square 2-1: right
+2026-11-28 14:18:02.944 INFO [mini] square 2-2: wrong (read T)
+2026-11-28 14:18:02.944 INFO [mini] square 2-3: right
+2026-11-28 14:18:02.944 INFO [mini] square 2-4: right
+2026-11-28 14:18:02.944 INFO [mini] square 3-0: right
+2026-11-28 14:18:02.944 INFO [mini] square 3-1: right
+2026-11-28 14:18:02.944 INFO [mini] square 3-2: wrong (read V)
+2026-11-28 14:18:02.944 INFO [mini] square 3-3: right
+2026-11-28 14:18:02.945 INFO [mini] square 3-4: right
+2026-11-28 14:18:02.945 INFO [mini] square 4-1: right
+2026-11-28 14:18:02.945 INFO [mini] square 4-2: right
+2026-11-28 14:18:02.945 INFO [mini] square 4-3: right
+2026-11-28 14:18:02.945 INFO [mini] square 4-4: wrong (read I)
+2026-11-28 14:18:02.946 INFO [mini] 7A raw reading "A LI VE"
+2026-11-28 14:18:02.946 INFO [mini] 8A raw reading "TO KEN"
+2026-11-28 14:18:02.946 INFO [mini] 9A raw reading "T E N I"
+2026-11-28 14:18:02.946 INFO [mini] 3D raw reading "A\nL\nI\nK\n-"
+2026-11-28 14:18:02.946 INFO [mini] 6D raw reading "S\nE\nN\nI"
+2026-11-28 14:18:04.718 INFO [mini] marks: removed 0, added 24: ok 1621ms
+2026-11-28 14:18:04.741 INFO [mini] check done {"solved":false,"calls":15,"failures":{},"ms":8468,"strokes":42,"dots":0,"unassigned":0,"marked":true}
+2026-11-28 14:18:04.741 INFO [Mini CHECK] done {"summary":"5 of 10 entries right.\nWrong: 7A read ALTVE · 8A read TOVEN · 9A read TENI · 3D read ALTVE · 6D read SENI"}
+2026-11-28 14:20:22.090 INFO [P4] tap CHECK by finger at (1682,2372) moved=10 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+
+===== Mini CHECK — 2026-11-28 14:20:22.091 =====
+2026-11-28 14:20:22.440 INFO [mini] read 42 strokes (frame px) {"cellsWithInk":23,"dotsIgnored":0,"unassigned":0,"ambiguous":0}
+2026-11-28 14:20:22.984 INFO [mini] 1A: mapped {"letters":4,"inked":4,"ms":544}
+2026-11-28 14:20:23.536 INFO [mini] 5A: mapped {"letters":5,"inked":5,"ms":550}
+2026-11-28 14:20:24.202 INFO [mini] 7A: mapped {"letters":5,"inked":5,"ms":666}
+2026-11-28 14:20:24.861 INFO [mini] 8A: mapped {"letters":5,"inked":5,"ms":658}
+2026-11-28 14:20:25.525 INFO [mini] 9A: mapped {"letters":4,"inked":4,"ms":663}
+2026-11-28 14:20:26.102 INFO [mini] 1D: mapped {"letters":4,"inked":4,"ms":576}
+2026-11-28 14:20:26.687 INFO [mini] 2D: mapped {"letters":5,"inked":5,"ms":585}
+2026-11-28 14:20:27.357 INFO [mini] 3D: not mapped {"letters":4,"inked":5,"ms":668}
+2026-11-28 14:20:28.061 INFO [mini] 4D: mapped {"letters":5,"inked":5,"ms":704}
+2026-11-28 14:20:28.696 INFO [mini] 6D: mapped {"letters":4,"inked":4,"ms":634}
+2026-11-28 14:20:29.095 INFO [mini] square 0-2 read on its own {"letters":1,"ms":398}
+2026-11-28 14:20:29.468 INFO [mini] square 1-2 read on its own {"letters":1,"ms":371}
+2026-11-28 14:20:29.850 INFO [mini] square 2-2 read on its own {"letters":1,"ms":382}
+2026-11-28 14:20:30.229 INFO [mini] square 3-2 read on its own {"letters":1,"ms":378}
+2026-11-28 14:20:30.644 INFO [mini] square 4-2 read on its own {"letters":1,"ms":414}
+2026-11-28 14:20:30.809 INFO [mini] square 0-0: right
+2026-11-28 14:20:30.810 INFO [mini] square 0-1: right
+2026-11-28 14:20:30.810 INFO [mini] square 0-2: right
+2026-11-28 14:20:30.810 INFO [mini] square 0-3: right
+2026-11-28 14:20:30.810 INFO [mini] square 1-0: right
+2026-11-28 14:20:30.810 INFO [mini] square 1-1: right
+2026-11-28 14:20:30.810 INFO [mini] square 1-2: right
+2026-11-28 14:20:30.811 INFO [mini] square 1-3: right
+2026-11-28 14:20:30.811 INFO [mini] square 1-4: right
+2026-11-28 14:20:30.811 INFO [mini] square 2-0: right
+2026-11-28 14:20:30.811 INFO [mini] square 2-1: right
+2026-11-28 14:20:30.811 INFO [mini] square 2-2: wrong (read T)
+2026-11-28 14:20:30.811 INFO [mini] square 2-3: right
+2026-11-28 14:20:30.812 INFO [mini] square 2-4: right
+2026-11-28 14:20:30.812 INFO [mini] square 3-0: right
+2026-11-28 14:20:30.812 INFO [mini] square 3-1: right
+2026-11-28 14:20:30.812 INFO [mini] square 3-2: wrong (read V)
+2026-11-28 14:20:30.812 INFO [mini] square 3-3: right
+2026-11-28 14:20:30.812 INFO [mini] square 3-4: right
+2026-11-28 14:20:30.813 INFO [mini] square 4-1: right
+2026-11-28 14:20:30.813 INFO [mini] square 4-2: right
+2026-11-28 14:20:30.813 INFO [mini] square 4-3: right
+2026-11-28 14:20:30.813 INFO [mini] square 4-4: wrong (read I)
+2026-11-28 14:20:30.813 INFO [mini] 7A raw reading "A LI VE"
+2026-11-28 14:20:30.814 INFO [mini] 8A raw reading "TO KEN"
+2026-11-28 14:20:30.814 INFO [mini] 9A raw reading "T E N I"
+2026-11-28 14:20:30.814 INFO [mini] 3D raw reading "A\nL\nI\nK\n-"
+2026-11-28 14:20:30.814 INFO [mini] 6D raw reading "S\nE\nN\nI"
+2026-11-28 14:20:32.638 INFO [mini] marks: removed 24, added 24: ok 1617ms
+2026-11-28 14:20:32.662 INFO [mini] check done {"solved":false,"calls":15,"failures":{},"ms":8505,"strokes":42,"dots":0,"unassigned":0,"marked":true}
+2026-11-28 14:20:32.663 INFO [Mini CHECK] done {"summary":"5 of 10 entries right.\nWrong: 7A read ALTVE · 8A read TOVEN · 9A read TENI · 3D read ALTVE · 6D read SENI"}
+2026-11-28 14:21:30.933 INFO [P4] tap CHECK by pen at (1659,2339) moved=5 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+
+===== Mini CHECK — 2026-11-28 14:21:30.934 =====
+2026-11-28 14:21:31.280 INFO [mini] read 40 strokes (frame px) {"cellsWithInk":23,"dotsIgnored":1,"unassigned":0,"ambiguous":0}
+2026-11-28 14:21:31.825 INFO [mini] 1A: mapped {"letters":4,"inked":4,"ms":545}
+2026-11-28 14:21:32.381 INFO [mini] 5A: mapped {"letters":5,"inked":5,"ms":554}
+2026-11-28 14:21:32.992 INFO [mini] 7A: mapped {"letters":5,"inked":5,"ms":611}
+2026-11-28 14:21:33.649 INFO [mini] 8A: mapped {"letters":5,"inked":5,"ms":657}
+2026-11-28 14:21:34.260 INFO [mini] 9A: mapped {"letters":4,"inked":4,"ms":610}
+2026-11-28 14:21:34.885 INFO [mini] 1D: mapped {"letters":4,"inked":4,"ms":623}
+2026-11-28 14:21:35.490 INFO [mini] 2D: mapped {"letters":5,"inked":5,"ms":605}
+2026-11-28 14:21:36.147 INFO [mini] 3D: mapped {"letters":5,"inked":5,"ms":656}
+2026-11-28 14:21:36.848 INFO [mini] 4D: mapped {"letters":5,"inked":5,"ms":700}
+2026-11-28 14:21:37.442 INFO [mini] 6D: mapped {"letters":4,"inked":4,"ms":593}
+2026-11-28 14:21:37.597 INFO [mini] square 0-0: right
+2026-11-28 14:21:37.597 INFO [mini] square 0-1: right
+2026-11-28 14:21:37.597 INFO [mini] square 0-2: right
+2026-11-28 14:21:37.597 INFO [mini] square 0-3: right
+2026-11-28 14:21:37.598 INFO [mini] square 1-0: right
+2026-11-28 14:21:37.598 INFO [mini] square 1-1: right
+2026-11-28 14:21:37.598 INFO [mini] square 1-2: right
+2026-11-28 14:21:37.598 INFO [mini] square 1-3: right
+2026-11-28 14:21:37.598 INFO [mini] square 1-4: right
+2026-11-28 14:21:37.599 INFO [mini] square 2-0: right
+2026-11-28 14:21:37.599 INFO [mini] square 2-1: right
+2026-11-28 14:21:37.599 INFO [mini] square 2-2: right
+2026-11-28 14:21:37.599 INFO [mini] square 2-3: right
+2026-11-28 14:21:37.599 INFO [mini] square 2-4: right
+2026-11-28 14:21:37.599 INFO [mini] square 3-0: right
+2026-11-28 14:21:37.600 INFO [mini] square 3-1: right
+2026-11-28 14:21:37.600 INFO [mini] square 3-2: right
+2026-11-28 14:21:37.600 INFO [mini] square 3-3: right
+2026-11-28 14:21:37.600 INFO [mini] square 3-4: right
+2026-11-28 14:21:37.600 INFO [mini] square 4-1: right
+2026-11-28 14:21:37.600 INFO [mini] square 4-2: right
+2026-11-28 14:21:37.601 INFO [mini] square 4-3: right
+2026-11-28 14:21:37.601 INFO [mini] square 4-4: right
+2026-11-28 14:21:39.213 INFO [mini] marks: removed 24, added 21: ok 1399ms
+2026-11-28 14:21:39.251 INFO [mini] check done {"solved":true,"calls":10,"failures":{},"ms":6460,"strokes":40,"dots":1,"unassigned":0,"marked":true}
+2026-11-28 14:21:39.253 INFO [Mini CHECK] done {"summary":"Solved! Every square is right."}
+2026-11-28 14:22:24.799 INFO [P4] tap REVEAL by pen at (297,2358) moved=12 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+2026-11-28 14:22:24.929 INFO [mini] reveal screen for sample-1: showPluginView ok 9ms
+2026-11-28 14:22:32.343 INFO [mini] reveal recorded: 1-2 {"total":1}
+
+===== Mini REVEAL marks — 2026-11-28 14:22:46.745 =====
+2026-11-28 14:22:47.079 INFO [mini] revealed 0 squares {"total":1}
+2026-11-28 14:22:49.000 INFO [P4] tap REVEAL by pen at (273,2360) moved=32 → ignored {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":true}
+2026-11-28 14:22:49.004 INFO [mini] marks: removed 21, added 24: ok 1718ms
+2026-11-28 14:22:49.005 INFO [Mini REVEAL marks] done {"summary":"Revealed squares are marked with a grey triangle."}
+2026-11-28 14:22:51.305 INFO [P4] tap REVEAL by pen at (301,2332) moved=10 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+2026-11-28 14:22:51.456 INFO [mini] reveal screen for sample-1: showPluginView ok 22ms
+2026-11-28 14:22:55.248 INFO [mini] reveal recorded: 1-0, 1-1, 1-2, 1-3, 1-4 {"total":5}
+
+===== Mini REVEAL marks — 2026-11-28 14:23:03.628 =====
+2026-11-28 14:23:04.082 INFO [mini] revealed 0 squares {"total":5}
+2026-11-28 14:23:06.688 INFO [mini] marks: removed 24, added 36: ok 2347ms
+2026-11-28 14:23:06.690 INFO [Mini REVEAL marks] done {"summary":"Revealed squares are marked with a grey triangle."}
+2026-11-28 14:23:35.417 INFO [P4] tap CHECK by pen at (1658,2364) moved=8 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+
+===== Mini CHECK — 2026-11-28 14:23:35.419 =====
+2026-11-28 14:23:35.821 INFO [mini] read 42 strokes (frame px) {"cellsWithInk":23,"dotsIgnored":2,"unassigned":1,"ambiguous":0}
+2026-11-28 14:23:36.366 INFO [mini] 1A: mapped {"letters":4,"inked":4,"ms":544}
+2026-11-28 14:23:36.915 INFO [mini] 5A: mapped {"letters":5,"inked":5,"ms":549}
+2026-11-28 14:23:37.531 INFO [mini] 7A: mapped {"letters":5,"inked":5,"ms":615}
+2026-11-28 14:23:38.190 INFO [mini] 8A: mapped {"letters":5,"inked":5,"ms":657}
+2026-11-28 14:23:38.803 INFO [mini] 9A: mapped {"letters":4,"inked":4,"ms":612}
+2026-11-28 14:23:39.428 INFO [mini] 1D: mapped {"letters":4,"inked":4,"ms":625}
+2026-11-28 14:23:40.026 INFO [mini] 2D: mapped {"letters":5,"inked":5,"ms":597}
+2026-11-28 14:23:40.683 INFO [mini] 3D: mapped {"letters":5,"inked":5,"ms":656}
+2026-11-28 14:23:41.392 INFO [mini] 4D: mapped {"letters":5,"inked":5,"ms":707}
+2026-11-28 14:23:41.991 INFO [mini] 6D: mapped {"letters":4,"inked":4,"ms":598}
+2026-11-28 14:23:42.163 INFO [mini] square 0-0: right
+2026-11-28 14:23:42.163 INFO [mini] square 0-1: right
+2026-11-28 14:23:42.163 INFO [mini] square 0-2: right
+2026-11-28 14:23:42.163 INFO [mini] square 0-3: right
+2026-11-28 14:23:42.163 INFO [mini] square 1-0: right
+2026-11-28 14:23:42.164 INFO [mini] square 1-1: right
+2026-11-28 14:23:42.164 INFO [mini] square 1-2: right
+2026-11-28 14:23:42.164 INFO [mini] square 1-3: right
+2026-11-28 14:23:42.164 INFO [mini] square 1-4: right
+2026-11-28 14:23:42.164 INFO [mini] square 2-0: right
+2026-11-28 14:23:42.164 INFO [mini] square 2-1: right
+2026-11-28 14:23:42.165 INFO [mini] square 2-2: right
+2026-11-28 14:23:42.165 INFO [mini] square 2-3: right
+2026-11-28 14:23:42.165 INFO [mini] square 2-4: right
+2026-11-28 14:23:42.165 INFO [mini] square 3-0: right
+2026-11-28 14:23:42.165 INFO [mini] square 3-1: right
+2026-11-28 14:23:42.166 INFO [mini] square 3-2: right
+2026-11-28 14:23:42.166 INFO [mini] square 3-3: right
+2026-11-28 14:23:42.166 INFO [mini] square 3-4: right
+2026-11-28 14:23:42.166 INFO [mini] square 4-1: right
+2026-11-28 14:23:42.166 INFO [mini] square 4-2: right
+2026-11-28 14:23:42.166 INFO [mini] square 4-3: right
+2026-11-28 14:23:42.167 INFO [mini] square 4-4: right
+2026-11-28 14:23:44.781 INFO [mini] marks: removed 36, added 36: ok 2351ms
+2026-11-28 14:23:44.812 INFO [mini] check done {"solved":true,"calls":10,"failures":{},"ms":6508,"strokes":42,"dots":2,"unassigned":1,"marked":true}
+2026-11-28 14:23:44.821 INFO [Mini CHECK] done {"summary":"Solved! Every square is right (5 revealed)."}
+2026-11-28 14:23:52.191 INFO [P4] tap REVEAL by pen at (342,2342) moved=0 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+2026-11-28 14:23:52.346 INFO [mini] reveal screen for sample-1: showPluginView ok 7ms
+2026-11-28 14:23:54.707 INFO [mini] reveal recorded: 4-3 {"total":6}
+
+===== Mini REVEAL marks — 2026-11-28 14:23:56.084 =====
+2026-11-28 14:23:56.446 INFO [mini] revealed 0 squares {"total":6}
+2026-11-28 14:23:59.252 INFO [mini] marks: removed 36, added 39: ok 2544ms
+2026-11-28 14:23:59.254 INFO [Mini REVEAL marks] done {"summary":"Revealed squares are marked with a grey triangle."}
+2026-11-28 14:24:05.719 INFO [P4] tap REVEAL by pen at (347,2352) moved=8 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+2026-11-28 14:24:05.853 INFO [mini] reveal screen for sample-1: showPluginView ok 6ms
+2026-11-28 14:24:08.438 INFO [mini] reveal recorded: 3-1 {"total":7}
+
+===== Mini REVEAL marks — 2026-11-28 14:24:10.166 =====
+2026-11-28 14:24:10.497 INFO [mini] revealed 0 squares {"total":7}
+2026-11-28 14:24:13.602 INFO [mini] marks: removed 39, added 42: ok 2749ms
+2026-11-28 14:24:13.605 INFO [Mini REVEAL marks] done {"summary":"Revealed squares are marked with a grey triangle."}
+2026-11-28 14:24:16.568 INFO [P4] tap REVEAL by pen at (253,2356) moved=1 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+2026-11-28 14:24:16.712 INFO [mini] reveal screen for sample-1: showPluginView ok 4ms
+2026-11-28 14:24:20.108 INFO [mini] reveal recorded: 4-2 {"total":8}
+
+===== Mini REVEAL marks — 2026-11-28 14:24:21.206 =====
+2026-11-28 14:24:21.520 INFO [mini] revealed 0 squares {"total":8}
+2026-11-28 14:24:24.901 INFO [mini] marks: removed 42, added 45: ok 3021ms
+2026-11-28 14:24:24.904 INFO [Mini REVEAL marks] done {"summary":"Revealed squares are marked with a grey triangle."}
+2026-11-28 14:24:28.611 INFO [P4] tap CHECK by pen at (1628,2357) moved=4 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+
+===== Mini CHECK — 2026-11-28 14:24:28.611 =====
+2026-11-28 14:24:29.020 INFO [mini] read 46 strokes (frame px) {"cellsWithInk":23,"dotsIgnored":5,"unassigned":1,"ambiguous":0}
+2026-11-28 14:24:29.574 INFO [mini] 1A: mapped {"letters":4,"inked":4,"ms":553}
+2026-11-28 14:24:30.133 INFO [mini] 5A: mapped {"letters":5,"inked":5,"ms":558}
+2026-11-28 14:24:30.742 INFO [mini] 7A: mapped {"letters":5,"inked":5,"ms":607}
+2026-11-28 14:24:31.400 INFO [mini] 8A: mapped {"letters":5,"inked":5,"ms":658}
+2026-11-28 14:24:32.012 INFO [mini] 9A: mapped {"letters":4,"inked":4,"ms":611}
+2026-11-28 14:24:32.646 INFO [mini] 1D: mapped {"letters":4,"inked":4,"ms":634}
+2026-11-28 14:24:33.313 INFO [mini] 2D: not mapped {"letters":4,"inked":5,"ms":666}
+2026-11-28 14:24:33.971 INFO [mini] 3D: mapped {"letters":5,"inked":5,"ms":657}
+2026-11-28 14:24:34.672 INFO [mini] 4D: mapped {"letters":5,"inked":5,"ms":700}
+2026-11-28 14:24:35.268 INFO [mini] 6D: mapped {"letters":4,"inked":4,"ms":594}
+2026-11-28 14:24:35.664 INFO [mini] square 0-1 read on its own {"letters":1,"ms":395}
+2026-11-28 14:24:36.028 INFO [mini] square 1-1 read on its own {"letters":1,"ms":364}
+2026-11-28 14:24:36.402 INFO [mini] square 2-1 read on its own {"letters":1,"ms":373}
+2026-11-28 14:24:36.859 INFO [mini] square 3-1 read on its own {"letters":0,"ms":456}
+2026-11-28 14:24:37.241 INFO [mini] square 4-1 read on its own {"letters":1,"ms":381}
+2026-11-28 14:24:37.444 INFO [mini] square 0-0: right
+2026-11-28 14:24:37.444 INFO [mini] square 0-1: right
+2026-11-28 14:24:37.445 INFO [mini] square 0-2: right
+2026-11-28 14:24:37.445 INFO [mini] square 0-3: right
+2026-11-28 14:24:37.445 INFO [mini] square 1-0: right
+2026-11-28 14:24:37.445 INFO [mini] square 1-1: right
+2026-11-28 14:24:37.446 INFO [mini] square 1-2: right
+2026-11-28 14:24:37.446 INFO [mini] square 1-3: right
+2026-11-28 14:24:37.446 INFO [mini] square 1-4: right
+2026-11-28 14:24:37.446 INFO [mini] square 2-0: right
+2026-11-28 14:24:37.446 INFO [mini] square 2-1: right
+2026-11-28 14:24:37.447 INFO [mini] square 2-2: right
+2026-11-28 14:24:37.447 INFO [mini] square 2-3: right
+2026-11-28 14:24:37.447 INFO [mini] square 2-4: right
+2026-11-28 14:24:37.447 INFO [mini] square 3-0: right
+2026-11-28 14:24:37.447 INFO [mini] square 3-1: right
+2026-11-28 14:24:37.447 INFO [mini] square 3-2: right
+2026-11-28 14:24:37.448 INFO [mini] square 3-3: right
+2026-11-28 14:24:37.448 INFO [mini] square 3-4: right
+2026-11-28 14:24:37.448 INFO [mini] square 4-1: right
+2026-11-28 14:24:37.448 INFO [mini] square 4-2: right
+2026-11-28 14:24:37.448 INFO [mini] square 4-3: right
+2026-11-28 14:24:37.448 INFO [mini] square 4-4: right
+2026-11-28 14:24:40.753 INFO [mini] marks: removed 45, added 45: ok 3002ms
+2026-11-28 14:24:40.777 INFO [mini] check done {"solved":true,"calls":15,"failures":{},"ms":8561,"strokes":46,"dots":5,"unassigned":1,"marked":true}
+2026-11-28 14:24:40.777 INFO [Mini CHECK] done {"summary":"Solved! Every square is right (8 revealed)."}
+2026-11-28 14:25:08.577 INFO [P4] tap REVEAL by pen at (352,2327) moved=3 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+2026-11-28 14:25:08.729 INFO [mini] reveal screen for sample-1: showPluginView ok 5ms
+2026-11-28 14:25:50.640 INFO [P4] tap CHECK by pen at (1593,2342) moved=9 → FIRE {"path":"/storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note","canHandwrite":true,"note":"puzzle","debounced":false,"busy":false}
+
+===== Mini CHECK — 2026-11-28 14:25:50.640 =====
+2026-11-28 14:25:51.093 INFO [mini] read 46 strokes (frame px) {"cellsWithInk":23,"dotsIgnored":5,"unassigned":1,"ambiguous":0}
+2026-11-28 14:25:51.654 INFO [mini] 1A: mapped {"letters":4,"inked":4,"ms":560}
+2026-11-28 14:25:52.210 INFO [mini] 5A: mapped {"letters":5,"inked":5,"ms":555}
+2026-11-28 14:25:52.824 INFO [mini] 7A: mapped {"letters":5,"inked":5,"ms":613}
+2026-11-28 14:25:53.481 INFO [mini] 8A: mapped {"letters":5,"inked":5,"ms":656}
+2026-11-28 14:25:54.092 INFO [mini] 9A: mapped {"letters":4,"inked":4,"ms":610}
+2026-11-28 14:25:54.676 INFO [mini] 1D: mapped {"letters":4,"inked":4,"ms":583}
+2026-11-28 14:25:55.341 INFO [mini] 2D: not mapped {"letters":4,"inked":5,"ms":663}
+2026-11-28 14:25:55.999 INFO [mini] 3D: mapped {"letters":5,"inked":5,"ms":658}
+2026-11-28 14:25:56.697 INFO [mini] 4D: mapped {"letters":5,"inked":5,"ms":696}
+2026-11-28 14:25:57.297 INFO [mini] 6D: mapped {"letters":4,"inked":4,"ms":600}
+2026-11-28 14:25:57.695 INFO [mini] square 0-1 read on its own {"letters":1,"ms":397}
+2026-11-28 14:25:58.059 INFO [mini] square 1-1 read on its own {"letters":1,"ms":363}
+2026-11-28 14:25:58.434 INFO [mini] square 2-1 read on its own {"letters":1,"ms":375}
+2026-11-28 14:25:58.891 INFO [mini] square 3-1 read on its own {"letters":0,"ms":456}
+2026-11-28 14:25:59.270 INFO [mini] square 4-1 read on its own {"letters":1,"ms":379}
+2026-11-28 14:25:59.469 INFO [mini] square 0-0: right
+2026-11-28 14:25:59.469 INFO [mini] square 0-1: right
+2026-11-28 14:25:59.469 INFO [mini] square 0-2: right
+2026-11-28 14:25:59.470 INFO [mini] square 0-3: right
+2026-11-28 14:25:59.470 INFO [mini] square 1-0: right
+2026-11-28 14:25:59.470 INFO [mini] square 1-1: right
+2026-11-28 14:25:59.470 INFO [mini] square 1-2: right
+2026-11-28 14:25:59.471 INFO [mini] square 1-3: right
+2026-11-28 14:25:59.471 INFO [mini] square 1-4: right
+2026-11-28 14:25:59.471 INFO [mini] square 2-0: right
+2026-11-28 14:25:59.471 INFO [mini] square 2-1: right
+2026-11-28 14:25:59.472 INFO [mini] square 2-2: right
+2026-11-28 14:25:59.472 INFO [mini] square 2-3: right
+2026-11-28 14:25:59.472 INFO [mini] square 2-4: right
+2026-11-28 14:25:59.472 INFO [mini] square 3-0: right
+2026-11-28 14:25:59.472 INFO [mini] square 3-1: right
+2026-11-28 14:25:59.473 INFO [mini] square 3-2: right
+2026-11-28 14:25:59.473 INFO [mini] square 3-3: right
+2026-11-28 14:25:59.473 INFO [mini] square 3-4: right
+2026-11-28 14:25:59.473 INFO [mini] square 4-1: right
+2026-11-28 14:25:59.473 INFO [mini] square 4-2: right
+2026-11-28 14:25:59.474 INFO [mini] square 4-3: right
+2026-11-28 14:25:59.474 INFO [mini] square 4-4: right
+2026-11-28 14:26:02.688 INFO [mini] marks: removed 45, added 45: ok 2914ms
+2026-11-28 14:26:02.718 INFO [mini] check done {"solved":true,"calls":15,"failures":{},"ms":8562,"strokes":46,"dots":5,"unassigned":1,"marked":true}
+2026-11-28 14:26:02.719 INFO [Mini CHECK] done {"summary":"Solved! Every square is right (8 revealed)."}
+2026-11-28 14:26:30.909 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== Play: Start sample Mini — 2026-11-28 14:26:32.142 =====
+2026-11-28 14:26:32.187 INFO [mini] note exists, reopening /storage/emulated/0/Note/SupernotePuzzles/Mini - sample-1.note
+2026-11-28 14:26:32.242 INFO [mini] openNote ok 50ms
+2026-11-28 14:26:32.246 INFO [Play: Start sample Mini] done {"summary":"Sample Mini: write your answers, then tap CHECK."}
+2026-11-28 14:27:03.440 INFO [button] press {"bgColor":0,"pressEvent":3,"icon":"/data/user/0/com.ratta.supernote.pluginhost/files/plugins/sd55lh4jnwwoilc0/drawable-mdpi/assets_icon.png","name":"Puzzles","color":0,"id":100}
+
+===== Play: CHECK this puzzle — 2026-11-28 14:27:04.676 =====
+2026-11-28 14:27:05.328 INFO [mini] read 46 strokes (frame px) {"cellsWithInk":23,"dotsIgnored":5,"unassigned":1,"ambiguous":0}
+2026-11-28 14:27:05.877 INFO [mini] 1A: mapped {"letters":4,"inked":4,"ms":547}
+2026-11-28 14:27:06.431 INFO [mini] 5A: mapped {"letters":5,"inked":5,"ms":554}
+2026-11-28 14:27:07.044 INFO [mini] 7A: mapped {"letters":5,"inked":5,"ms":611}
+2026-11-28 14:27:07.703 INFO [mini] 8A: mapped {"letters":5,"inked":5,"ms":658}
+2026-11-28 14:27:08.323 INFO [mini] 9A: mapped {"letters":4,"inked":4,"ms":619}
+2026-11-28 14:27:08.907 INFO [mini] 1D: mapped {"letters":4,"inked":4,"ms":583}
+2026-11-28 14:27:09.562 INFO [mini] 2D: not mapped {"letters":4,"inked":5,"ms":655}
+2026-11-28 14:27:10.220 INFO [mini] 3D: mapped {"letters":5,"inked":5,"ms":656}
+2026-11-28 14:27:10.923 INFO [mini] 4D: mapped {"letters":5,"inked":5,"ms":703}
+2026-11-28 14:27:11.521 INFO [mini] 6D: mapped {"letters":4,"inked":4,"ms":597}
+2026-11-28 14:27:11.919 INFO [mini] square 0-1 read on its own {"letters":1,"ms":397}
+2026-11-28 14:27:12.285 INFO [mini] square 1-1 read on its own {"letters":1,"ms":365}
+2026-11-28 14:27:12.664 INFO [mini] square 2-1 read on its own {"letters":1,"ms":377}
+2026-11-28 14:27:13.123 INFO [mini] square 3-1 read on its own {"letters":0,"ms":459}
+2026-11-28 14:27:13.510 INFO [mini] square 4-1 read on its own {"letters":1,"ms":379}
+2026-11-28 14:27:13.724 INFO [mini] square 0-0: right
+2026-11-28 14:27:13.724 INFO [mini] square 0-1: right
+2026-11-28 14:27:13.724 INFO [mini] square 0-2: right
+2026-11-28 14:27:13.724 INFO [mini] square 0-3: right
+2026-11-28 14:27:13.724 INFO [mini] square 1-0: right
+2026-11-28 14:27:13.725 INFO [mini] square 1-1: right
+2026-11-28 14:27:13.725 INFO [mini] square 1-2: right
+2026-11-28 14:27:13.725 INFO [mini] square 1-3: right
+2026-11-28 14:27:13.725 INFO [mini] square 1-4: right
+2026-11-28 14:27:13.725 INFO [mini] square 2-0: right
+2026-11-28 14:27:13.725 INFO [mini] square 2-1: right
+2026-11-28 14:27:13.726 INFO [mini] square 2-2: right
+2026-11-28 14:27:13.726 INFO [mini] square 2-3: right
+2026-11-28 14:27:13.726 INFO [mini] square 2-4: right
+2026-11-28 14:27:13.726 INFO [mini] square 3-0: right
+2026-11-28 14:27:13.726 INFO [mini] square 3-1: right
+2026-11-28 14:27:13.726 INFO [mini] square 3-2: right
+2026-11-28 14:27:13.727 INFO [mini] square 3-3: right
+2026-11-28 14:27:13.727 INFO [mini] square 3-4: right
+2026-11-28 14:27:13.727 INFO [mini] square 4-1: right
+2026-11-28 14:27:13.727 INFO [mini] square 4-2: right
+2026-11-28 14:27:13.727 INFO [mini] square 4-3: right
+2026-11-28 14:27:13.727 INFO [mini] square 4-4: right
+2026-11-28 14:27:16.916 INFO [mini] marks: removed 45, added 45: ok 2903ms
+2026-11-28 14:27:16.952 INFO [mini] check done {"solved":true,"calls":15,"failures":{},"ms":8690,"strokes":46,"dots":5,"unassigned":1,"marked":true}
+2026-11-28 14:27:16.953 INFO [Play: CHECK this puzzle] done {"summary":"Solved! Every square is right (8 revealed)."}

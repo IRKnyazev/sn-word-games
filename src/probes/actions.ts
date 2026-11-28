@@ -1,4 +1,6 @@
 /** The Probes menu: what each button does and the permissions it needs. */
+import {checkPuzzle, startPuzzle} from '../app/mini';
+import {SAMPLE_MINI} from '../puzzles/sample';
 import {PERMISSION, type Permission} from '../sdk/types';
 import type {ProbeContext} from './context';
 import {runEnvProbe} from './env';
@@ -29,6 +31,21 @@ export interface MenuAction {
 export function menuActions(sdkVersion: string): MenuAction[] {
   const R = PERMISSION.read;
   return [
+    {
+      id: 'mini',
+      section: 'Play',
+      label: 'Start sample Mini',
+      needs: [R],
+      run: ctx => startPuzzle(ctx, SAMPLE_MINI.id),
+    },
+    {
+      id: 'minicheck',
+      section: 'Play',
+      label: 'CHECK this puzzle',
+      closesView: true,
+      needs: [R],
+      run: checkPuzzle,
+    },
     {
       id: 'env',
       section: 'Setup',

@@ -156,3 +156,26 @@ describe('layout choice', () => {
     expect(ctx.lines().some(l => l.includes('out of order'))).toBe(true);
   });
 });
+
+describe('M1 scores on the probe pages', () => {
+  const [letters] = probePages();
+
+  it('adds forgiven and mapped scores', async () => {
+    // Every single square reads "0" for O (a look-alike); rows read with spaces.
+    const strokes = letters.cells.map(c =>
+      strokeIn(c.rect, {tag: c.expected === 'O' ? '0' : c.expected}),
+    );
+    const sdk = fakeSdk({
+      getElements: async () => ok(strokes),
+      recognize: async (els: Tagged[]) =>
+        ok(els.map(e => e.tag ?? '?').join(' ')),
+    });
+    const summary = await readProbePage(testContext(sdk), 'menu');
+    expect(summary).toContain('per cell: 50/52');
+    expect(summary).toContain('per cell, look-alikes forgiven: 52/52');
+    expect(summary).not.toContain('fineliner');
+    expect(summary).toMatch(
+      /rows\/words mapped to squares: 52\/52 right; 5 of 5 rows\/words had a matching letter count/,
+    );
+  });
+});

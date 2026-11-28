@@ -12,6 +12,26 @@ import type {
   Sdk,
 } from '../../src/sdk/types';
 
+import {
+  emptyState,
+  type PuzzleState,
+  type StateStore,
+} from '../../src/state/store';
+
+export function memoryStore(): StateStore & {states: Map<string, PuzzleState>} {
+  const states = new Map<string, PuzzleState>();
+  return {
+    states,
+    load: async (puzzleId, notePath) =>
+      JSON.parse(
+        JSON.stringify(states.get(notePath) ?? emptyState(puzzleId, notePath)),
+      ),
+    save: async state => {
+      states.set(state.notePath, JSON.parse(JSON.stringify(state)));
+    },
+  };
+}
+
 export function ok<T>(value: T): Res<T> {
   return {ok: true, value, ms: 1};
 }
@@ -106,9 +126,17 @@ export function fakeSdk(
     insertNotePage: async () => ok(true),
     openNote: async () => ok(true),
     closePluginView: async () => ok(true),
+    showPluginView: async () => ok(true),
     saveCurrentNote: async () => ok(true),
     getElements: async () => ok([]),
     getLastElement: async () => ok(null),
+    // Mirrors whatever getElements returns, like an unchanged page.
+    getElementNumList: async (path: string, page: number) => {
+      const r = (await out.getElements(page, path)) as Res<ElementLike[]>;
+      return ok(
+        r.ok ? r.value.map(e => e.numInPage ?? 0).filter(n => n >= 1) : [],
+      );
+    },
     recycle: () => undefined,
     recognize: async () => ok(''),
     insertGeometry: async () => ok(0),
@@ -190,6 +218,7 @@ export function testContext(
     state: new ProbeState(),
     now: opts.now ?? (() => (t += 10)),
     date: () => new Date(2026, 10, 27, 10, 15, 0),
+    store: memoryStore(),
     makeLogSink: () => ({append: async () => undefined}),
     listenPenUp: jest.fn(() => ({remove: jest.fn()})),
     lines: () => log.tail(1000),

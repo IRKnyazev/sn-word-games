@@ -18,7 +18,20 @@ import {
   recogniseResilient,
   type RecogniseOutcome,
 } from '../recognise/resilient';
-import {percent, score, tally, type Score} from '../recognise/text';
+import {
+  letterTokens,
+  mapEntryToCells,
+  matchesLetter,
+} from '../recognise/entries';
+import {
+  percent,
+  recognisedText,
+  score,
+  tally,
+  type Score,
+} from '../recognise/text';
+
+export {recognisedText};
 import {describe} from '../sdk/result';
 import {ELEMENT_TYPE, type ElementLike} from '../sdk/types';
 import type {ProbeContext} from './context';
@@ -36,17 +49,6 @@ interface LevelStats {
 
 function newStats(): LevelStats {
   return {scores: [], calls: 0, ms: 0, failures: {}};
-}
-
-/** recognizeElements usually answers a string; log anything else as JSON. */
-export function recognisedText(value: unknown): string {
-  if (typeof value === 'string') {
-    return value;
-  }
-  if (value && typeof value === 'object' && 'text' in value) {
-    return String((value as {text: unknown}).text ?? '');
-  }
-  return value === null || value === undefined ? '' : JSON.stringify(value);
 }
 
 export async function readProbePage(
@@ -142,6 +144,7 @@ export async function readProbePage(
         (assignment.byCell.get(id) ?? []).map(i => elements[i]),
       );
 
+    const texts = new Map<string, string>();
     const run = async (
       label: string,
       part: ElementLike[],
@@ -149,6 +152,7 @@ export async function readProbePage(
       stats: LevelStats,
     ) => {
       const r = await recogniseResilient(recognise, part, {now: ctx.now});
+      texts.set(label, r.text);
       stats.calls += r.calls;
       stats.ms += r.ms;
       for (const f of r.failures) {
@@ -185,6 +189,19 @@ export async function readProbePage(
       }
     }
 
+    // (a2) the same single squares, look-alikes forgiven (M1 rule)
+    const letterCells = layout.cells.filter(
+      c => c.kind === 'letter' && strokesOf([c.id]).length > 0,
+    );
+    const forgiven = (text: string | undefined, expected: string) => {
+      const t = letterTokens(text);
+      return t.length === 1 && matchesLetter(t[0], expected);
+    };
+    const scored = letterCells.filter(c => c.expected !== undefined);
+    const cellForgiven = scored.filter(c =>
+      forgiven(texts.get(`cell ${c.id}`), c.expected!),
+    ).length;
+
     // (b) words/rows and (c) sections
     const expectedOf = (g: Group): string | undefined => {
       const cells = g.cellIds.map(id => cellById.get(id));
@@ -215,6 +232,44 @@ export async function readProbePage(
       );
     }
 
+    // (b2) words/rows mapped back to squares (M1 rule)
+    let mappedRight = 0;
+    let mappedTotal = 0;
+    let groupsMapped = 0;
+    let groupsTried = 0;
+    for (const g of layout.groups.filter(x => x.level === 'word')) {
+      const cells = g.cellIds.map(id => cellById.get(id)!);
+      if (cells.some(c => c.kind !== 'letter')) {
+        continue;
+      }
+      const hasInk = cells.map(c => strokesOf([c.id]).length > 0);
+      if (!hasInk.some(Boolean)) {
+        continue;
+      }
+      groupsTried++;
+      const mapped = mapEntryToCells(
+        letterTokens(texts.get(`word ${g.id}`)),
+        hasInk,
+      );
+      if (mapped) {
+        groupsMapped++;
+      }
+      if (cells.some(c => c.expected === undefined)) {
+        // Crossword runs: no printed answer, so only the mapping rate counts.
+        continue;
+      }
+      cells.forEach((c, i) => {
+        if (!hasInk[i]) {
+          return;
+        }
+        mappedTotal++;
+        const ok = mapped
+          ? matchesLetter(mapped[i] ?? '', c.expected!)
+          : forgiven(texts.get(`cell ${c.id}`), c.expected!);
+        mappedRight += ok ? 1 : 0;
+      });
+    }
+
     const line = (name: string, s: LevelStats) => {
       const t = tally(s.scores);
       const fails = Object.entries(s.failures)
@@ -230,6 +285,16 @@ export async function readProbePage(
       line('per word/row', perWord),
       line('per section', perSection),
     ];
+    if (scored.length > 0) {
+      summary.push(
+        `per cell, look-alikes forgiven: ${cellForgiven}/${scored.length}`,
+      );
+    }
+    if (groupsTried > 0) {
+      summary.push(
+        `rows/words mapped to squares: ${mappedRight}/${mappedTotal} right; ${groupsMapped} of ${groupsTried} rows/words had a matching letter count`,
+      );
+    }
     if (assignment.unassigned.length > 0) {
       summary.push(`${assignment.unassigned.length} strokes outside any cell`);
     }

@@ -5,7 +5,12 @@
  * note and when canHandwrite() isn't false (taps through the top menu).
  * Silent on other notes unless P4 logging is armed.
  */
+import {isPuzzleNotePath} from '../app/mini';
+import {contains} from '../layout/geometry';
+import {miniLayout} from '../layout/mini';
 import {MANTA_PAGE, probeZones} from '../layout/probe';
+import type {Zone} from '../layout/types';
+import {SAMPLE_MINI} from '../puzzles/sample';
 import {isProbeNotePath} from '../sdk/paths';
 import {describe} from '../sdk/result';
 import type {ProbeContext} from './context';
@@ -16,8 +21,16 @@ import {ACTION, TapDetector, toolName, type MotionLike, type Tap} from './tap';
 const TAG = 'P4';
 
 export interface TapActions {
+  /** P1 READ on a probe note. */
   read: () => Promise<RunResult>;
+  /** CHECK on a puzzle note. */
+  check: () => Promise<RunResult>;
+  /** REVEAL on a puzzle note: opens the Puzzles view on the reveal screen. */
+  reveal: () => Promise<void>;
 }
+
+/** Buttons on puzzle pages sit where the probe pages' TAP/READ are. */
+const PUZZLE_ZONES: Zone[] = miniLayout(SAMPLE_MINI, MANTA_PAGE).page.zones;
 
 export function armP4(ctx: ProbeContext): string {
   ctx.state.arm('p4', ctx.now());
@@ -32,7 +45,10 @@ export function createMotionHandler(
   ctx: ProbeContext,
   actions: TapActions,
 ): (ev: MotionLike) => void {
-  const detector = new TapDetector(probeZones(MANTA_PAGE));
+  const detector = new TapDetector([
+    ...probeZones(MANTA_PAGE),
+    ...PUZZLE_ZONES,
+  ]);
   return ev => {
     // Hot path: only down, up and cancel matter (moves, hovers, others don't).
     if (
@@ -92,17 +108,34 @@ export async function handleTap(
 ): Promise<void> {
   const path = await ctx.sdk.getCurrentFilePath();
   const hw = await ctx.sdk.canHandwrite();
-  const isProbe = path.ok && isProbeNotePath(path.value);
-  const overMenu = hw.ok && hw.value === false;
+  const kind = !path.ok
+    ? 'none'
+    : isProbeNotePath(path.value)
+    ? 'probe'
+    : isPuzzleNotePath(path.value)
+    ? 'puzzle'
+    : 'none';
+  // Which printed button this is depends on the kind of note.
+  const zones =
+    kind === 'probe'
+      ? probeZones(MANTA_PAGE)
+      : kind === 'puzzle'
+      ? PUZZLE_ZONES
+      : [];
+  const button = zones.find(z => contains(z.rect, tap.at))?.id ?? null;
+  // The note must say it is on screen and taking handwriting. An error
+  // (e.g. 118 "handwriting app not open" in the file manager, where the
+  // keyboard sits over the buttons) or false (a menu over the page) blocks.
+  const onPage = hw.ok && hw.value === true;
   const now = ctx.now();
   const debounced = now - ctx.state.lastFireAt < TAP_DEBOUNCE_MS;
   const busy = ctx.state.isBusy(now);
-  const fire = isProbe && !overMenu && !debounced && !busy;
-  const loud = armed || isProbe;
+  const fire = button !== null && onPage && !debounced && !busy;
+  const loud = armed || kind !== 'none';
   if (loud) {
     ctx.log.info(
       TAG,
-      `tap ${tap.zone.id} by ${tap.tool} at (${Math.round(
+      `tap ${button ?? tap.zone.id} by ${tap.tool} at (${Math.round(
         tap.at.x,
       )},${Math.round(tap.at.y)}) moved=${Math.round(tap.moved)} → ${
         fire ? 'FIRE' : 'ignored'
@@ -110,7 +143,7 @@ export async function handleTap(
       {
         path: path.ok ? path.value : describe(path),
         canHandwrite: hw.ok ? hw.value : describe(hw),
-        probeNote: isProbe,
+        note: kind,
         debounced,
         busy,
       },
@@ -123,10 +156,15 @@ export async function handleTap(
     return;
   }
   ctx.state.lastFireAt = now;
-  if (tap.zone.id === 'READ') {
-    const res = await actions.read();
+  if (button === 'READ' || button === 'CHECK') {
+    const res = await (button === 'READ' ? actions.read() : actions.check());
     ctx.state.lastFireAt = ctx.now();
     await ctx.sdk.showDialog(res.summary, res.ok);
+    return;
+  }
+  if (button === 'REVEAL') {
+    await actions.reveal();
+    await ctx.log.flush();
     return;
   }
   const shown = await ctx.sdk.showDialog(`TAP received (${tap.tool}).`);

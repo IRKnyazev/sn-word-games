@@ -21,6 +21,8 @@ export interface ElementInfo {
   last?: Point;
   geometryType?: string;
   picturePath?: string;
+  /** Set when the stroke's points couldn't be read (bounds is then null). */
+  readError?: string;
 }
 
 /** Reads up to `max` points. Tolerates size() = -1 and missing accessors. */
@@ -74,7 +76,13 @@ export async function describeElement(
   if (el.type === ELEMENT_TYPE.stroke && el.stroke) {
     info.penType = el.stroke.penType;
     info.penColor = el.stroke.penColor;
-    const pts = await readPoints(el.stroke.points, maxPoints);
+    let pts: Point[] = [];
+    try {
+      pts = await readPoints(el.stroke.points, maxPoints);
+    } catch (e) {
+      // One unreadable stroke must not stop the rest of the page being read.
+      info.readError = e instanceof Error ? e.message : String(e);
+    }
     info.nPoints = pts.length;
     info.bounds = boundsOfPoints(pts);
     if (pts.length > 0) {

@@ -51,7 +51,8 @@ describe('P2 coordinates', () => {
       getCurrentPageNum: async () => ok(2),
       getLastElement: async () => ok(bad),
     });
-    await expect(reportP2(testContext(sdk))).rejects.toThrow('gone');
+    const ctx = testContext(sdk);
+    await expect(reportP2(ctx)).resolves.toMatch(/getElements/);
     expect(sdk.recycle).toHaveBeenCalledWith([bad]);
   });
 

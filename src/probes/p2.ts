@@ -176,7 +176,9 @@ export async function reportP2(ctx: ProbeContext): Promise<string> {
           TAG,
           `getLastElement type=${info.type} bounds=${
             info.bounds ? formatRect(info.bounds) : '-'
-          } → ${verdict(info.bounds, target, size)}`,
+          } → ${verdict(info.bounds, target, size)}${
+            info.readError ? ` (points unreadable: ${info.readError})` : ''
+          }`,
         );
       } finally {
         ctx.sdk.recycle([lastEl]);
